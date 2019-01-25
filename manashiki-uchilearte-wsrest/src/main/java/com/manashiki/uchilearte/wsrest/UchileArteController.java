@@ -232,7 +232,44 @@ public class UchileArteController {
 
 		List<TipoCertificadoDTO> retListaTipoCertificadoDTO = new ArrayList<TipoCertificadoDTO>();
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoCertificadoDTO=factoryServicio.getTipoCertificadoServicio().listarTipoCertificadosDTO();//Traer Todos
+		retListaTipoCertificadoDTO=factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoDTO();//Traer Todos
+
+		if(retListaTipoCertificadoDTO!=null && retListaTipoCertificadoDTO.size()>0){
+			cantidadResultados = retListaTipoCertificadoDTO.size();
+		}
+
+		uchileArte.setListaTipoCertificadoDTO(retListaTipoCertificadoDTO);
+		/*-------------------------------------------------------------------------------------------------------------*/
+
+		Instant end = Instant.now();
+
+		Duration duration = Duration.between(start, end);
+
+		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+
+		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
+				this.request.getContentType(), uchileArte);
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+
+	}
+	
+	@POST
+	@Path("/listarTipoCertificadosOrden")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response listarTipoCertificadosOrden(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
+
+		UchileArte uchileArte = new UchileArte();
+
+		Instant start = Instant.now();
+
+		int cantidadResultados = 0;
+
+		List<TipoCertificadoDTO> retListaTipoCertificadoDTO = new ArrayList<TipoCertificadoDTO>();
+		/*-------------------------------------------------------------------------------------------------------------*/
+		retListaTipoCertificadoDTO = factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoOrdenDTO();//Traer Todos
 
 		if(retListaTipoCertificadoDTO!=null && retListaTipoCertificadoDTO.size()>0){
 			cantidadResultados = retListaTipoCertificadoDTO.size();
@@ -272,6 +309,43 @@ public class UchileArteController {
 		// Mostrar Todo
 		/*-------------------------------------------------------------------------------------------------------------*/
 		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadosDTO();//Traer Todos
+
+		if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
+			cantidadResultados = retListaFinalidadCertificadoDTO.size();
+		}
+
+		uchileArte.setListaFinalidadCertificadoDTO(retListaFinalidadCertificadoDTO);
+		/*-------------------------------------------------------------------------------------------------------------*/
+
+		Instant end = Instant.now();
+
+		Duration duration = Duration.between(start, end);
+
+		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+
+		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
+				this.request.getContentType(), uchileArte);
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+	}
+	
+	@POST
+	@Path("/listarFinalidadCertificadosOrdenados")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response listarFinalidadCertificadosOrdenados(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
+
+		UchileArte uchileArte = new UchileArte();
+
+		Instant start = Instant.now();
+
+		int cantidadResultados = 0;
+
+		List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO = new ArrayList<FinalidadCertificadoDTO>();
+		// Mostrar Todo
+		/*-------------------------------------------------------------------------------------------------------------*/
+		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadosOrdenDTO();//Traer Todos
 
 		if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
 			cantidadResultados = retListaFinalidadCertificadoDTO.size();
@@ -424,7 +498,43 @@ public class UchileArteController {
 
 		List<TipoSolicitudDTO> retListaTipoSolicitudDTO = new ArrayList<TipoSolicitudDTO>();
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudesDTO();
+		retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudDTO();
+
+		if(retListaTipoSolicitudDTO!=null && retListaTipoSolicitudDTO.size()>0){
+			cantidadResultados = retListaTipoSolicitudDTO.size();
+		}
+
+		uchileArte.setListaTipoSolicitudDTO(retListaTipoSolicitudDTO);
+		/*-------------------------------------------------------------------------------------------------------------*/
+		Instant end = Instant.now();
+
+		Duration duration = Duration.between(start, end);
+
+		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+
+		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
+				this.request.getContentType(), uchileArte);
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+
+	}
+	
+	@POST
+	@Path("/listarTipoSolicitudesOrdenados")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response listarTipoSolicitudesOrdenados(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
+
+		UchileArte uchileArte = new UchileArte();
+
+		Instant start = Instant.now();
+
+		int cantidadResultados = 0;
+
+		List<TipoSolicitudDTO> retListaTipoSolicitudDTO = new ArrayList<TipoSolicitudDTO>();
+		/*-------------------------------------------------------------------------------------------------------------*/
+		retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudOrdenDTO();
 
 		if(retListaTipoSolicitudDTO!=null && retListaTipoSolicitudDTO.size()>0){
 			cantidadResultados = retListaTipoSolicitudDTO.size();

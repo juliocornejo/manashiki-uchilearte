@@ -34,7 +34,7 @@ public class SolicitudCertificadoEntity implements Serializable {
 	@OrderBy
 	@Column(name="apellido_paterno_persona_solicitud_certificado")
 	private String apellidoPaternoPersonaSolicitudCertificado;
-	/**************************/
+	
 	@OrderBy
 	@Column(name="apellido_materno_persona_solicitud_certificado")
 	private String apellidoMaternoPersonaSolicitudCertificado; 
@@ -71,8 +71,8 @@ public class SolicitudCertificadoEntity implements Serializable {
 	
 	@OrderBy
 	@Index(name="idx_solicitud_certificado_estado_solicitud")
-	@Column(name="estado_solicitud")
-	private Integer estadoSolicitud;
+	@Column(name="estado_solicitud_certificado")
+	private Integer estadoSolicitudCertificado;
 	
 	@OneToMany(mappedBy="fkIdSolicitudCertificado")
 	private List<LogReservaEntity> negocios_solicitudes;
@@ -127,10 +127,6 @@ public class SolicitudCertificadoEntity implements Serializable {
 		return fechaSolicitud;
 	}
 
-	public Integer getEstadoSolicitud() {
-		return estadoSolicitud;
-	}
-
 	public void setIdSolicitudCertificado(Integer idSolicitudCertificado) {
 		this.idSolicitudCertificado = idSolicitudCertificado;
 	}
@@ -175,16 +171,20 @@ public class SolicitudCertificadoEntity implements Serializable {
 		this.fechaSolicitud = fechaSolicitud;
 	}
 
-	public void setEstadoSolicitud(Integer estadoSolicitud) {
-		this.estadoSolicitud = estadoSolicitud;
-	}
-
 	public List<LogReservaEntity> getNegocios_solicitudes() {
 		return negocios_solicitudes;
 	}
 
 	public void setNegocios_solicitudes(List<LogReservaEntity> negocios_solicitudes) {
 		this.negocios_solicitudes = negocios_solicitudes;
+	}
+
+	public Integer getEstadoSolicitudCertificado() {
+		return estadoSolicitudCertificado;
+	}
+
+	public void setEstadoSolicitudCertificado(Integer estadoSolicitudCertificado) {
+		this.estadoSolicitudCertificado = estadoSolicitudCertificado;
 	}
 	
 }

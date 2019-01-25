@@ -39,7 +39,7 @@ public class SolicitudAcademicaDTOMapper{
 			solicitudAcademicaModel.setFechaSolicitud(solicitudAcademicaDTO.getFechaSolicitud()); 
 			solicitudAcademicaModel.setIdArchivoSolicitud(solicitudAcademicaDTO.getIdArchivoSolicitud()); 
 			solicitudAcademicaModel.setArchivoAdjunto(solicitudAcademicaDTO.isArchivoAdjunto()); 
-			solicitudAcademicaModel.setEstadoSolicitud(solicitudAcademicaDTO.getEstadoSolicitud());
+			solicitudAcademicaModel.setEstadoSolicitudAcademica(solicitudAcademicaDTO.getEstadoSolicitud());
 		}
 		
 		return solicitudAcademicaModel;
@@ -93,7 +93,7 @@ public class SolicitudAcademicaDTOMapper{
 			if(solicitudAcademicaModel.getIdArchivoSolicitud()!=null){
 				solicitudAcademicaDTO.setIdArchivoSolicitud(solicitudAcademicaModel.getIdArchivoSolicitud());
 			}
-			solicitudAcademicaDTO.setEstadoSolicitud(solicitudAcademicaModel.getEstadoSolicitud());
+			solicitudAcademicaDTO.setEstadoSolicitud(solicitudAcademicaModel.getEstadoSolicitudAcademica());
 		}
 		return solicitudAcademicaDTO;
 	}

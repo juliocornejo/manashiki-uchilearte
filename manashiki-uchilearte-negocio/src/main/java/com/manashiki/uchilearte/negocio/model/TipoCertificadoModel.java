@@ -11,6 +11,7 @@ public class TipoCertificadoModel implements Serializable{
 	private Integer idTipoCertificado;
 	private String codigoTipoCertificado;
 	private String nombreTipoCertificado;
+	private Boolean estadoTipoCertificado;
 
 	public TipoCertificadoModel() {
 		super();
@@ -39,5 +40,15 @@ public class TipoCertificadoModel implements Serializable{
 	public void setNombreTipoCertificado(String nombreTipoCertificado) {
 		this.nombreTipoCertificado = nombreTipoCertificado;
 	}
+
+	public Boolean getEstadoTipoCertificado() {
+		return estadoTipoCertificado;
+	}
+
+	public void setEstadoTipoCertificado(Boolean estadoTipoCertificado) {
+		this.estadoTipoCertificado = estadoTipoCertificado;
+	}
+	
+	
 	
 }

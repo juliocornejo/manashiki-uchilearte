@@ -213,10 +213,10 @@ public class SolicitudAcademicaDAOImpl implements SolicitudAcademicaDAO{
 	 * @throws no lanza excepciones
 	 */
 	public List<SolicitudAcademicaEntity> listarSolicitudAcademicaxEstadoEntity(SolicitudAcademicaEntity objSolicitudAcademicaEntity){
-		objLog.info("INI - listarSolicitudAcademicaxEstadoEntity "+objSolicitudAcademicaEntity.getEstadoSolicitud());
+		objLog.info("INI - listarSolicitudAcademicaxEstadoEntity "+objSolicitudAcademicaEntity.getEstadoSolicitudAcademica());
 		List<SolicitudAcademicaEntity> listaSolicitudAcademica= null;
 		try {
-			listaSolicitudAcademica = solicitudCertificadoRepository.findByEstadoSolicitud(objSolicitudAcademicaEntity.getEstadoSolicitud());
+			listaSolicitudAcademica = solicitudCertificadoRepository.findByEstadoSolicitudAcademica(objSolicitudAcademicaEntity.getEstadoSolicitudAcademica());
 		} catch (PersistenceException e) {
 			objLog.error("No se pudo Obtener la lista");
 		}

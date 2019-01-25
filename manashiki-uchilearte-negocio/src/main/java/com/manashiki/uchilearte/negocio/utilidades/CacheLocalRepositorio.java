@@ -90,8 +90,10 @@ public class CacheLocalRepositorio {
 				}
 
 				cacheLocalUchileArteModel = new CacheLocalUchileArte(listaProgramaUniversidadModel, cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
-						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaFinalidadCertificado(),
-						cacheLocalUchileArteModel.getListaTipoSolicitud(), cacheLocalUchileArteModel.getListaRegion());
+						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), cacheLocalUchileArteModel.getListaFinalidadCertificado(),
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(),
+						cacheLocalUchileArteModel.getListaTipoSolicitud(),
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), cacheLocalUchileArteModel.getListaRegion());
 				objCacheLocal.Eliminar(objetoCache);
 				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
 
@@ -177,8 +179,9 @@ public class CacheLocalRepositorio {
 				}
 
 				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), listaProgramaUniversidadPostulacionModel,
-						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaFinalidadCertificado(),
-						cacheLocalUchileArteModel.getListaTipoSolicitud(), cacheLocalUchileArteModel.getListaRegion());
+						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), cacheLocalUchileArteModel.getListaFinalidadCertificado(),
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(), 	cacheLocalUchileArteModel.getListaTipoSolicitud(), 
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), cacheLocalUchileArteModel.getListaRegion());
 				objCacheLocal.Eliminar(objetoCache);
 				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
 
@@ -260,8 +263,9 @@ public class CacheLocalRepositorio {
 
 
 				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
-						listaTipoCertificadoModel, cacheLocalUchileArteModel.getListaFinalidadCertificado(),
-						cacheLocalUchileArteModel.getListaTipoSolicitud(), cacheLocalUchileArteModel.getListaRegion());
+						listaTipoCertificadoModel, cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), cacheLocalUchileArteModel.getListaFinalidadCertificado(),
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(), 	cacheLocalUchileArteModel.getListaTipoSolicitud(), 
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), cacheLocalUchileArteModel.getListaRegion());
 				objCacheLocal.Eliminar(objetoCache);
 				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
 
@@ -297,6 +301,90 @@ public class CacheLocalRepositorio {
 		}
 
 		objLog.info("FIN - obtenerCacheListaTipoCertificado");
+		return listaTipoCertificadoModel;
+
+	}
+	
+	public static List<TipoCertificadoModel> generarCacheListaTipoCertificadoOrden(ICacheComponent objCacheLocal, List<TipoCertificadoEntity> listaTipoCertificadoEntity) {
+		objLog.info("INI - generarCacheListaTipoCertificado");
+		CacheLocalUchileArte cacheLocalUchileArteModel = null;
+		TipoCertificadoModel tipoCertificadoModel = new TipoCertificadoModel();
+		List<TipoCertificadoModel> listaTipoCertificadoModel = null;
+		try{
+			try{
+				if(objCacheLocal==null){
+					objCacheLocal = crearRepositorioCacheLocal();
+				}
+			}
+			catch(Exception e){
+				listaTipoCertificadoModel=null; //No existe
+			}
+
+			try{
+				if(objCacheLocal!=null){
+					cacheLocalUchileArteModel = (CacheLocalUchileArte) objCacheLocal.Buscar(objetoCache);
+					if(cacheLocalUchileArteModel!=null){
+						if(cacheLocalUchileArteModel.getListaTipoCertificadoOrden()!=null){
+							listaTipoCertificadoModel = cacheLocalUchileArteModel.getListaTipoCertificadoOrden();
+						}
+					}else{
+						cacheLocalUchileArteModel = new CacheLocalUchileArte();
+					}
+				}
+			}catch(Exception e){
+				listaTipoCertificadoModel= null;
+			}
+
+
+			if(listaTipoCertificadoModel==null || listaTipoCertificadoModel.size()==0){
+				//Lista distinta de Nula, y no existia el Country
+				listaTipoCertificadoModel = new ArrayList<TipoCertificadoModel>();
+				for(TipoCertificadoEntity puEnt:listaTipoCertificadoEntity){
+					tipoCertificadoModel = new TipoCertificadoModel();
+					tipoCertificadoModel = TipoCertificadoModelMapper.TipoCertificadoEntityToTipoCertificadoModel(puEnt);
+					listaTipoCertificadoModel.add(tipoCertificadoModel);
+				}
+
+
+				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
+						cacheLocalUchileArteModel.getListaTipoCertificado(), listaTipoCertificadoModel, cacheLocalUchileArteModel.getListaFinalidadCertificado(),
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(), 	cacheLocalUchileArteModel.getListaTipoSolicitud(), 
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), cacheLocalUchileArteModel.getListaRegion());
+				objCacheLocal.Eliminar(objetoCache);
+				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
+
+			}
+		}
+		catch(Exception ne){
+			listaTipoCertificadoModel = null;
+		}
+		objLog.info("FIN - generarCacheListaTipoCertificado");
+		return listaTipoCertificadoModel;
+	}
+
+	public static List<TipoCertificadoModel> obtenerCacheListaTipoCertificadoOrden(ICacheComponent objCacheLocal) {
+		objLog.info("INI - obtenerCacheListaTipoCertificadoOrden");
+		CacheLocalUchileArte cacheLocalUchileArteModel = new CacheLocalUchileArte();
+		List<TipoCertificadoModel> listaTipoCertificadoModel = new ArrayList<TipoCertificadoModel>();
+		try{
+			try{
+
+				cacheLocalUchileArteModel = (CacheLocalUchileArte) objCacheLocal.Buscar(objetoCache);
+
+			}catch(Exception ne){
+				cacheLocalUchileArteModel = null; 
+			}
+
+			if(cacheLocalUchileArteModel!=null){
+				if(cacheLocalUchileArteModel.getListaTipoCertificadoOrden()!=null && cacheLocalUchileArteModel.getListaTipoCertificadoOrden().size()>0){
+					listaTipoCertificadoModel = cacheLocalUchileArteModel.getListaTipoCertificadoOrden();
+				}
+			}
+		}catch(Exception ne){
+			listaTipoCertificadoModel=null; 
+		}
+
+		objLog.info("FIN - obtenerCacheListaTipoCertificadoOrden");
 		return listaTipoCertificadoModel;
 
 	}
@@ -342,8 +430,9 @@ public class CacheLocalRepositorio {
 				}
 
 				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
-						cacheLocalUchileArteModel.getListaTipoCertificado(), listaFinalidadCertificadoModel,
-						cacheLocalUchileArteModel.getListaTipoSolicitud(), cacheLocalUchileArteModel.getListaRegion());
+						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), listaFinalidadCertificadoModel,
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(), 	cacheLocalUchileArteModel.getListaTipoSolicitud(), 
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), cacheLocalUchileArteModel.getListaRegion());
 				objCacheLocal.Eliminar(objetoCache);
 				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
 			}
@@ -354,6 +443,9 @@ public class CacheLocalRepositorio {
 		objLog.info("FIN - generarCacheListaFinalidadCertificado");
 		return listaFinalidadCertificadoModel;
 	}
+	
+	
+	
 
 	public static List<FinalidadCertificadoModel> obtenerCacheListaFinalidadCertificado(ICacheComponent objCacheLocal){
 		objLog.info("INI - obtenerCacheListaFinalidadCertificado");
@@ -381,7 +473,89 @@ public class CacheLocalRepositorio {
 		return listaFinalidadCertificadoModel;
 
 	}
+	
+	public static List<FinalidadCertificadoModel> generarCacheListaFinalidadCertificadoOrden(ICacheComponent objCacheLocal, List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity){
+		objLog.info("INI - generarCacheListaFinalidadCertificadoOrden");
+		CacheLocalUchileArte cacheLocalUchileArteModel = null;
+		FinalidadCertificadoModel finalidadCertificadoModel = new FinalidadCertificadoModel();
+		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel = null;
+		try{
+			try{
+				if(objCacheLocal==null){
+					objCacheLocal = crearRepositorioCacheLocal();
+				}
+			}
+			catch(Exception e){
+				listaFinalidadCertificadoModel=null; //No existe
+			}
 
+			try{
+				if(objCacheLocal!=null){
+					cacheLocalUchileArteModel = (CacheLocalUchileArte) objCacheLocal.Buscar(objetoCache);
+					if(cacheLocalUchileArteModel!=null){
+						if(cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden()!=null){
+							listaFinalidadCertificadoModel = cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden();
+						}
+					}else{
+						cacheLocalUchileArteModel = new CacheLocalUchileArte();
+					}
+				}
+			}catch(Exception e){
+				listaFinalidadCertificadoModel= null;
+			}
+
+
+			if(listaFinalidadCertificadoModel==null || listaFinalidadCertificadoModel.size()==0){
+				//Lista distinta de Nula, y no existia el Country
+				listaFinalidadCertificadoModel = new ArrayList<FinalidadCertificadoModel>();
+				for(FinalidadCertificadoEntity puEnt:listaFinalidadCertificadoEntity){
+					finalidadCertificadoModel = new FinalidadCertificadoModel();
+					finalidadCertificadoModel = FinalidadCertificadoModelMapper.FinalidadCertificadoEntityToFinalidadCertificadoModel(puEnt);
+					listaFinalidadCertificadoModel.add(finalidadCertificadoModel);
+				}
+
+				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
+						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), cacheLocalUchileArteModel.getListaFinalidadCertificado() ,
+						listaFinalidadCertificadoModel, 	cacheLocalUchileArteModel.getListaTipoSolicitud(), 
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), cacheLocalUchileArteModel.getListaRegion());
+				objCacheLocal.Eliminar(objetoCache);
+				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
+			}
+		}
+		catch(Exception e){
+			listaFinalidadCertificadoModel=null; //No existe
+		}
+		objLog.info("FIN - generarCacheListaFinalidadCertificado");
+		return listaFinalidadCertificadoModel;
+	}
+	
+	public static List<FinalidadCertificadoModel> obtenerCacheListaFinalidadCertificadoOrden(ICacheComponent objCacheLocal){
+		objLog.info("INI - obtenerCacheListaFinalidadCertificadoOrden");
+		CacheLocalUchileArte cacheLocalUchileArteModel = new CacheLocalUchileArte();
+		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel = new ArrayList<FinalidadCertificadoModel>();
+		try{
+			try{
+
+				cacheLocalUchileArteModel = (CacheLocalUchileArte) objCacheLocal.Buscar(objetoCache);
+
+			}catch(Exception ne){
+				cacheLocalUchileArteModel = null; 
+			}
+
+			if(cacheLocalUchileArteModel!=null){
+				if(cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden()!=null && cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden().size()>0){
+					listaFinalidadCertificadoModel = cacheLocalUchileArteModel.getListaFinalidadCertificado();
+				}
+			}
+		}catch(Exception ne){
+			listaFinalidadCertificadoModel = null; 
+		}
+
+		objLog.info("FIN - obtenerCacheListaFinalidadCertificadoOrden");
+		return listaFinalidadCertificadoModel;
+
+	}
+	
 	public static List<TipoSolicitudModel> generarCacheListaTipoSolicitud(ICacheComponent objCacheLocal, List<TipoSolicitudEntity> listaTipoSolicitudEntity) {
 		objLog.info("INI - generarCacheListaTipoSolicitud");
 		CacheLocalUchileArte cacheLocalUchileArteModel = null;
@@ -424,8 +598,10 @@ public class CacheLocalRepositorio {
 
 
 				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
-						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaFinalidadCertificado(),
-						listaTipoSolicitudModel, cacheLocalUchileArteModel.getListaRegion());
+						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), cacheLocalUchileArteModel.getListaFinalidadCertificado() ,
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(), 	listaTipoSolicitudModel, 
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), cacheLocalUchileArteModel.getListaRegion());
+				
 				objCacheLocal.Eliminar(objetoCache);
 				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
 
@@ -464,7 +640,91 @@ public class CacheLocalRepositorio {
 		return listaTipoSolicitudModel;
 
 	}
+	
+	public static List<TipoSolicitudModel> generarCacheListaTipoSolicitudOrden(ICacheComponent objCacheLocal, List<TipoSolicitudEntity> listaTipoSolicitudEntity) {
+		objLog.info("INI - generarCacheListaTipoSolicitudOrden 	");
+		CacheLocalUchileArte cacheLocalUchileArteModel = null;
+		TipoSolicitudModel tipoSolicitudModel = new TipoSolicitudModel();
+		List<TipoSolicitudModel> listaTipoSolicitudModel = null;
+		try{
+			try{
+				if(objCacheLocal==null){
+					objCacheLocal = crearRepositorioCacheLocal();
+				}
+			}
+			catch(Exception e){
+				listaTipoSolicitudModel=null; //No existe
+			}
 
+			try{
+				if(objCacheLocal!=null){
+					cacheLocalUchileArteModel = (CacheLocalUchileArte) objCacheLocal.Buscar(objetoCache);
+					if(cacheLocalUchileArteModel!=null){
+						if(cacheLocalUchileArteModel.getListaTipoSolicitudOrden()!=null){
+							listaTipoSolicitudModel = cacheLocalUchileArteModel.getListaTipoSolicitudOrden();
+						}
+					}else{
+						cacheLocalUchileArteModel = new CacheLocalUchileArte();
+					}
+				}
+			}catch(Exception e){
+				listaTipoSolicitudModel= null;
+			}
+
+
+			if(listaTipoSolicitudModel==null || listaTipoSolicitudModel.size()==0){
+				//Lista distinta de Nula, y no existia el Country
+				listaTipoSolicitudModel = new ArrayList<TipoSolicitudModel>();
+				for(TipoSolicitudEntity puEnt:listaTipoSolicitudEntity){
+					tipoSolicitudModel = new TipoSolicitudModel();
+					tipoSolicitudModel = TipoSolicitudModelMapper.TipoSolicitudEntityToTipoSolicitudModel(puEnt);
+					listaTipoSolicitudModel.add(tipoSolicitudModel);
+				}
+
+
+				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
+						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), cacheLocalUchileArteModel.getListaFinalidadCertificado() ,
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(), cacheLocalUchileArteModel.getListaTipoSolicitud(), 
+						listaTipoSolicitudModel, cacheLocalUchileArteModel.getListaRegion());
+				
+				objCacheLocal.Eliminar(objetoCache);
+				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
+
+			}
+		}
+		catch(Exception ne){
+			listaTipoSolicitudModel = null;
+		}
+		objLog.info("FIN - generarCacheListaTipoSolicitudOrden");
+		return listaTipoSolicitudModel;
+	}
+
+	public static List<TipoSolicitudModel> obtenerCacheListaTipoSolicitudOrden(ICacheComponent objCacheLocal) {
+		objLog.info("INI - obtenerCacheListaTipoSolicitudOrden");
+		CacheLocalUchileArte cacheLocalUchileArteModel = new CacheLocalUchileArte();
+		List<TipoSolicitudModel> listaTipoSolicitudModel = new ArrayList<TipoSolicitudModel>();
+		try{
+			try{
+
+				cacheLocalUchileArteModel = (CacheLocalUchileArte) objCacheLocal.Buscar(objetoCache);
+
+			}catch(Exception ne){
+				cacheLocalUchileArteModel = null; 
+			}
+
+			if(cacheLocalUchileArteModel!=null){
+				if(cacheLocalUchileArteModel.getListaTipoSolicitudOrden()!=null && cacheLocalUchileArteModel.getListaTipoSolicitudOrden().size()>0){
+					listaTipoSolicitudModel = cacheLocalUchileArteModel.getListaTipoSolicitudOrden();
+				}
+			}
+		}catch(Exception ne){
+			listaTipoSolicitudModel = null; 
+		}
+
+		objLog.info("FIN - obtenerCacheListaTipoSolicitudOrden");
+		return listaTipoSolicitudModel;
+
+	}
 
 	public static List<RegionModel> generarCacheListaRegion(ICacheComponent objCacheLocal, List<RegionEntity> listaRegionEntity) {
 		objLog.info("INI - generarCacheListaRegion");
@@ -507,8 +767,9 @@ public class CacheLocalRepositorio {
 				}
 
 				cacheLocalUchileArteModel = new CacheLocalUchileArte(cacheLocalUchileArteModel.getListaProgramaUniversidad(), cacheLocalUchileArteModel.getListaProgramaUniversidadPostulaciones(),
-						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaFinalidadCertificado(),
-						cacheLocalUchileArteModel.getListaTipoSolicitud(), listaRegionModel);
+						cacheLocalUchileArteModel.getListaTipoCertificado(), cacheLocalUchileArteModel.getListaTipoCertificadoOrden(), cacheLocalUchileArteModel.getListaFinalidadCertificado() ,
+						cacheLocalUchileArteModel.getListaFinalidadCertificadoOrden(), cacheLocalUchileArteModel.getListaTipoSolicitud(), 
+						cacheLocalUchileArteModel.getListaTipoSolicitudOrden(), listaRegionModel);
 				objCacheLocal.Eliminar(objetoCache);
 				objCacheLocal.Enviar(objetoCache, cacheLocalUchileArteModel);
 

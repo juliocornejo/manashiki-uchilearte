@@ -19,9 +19,6 @@ import com.manashiki.uchilearte.negocio.model.FinalidadCertificadoModel;
 import com.manashiki.uchilearte.negocio.utilidades.CacheLocalRepositorio;
 
 import vijnana.cache.component.ICacheComponent;
-//import com.manashiki.uchilearte.negocio.utilidades.CacheLocalRepositorio;
-
-//import vijnana.cache.component.ICacheComponent;
 
 @Component
 public class FinalidadCertificadoNegocio implements FinalidadCertificadoNegocioDAO{
@@ -83,7 +80,7 @@ public class FinalidadCertificadoNegocio implements FinalidadCertificadoNegocioD
 		return finalidadCertificadoModel;
 	}
 
-	public List<FinalidadCertificadoModel> listarFinalidadCertificadosModel() {
+	public List<FinalidadCertificadoModel> listarFinalidadCertificadoModel() {
 		objLog.info("INI - listarFinalidadCertificadosModel");
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel=new ArrayList<FinalidadCertificadoModel>();
 //		List<FinalidadCertificadoEntity> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoEntity>();
@@ -92,6 +89,21 @@ public class FinalidadCertificadoNegocio implements FinalidadCertificadoNegocioD
 		
 //		listaFinalidadCertificadoModel = FinalidadCertificadoModelMapper.ListFinalidadCertificadoEntityToListFinalidadCertificadoModel(listaFinalidadCertificadoes);
 		listaFinalidadCertificadoModel = obtenerCacheListaFinalidadCertificado();
+		
+		objLog.info("FIN - listarFinalidadCertificadosModel "+listaFinalidadCertificadoModel.size());
+		
+		return listaFinalidadCertificadoModel;
+	}
+	
+	public List<FinalidadCertificadoModel> listarFinalidadCertificadoModelOrden() {
+		objLog.info("INI - listarFinalidadCertificadosModel");
+		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel=new ArrayList<FinalidadCertificadoModel>();
+//		List<FinalidadCertificadoEntity> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoEntity>();
+//		
+//		listaFinalidadCertificadoes=factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoesEntity();
+		FinalidadCertificadoModel finalidadCertificadoModel = new FinalidadCertificadoModel();
+//		listaFinalidadCertificadoModel = FinalidadCertificadoModelMapper.ListFinalidadCertificadoEntityToListFinalidadCertificadoModel(listaFinalidadCertificadoes);
+		listaFinalidadCertificadoModel = obtenerCacheListaFinalidadCertificadoOrden(finalidadCertificadoModel);
 		
 		objLog.info("FIN - listarFinalidadCertificadosModel "+listaFinalidadCertificadoModel.size());
 		
@@ -126,19 +138,56 @@ public class FinalidadCertificadoNegocio implements FinalidadCertificadoNegocioD
 		try{
 			if(listaFinalidadCertificadoModel==null || listaFinalidadCertificadoModel.size()==0){
 				
-				listaFinalidadCertificadoEntity = factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoesEntity();
+				listaFinalidadCertificadoEntity = factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoEntity();
 				
 				if(listaFinalidadCertificadoEntity!=null && listaFinalidadCertificadoEntity.size()>0){
 					
 					listaFinalidadCertificadoModel = CacheLocalRepositorio.generarCacheListaFinalidadCertificado(objCacheComponent, listaFinalidadCertificadoEntity);
-					
-//					listaFinalidadCertificadoModel = new ArrayList<FinalidadCertificadoModel>();
-//					for(FinalidadCertificadoEntity puEnt:listaFinalidadCertificadoEntity){
-//						finalidadCertificadoModel = new FinalidadCertificadoModel();
-//						finalidadCertificadoModel = FinalidadCertificadoModelMapper.FinalidadCertificadoEntityToFinalidadCertificadoModel(puEnt);
-//						listaFinalidadCertificadoModel.add(finalidadCertificadoModel);
-//					}
 									
+				}
+			
+			}
+		
+		}
+		catch(Exception e){
+			objLog.error("Error en la implementacion del Servicio "+e.getMessage());
+		}
+		return listaFinalidadCertificadoModel;
+	}
+	
+	private List<FinalidadCertificadoModel> obtenerCacheListaFinalidadCertificadoOrden(FinalidadCertificadoModel objFinalidadCertificadoModel){
+		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel=new ArrayList<FinalidadCertificadoModel>();
+		
+		List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity=new ArrayList<FinalidadCertificadoEntity>();
+
+		try{
+			if(objCacheComponent==null){
+				objCacheComponent = CacheLocalRepositorio.crearRepositorioCacheLocal(); //Colocar el nombre de cache local del ws
+			}
+		
+		}catch(Exception e){
+			listaFinalidadCertificadoModel = null;
+			objLog.error("Cae al obtener el repositorio de Cache");
+		}
+		
+		try{
+			listaFinalidadCertificadoModel = CacheLocalRepositorio.obtenerCacheListaFinalidadCertificadoOrden(objCacheComponent);
+
+		}catch(Exception e){
+			
+			listaFinalidadCertificadoModel=null;
+		
+		}
+		
+		try{
+			if(listaFinalidadCertificadoModel==null || listaFinalidadCertificadoModel.size()==0){
+				
+				FinalidadCertificadoEntity finalidadCertificadoEntity = FinalidadCertificadoModelMapper.FinalidadCertificadoModelToFinalidadCertificadoEntity(objFinalidadCertificadoModel);
+				
+				listaFinalidadCertificadoEntity = factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity(finalidadCertificadoEntity);
+				
+				if(listaFinalidadCertificadoEntity!=null && listaFinalidadCertificadoEntity.size()>0){
+					listaFinalidadCertificadoModel = CacheLocalRepositorio.generarCacheListaFinalidadCertificadoOrden(objCacheComponent, listaFinalidadCertificadoEntity);
 				}
 			
 			}

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.manashiki.uchilearte.logica.dao.FinalidadCertificadoDAO;
 import com.manashiki.uchilearte.logica.entidad.FinalidadCertificadoEntity;
+import com.manashiki.uchilearte.logica.entidad.TipoCertificadoEntity;
 import com.manashiki.uchilearte.logica.exception.PersistenceImplException;
 import com.manashiki.uchilearte.logica.repository.FinalidadCertificadoRepository;
 
@@ -21,7 +22,7 @@ public class FinalidadCertificadoDAOImpl implements FinalidadCertificadoDAO{
 	
 	
 	@Autowired
-	FinalidadCertificadoRepository regionRepository;
+	FinalidadCertificadoRepository finalidadCertificadoRepository;
 	
 	/**
 	 * Crea una Entidad FinalidadCertificado en la base de datos
@@ -31,7 +32,7 @@ public class FinalidadCertificadoDAOImpl implements FinalidadCertificadoDAO{
 	 */
 	public FinalidadCertificadoEntity crearFinalidadCertificadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity){
 		objLog.info("INI - crearFinalidadCertificadoEntity ");
-		FinalidadCertificadoEntity regionEntity = regionRepository.save(objFinalidadCertificadoEntity);
+		FinalidadCertificadoEntity regionEntity = finalidadCertificadoRepository.save(objFinalidadCertificadoEntity);
 		objLog.info("FIN - crearFinalidadCertificadoEntity "+objFinalidadCertificadoEntity.getIdFinalidadCertificado());
 		return regionEntity;
 	}
@@ -44,7 +45,7 @@ public class FinalidadCertificadoDAOImpl implements FinalidadCertificadoDAO{
 	 */
 	public FinalidadCertificadoEntity actualizarFinalidadCertificadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity){
 		objLog.info("INI - actualizarFinalidadCertificadoEntity "+objFinalidadCertificadoEntity.getIdFinalidadCertificado());
-		FinalidadCertificadoEntity regionEntity = regionRepository.save(objFinalidadCertificadoEntity);
+		FinalidadCertificadoEntity regionEntity = finalidadCertificadoRepository.save(objFinalidadCertificadoEntity);
 		objLog.info("FIN - actualizarFinalidadCertificadoEntity "+objFinalidadCertificadoEntity.getIdFinalidadCertificado());
 		return regionEntity;
 	
@@ -60,7 +61,7 @@ public class FinalidadCertificadoDAOImpl implements FinalidadCertificadoDAO{
 		objLog.info("INI - buscarFinalidadCertificadoxIdEntity "+objFinalidadCertificadoEntity.getIdFinalidadCertificado());
 		FinalidadCertificadoEntity regionEntity = null;
  		try {
- 			regionEntity = regionRepository.findOne(objFinalidadCertificadoEntity.getIdFinalidadCertificado());
+ 			regionEntity = finalidadCertificadoRepository.findOne(objFinalidadCertificadoEntity.getIdFinalidadCertificado());
 		} catch (PersistenceException e) {
 			objLog.error("Error en la implementacion de la Persistencia");
 			throw new PersistenceImplException(e);
@@ -81,20 +82,38 @@ public class FinalidadCertificadoDAOImpl implements FinalidadCertificadoDAO{
 	 * @return lista List<FinalidadCertificado>
 	 * @exception no lanza excepciones
 	 */
-	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoesEntity(){
+	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoEntity(){
 		objLog.info("INI - listarFinalidadCertificadoesEntity");
-		List<FinalidadCertificadoEntity> lista = null;
+		List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity = null;
 		try {
-			lista = regionRepository.findAll();
+			listaFinalidadCertificadoEntity = finalidadCertificadoRepository.findAll();
 		} catch (PersistenceException e) {
-			objLog.error("No se pudo obtener la lista "+lista.size());
+			objLog.error("No se pudo obtener la lista "+listaFinalidadCertificadoEntity.size());
 		}
 		
-		if(lista!=null){
- 				objLog.info("FIN - listarFinalidadCertificadosEntity "+lista.size());
+		if(listaFinalidadCertificadoEntity!=null){
+ 				objLog.info("FIN - listarFinalidadCertificadosEntity "+listaFinalidadCertificadoEntity.size());
  		}
 		
-		return lista;
-	}	
+		return listaFinalidadCertificadoEntity;
+	}
+	
+	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity){
+		objLog.info("INI - listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity");
+		List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity = null;
+		try {
+			listaFinalidadCertificadoEntity = finalidadCertificadoRepository.findByEstadoFinalidadCertificadoOrderByCodigoFinalidadCertificadoAsc(objFinalidadCertificadoEntity.getEstadoFinalidadCertificado());
+			
+		} catch (PersistenceException e) {
+			objLog.error("No se pudo obtener la lista "+listaFinalidadCertificadoEntity.size());
+		}
+		
+		if(listaFinalidadCertificadoEntity!=null){
+ 				objLog.info("FIN - listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity: "+listaFinalidadCertificadoEntity.size());
+ 		}
+		
+		return listaFinalidadCertificadoEntity;
+	}
+	
 	
 }

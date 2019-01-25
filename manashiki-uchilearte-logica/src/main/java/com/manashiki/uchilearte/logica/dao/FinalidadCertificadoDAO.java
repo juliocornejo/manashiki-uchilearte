@@ -11,6 +11,7 @@ public interface FinalidadCertificadoDAO{
 	public FinalidadCertificadoEntity crearFinalidadCertificadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity);
 	public FinalidadCertificadoEntity actualizarFinalidadCertificadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity);
 	public FinalidadCertificadoEntity buscarFinalidadCertificadoxIdEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity) throws PersistenceImplException;
-	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoesEntity();
+	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoEntity();
+	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity);
 	
 }

@@ -15,7 +15,7 @@ public interface SolicitudCertificadoRepository extends JpaRepository<SolicitudC
 	SolicitudCertificadoEntity findByRutPersonaSolicitudCertificado(String RutPersonaSolicitudCertificado);
 	
 	List<SolicitudCertificadoEntity> findByApellidoPaternoPersonaSolicitudCertificadoContaining(String apellidoPaternoPersonaSolicitudCertificado);
-	List<SolicitudCertificadoEntity> findByEstadoSolicitud(Integer estadoSolicitud);
+	List<SolicitudCertificadoEntity> findByEstadoSolicitudCertificado(Integer estadoSolicitudCertificado);
 	
 	List<SolicitudCertificadoEntity> findByFechaSolicitudBetween(Timestamp fechaInicial, Timestamp fechaFinal);
 	List<SolicitudCertificadoEntity> findByFechaSolicitudBetweenOrderByIdSolicitudCertificadoDesc(Timestamp fechaInicial, Timestamp fechaFinal);

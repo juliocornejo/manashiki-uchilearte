@@ -191,10 +191,10 @@ public class SolicitudCertificadoDAOImpl implements SolicitudCertificadoDAO{
 	 * @throws no lanza excepciones
 	 */
 	public List<SolicitudCertificadoEntity> listarSolicitudCertificadoxEstadoEntity(SolicitudCertificadoEntity objSolicitudCertificadoEntity){
-		objLog.info("INI - listarSolicitudCertificadoxEstadoEntity "+objSolicitudCertificadoEntity.getEstadoSolicitud());
+		objLog.info("INI - listarSolicitudCertificadoxEstadoEntity "+objSolicitudCertificadoEntity.getEstadoSolicitudCertificado());
 		List<SolicitudCertificadoEntity> listaSolicitudCertificado= null;
 		try {
-			listaSolicitudCertificado = solicitudCertificadoRepository.findByEstadoSolicitud(objSolicitudCertificadoEntity.getEstadoSolicitud());
+			listaSolicitudCertificado = solicitudCertificadoRepository.findByEstadoSolicitudCertificado(objSolicitudCertificadoEntity.getEstadoSolicitudCertificado());
 		} catch (PersistenceException e) {
 			objLog.error("No se pudo Obtener la lista");
 		}

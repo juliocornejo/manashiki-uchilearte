@@ -45,18 +45,9 @@ public class ProgramaUniversidadPostulacionEntity{
 	@Column(name="prioridad")
 	private Integer prioridad;
 	
-//	@OneToMany(mappedBy="fkIdProgramaUniversidad")
-//	private List<SolicitudCertificadoEntity> solicitudes_certificados;
-//	
-//	@OneToMany(mappedBy="fkIdProgramaUniversidad")
-//	private List<SolicitudAcademicaEntity> solicitudes_academicas;
-	
 	@OneToMany(mappedBy="fkIdProgramaUniversidadPostulacion")
 	private List<SolicitudPostulacionEntity> solicitudes_postulaciones;
 	
-//	@OneToMany(mappedBy="fkIdProgramaUniversidad")
-//	private List<VersionProgramaUniversidadEntity> versiones_programas_universidades;
-		
 	public ProgramaUniversidadPostulacionEntity() {
 		super();
 	}

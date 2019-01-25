@@ -25,6 +25,7 @@ public class TipoCertificadoModelMapper{
 			tipoCertificado.setIdTipoCertificado(tipoCertificadoModel.getIdTipoCertificado());
 			tipoCertificado.setCodigoTipoCertificado(tipoCertificadoModel.getCodigoTipoCertificado());
 			tipoCertificado.setNombreTipoCertificado(tipoCertificadoModel.getNombreTipoCertificado());
+			tipoCertificado.setEstadoTipoCertificado(tipoCertificadoModel.getEstadoTipoCertificado());
 		}
 		
 		return tipoCertificado;
@@ -63,6 +64,7 @@ public class TipoCertificadoModelMapper{
 			tipoCertificadoModel.setIdTipoCertificado(tipoCertificado.getIdTipoCertificado());
 			tipoCertificadoModel.setCodigoTipoCertificado(tipoCertificado.getCodigoTipoCertificado());
 			tipoCertificadoModel.setNombreTipoCertificado(tipoCertificado.getNombreTipoCertificado());
+			tipoCertificadoModel.setEstadoTipoCertificado(tipoCertificado.getEstadoTipoCertificado());
 		}
 		return tipoCertificadoModel;
 	}

@@ -15,7 +15,6 @@ public interface SolicitudPostulacionRepository extends JpaRepository<SolicitudP
 	SolicitudPostulacionEntity findByRutPersonaSolicitudPostulacion(String RutPersonaSolicitudPostulacion);
 	
 	List<SolicitudPostulacionEntity> findByApellidoPaternoPersonaSolicitudPostulacionContaining(String apellidoPaternoPersonaSolicitudPostulacion);
-//	List<SolicitudPostulacionEntity> findByFkIdTipoPostulacion(TipoPostulacionEntity fkIdTipoPostulacion);
 	List<SolicitudPostulacionEntity> findByEstadoSolicitudPostulacion(Integer estadoSolicitudPostulacion);
 	
 	List<SolicitudPostulacionEntity> findByFechaSolicitudBetween(Timestamp fechaInicial, Timestamp fechaFinal);

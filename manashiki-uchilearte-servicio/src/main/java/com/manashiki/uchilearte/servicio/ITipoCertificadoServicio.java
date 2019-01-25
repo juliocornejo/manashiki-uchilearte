@@ -9,6 +9,7 @@ public interface ITipoCertificadoServicio{
 	public TipoCertificadoDTO crearTipoCertificadoDTO(TipoCertificadoDTO objTipoCertificadoDTO);
 	public TipoCertificadoDTO actualizarTipoCertificadoDTO(TipoCertificadoDTO objTipoCertificadoDTO);
 	public TipoCertificadoDTO buscarTipoCertificadoxIdDTO(TipoCertificadoDTO objTipoCertificadoDTO) throws ServicioImplException;
-	public List<TipoCertificadoDTO> listarTipoCertificadosDTO();
+	public List<TipoCertificadoDTO> listarTipoCertificadoDTO();
+	public List<TipoCertificadoDTO> listarTipoCertificadoOrdenDTO();
 	
 }

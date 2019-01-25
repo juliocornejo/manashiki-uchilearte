@@ -17,7 +17,7 @@ public interface SolicitudAcademicaRepository extends JpaRepository<SolicitudAca
 	
 	List<SolicitudAcademicaEntity> findByApellidoPaternoPersonaSolicitudAcademicaContaining(String apellidoPaternoPersonaSolicitudAcademica);
 	List<SolicitudAcademicaEntity> findByFkIdTipoSolicitud(TipoSolicitudEntity fkIdTipoSolicitud);
-	List<SolicitudAcademicaEntity> findByEstadoSolicitud(Integer estadoSolicitud);
+	List<SolicitudAcademicaEntity> findByEstadoSolicitudAcademica(Integer estadoSolicitudAcademica);
 	
 	List<SolicitudAcademicaEntity> findByFechaSolicitudBetween(Timestamp fechaInicial, Timestamp fechaFinal);
 	List<SolicitudAcademicaEntity> findByFechaSolicitudBetweenOrderByIdSolicitudAcademicaDesc(Timestamp fechaInicial, Timestamp fechaFinal);

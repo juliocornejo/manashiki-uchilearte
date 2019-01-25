@@ -53,7 +53,7 @@ public class SolicitudCertificadoModelMapper{
 //			dateUtil = solicitudCertificadoModel.getFechaSolicitud();
 //			dateTimestamp = DateMapper.DateUtilToTimestamp(dateUtil);
 			solicitudCertificadoEntity.setFechaSolicitud(DateMapper.DateUtilToTimestamp(solicitudCertificadoModel.getFechaSolicitud())); 
-			solicitudCertificadoEntity.setEstadoSolicitud(solicitudCertificadoModel.getEstadoSolicitud());
+			solicitudCertificadoEntity.setEstadoSolicitudCertificado(solicitudCertificadoModel.getEstadoSolicitudCertificado());
 		}
 		
 		return solicitudCertificadoEntity;
@@ -117,7 +117,7 @@ public class SolicitudCertificadoModelMapper{
 //			dateTimestamp = solicitudCertificado.getFechaSolicitud();
 //			dateUtil = DateMapper.TimestampToDateUtil(dateTimestamp);
 			solicitudCertificadoModel.setFechaSolicitud(DateMapper.TimestampToDateUtil(solicitudCertificadoEntity.getFechaSolicitud())); 
-			solicitudCertificadoModel.setEstadoSolicitud(solicitudCertificadoEntity.getEstadoSolicitud());
+			solicitudCertificadoModel.setEstadoSolicitudCertificado(solicitudCertificadoEntity.getEstadoSolicitudCertificado());
 		}
 		return solicitudCertificadoModel;
 	}

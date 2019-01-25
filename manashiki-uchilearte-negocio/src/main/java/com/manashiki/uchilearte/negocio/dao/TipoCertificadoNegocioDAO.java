@@ -9,6 +9,7 @@ public interface TipoCertificadoNegocioDAO{
 	public TipoCertificadoModel crearTipoCertificadoModel(TipoCertificadoModel objTipoCertificadoModel);
 	public TipoCertificadoModel actualizarTipoCertificadoModel(TipoCertificadoModel objTipoCertificadoModel);
 	public TipoCertificadoModel buscarTipoCertificadoxIdModel(TipoCertificadoModel objTipoCertificadoModel) throws NegocioImplException;
-	public List<TipoCertificadoModel> listarTipoCertificadoesModel();
+	public List<TipoCertificadoModel> listarTipoCertificadoModel();
+	public List<TipoCertificadoModel> listarTipoCertificadoOrdenModel();
 	
 }

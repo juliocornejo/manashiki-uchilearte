@@ -11,5 +11,6 @@ public interface IFinalidadCertificadoServicio{
 	public FinalidadCertificadoDTO actualizarFinalidadCertificadoDTO(FinalidadCertificadoDTO objFinalidadCertificadoDTO);
 	public FinalidadCertificadoDTO buscarFinalidadCertificadoxIdDTO(FinalidadCertificadoDTO objFinalidadCertificadoDTO) throws ServicioImplException;
 	public List<FinalidadCertificadoDTO> listarFinalidadCertificadosDTO();
+	public List<FinalidadCertificadoDTO> listarFinalidadCertificadosOrdenDTO();
 	
 }

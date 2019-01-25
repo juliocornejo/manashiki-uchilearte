@@ -43,9 +43,6 @@ public class ComunaEntity  implements Serializable {
 	@IndexColumn(name="idx_comuna_fk_id_region")
 	private RegionEntity fkIdRegion;	
 	
-//	@OneToMany(mappedBy="fkIdComuna")
-//	private List<EmpresaEntity> comunas_empresas;
-	
 	@OneToMany(mappedBy="fkIdComuna")
 	private List<SolicitudPostulacionEntity> solicitudes_postulaciones;
 	

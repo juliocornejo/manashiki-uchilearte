@@ -31,6 +31,10 @@ public class TipoCertificadoEntity implements Serializable {
 	@OrderBy
 	@Column(name="nombre_tipo_certificado")
 	private String nombreTipoCertificado;
+	@OrderBy
+	@Column(name="estado_tipo_certificado")
+	private Boolean estadoTipoCertificado;
+	
 
 	@OneToMany(mappedBy="fkIdTipoCertificado")
 	private List<SolicitudCertificadoEntity> tipos_certificados;
@@ -70,4 +74,13 @@ public class TipoCertificadoEntity implements Serializable {
 	public void setTipos_certificados(List<SolicitudCertificadoEntity> tipos_certificados) {
 		this.tipos_certificados = tipos_certificados;
 	}
+
+	public Boolean getEstadoTipoCertificado() {
+		return estadoTipoCertificado;
+	}
+
+	public void setEstadoTipoCertificado(Boolean estadoTipoCertificado) {
+		this.estadoTipoCertificado = estadoTipoCertificado;
+	}
+	
 }

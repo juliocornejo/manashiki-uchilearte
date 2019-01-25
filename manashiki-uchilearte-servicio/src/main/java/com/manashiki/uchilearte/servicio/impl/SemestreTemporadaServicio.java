@@ -67,6 +67,7 @@ public class SemestreTemporadaServicio implements ISemestreTemporadaServicio{
 	
 	public List<SemestreTemporadaDTO> listarSemestreTemporadaDTO() {
 		objLog.info("INI - listarSemestreTemporadaesDTO");
+		
 		List<SemestreTemporadaDTO> listaSemestreTemporadaDTO=new ArrayList<SemestreTemporadaDTO>();
 		List<SemestreTemporadaModel> listaSemestreTemporadaes = new ArrayList<SemestreTemporadaModel>();
 		
@@ -75,6 +76,7 @@ public class SemestreTemporadaServicio implements ISemestreTemporadaServicio{
 		listaSemestreTemporadaDTO = SemestreTemporadaDTOMapper.ListSemestreTemporadaModelToListSemestreTemporadaDTO(listaSemestreTemporadaes);
 		
 		objLog.info("FIN - listarSemestreTemporadaesDTO "+listaSemestreTemporadaDTO.size());
+		
 		return listaSemestreTemporadaDTO;
 	}
 	

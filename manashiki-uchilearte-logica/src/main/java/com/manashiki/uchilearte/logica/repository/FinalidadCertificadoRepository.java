@@ -9,5 +9,6 @@ public interface FinalidadCertificadoRepository extends JpaRepository<FinalidadC
 //	List<FinalidadCertificadoEntity> findByEstadoFinalidadCertificado(Integer FinalidadCertificado);
 //	List<FinalidadCertificadoEntity> findByFkIdEmpresa(EmpresaEntity fkIdEmpresa);
 //	List<FinalidadCertificadoEntity> findByFkIdUsuario(UsuarioEntity fkIdUsuario);
+	java.util.List<FinalidadCertificadoEntity> findByEstadoFinalidadCertificadoOrderByCodigoFinalidadCertificadoAsc(Boolean estadoFinalidadCertificado);
 	//Solo el Buscar Todos
 }

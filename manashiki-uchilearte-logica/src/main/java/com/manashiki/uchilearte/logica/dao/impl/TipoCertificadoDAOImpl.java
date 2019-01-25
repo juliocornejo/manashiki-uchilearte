@@ -31,9 +31,9 @@ public class TipoCertificadoDAOImpl implements TipoCertificadoDAO{
 	 */
 	public TipoCertificadoEntity crearTipoCertificadoEntity(TipoCertificadoEntity objTipoCertificadoEntity){
 		objLog.info("INI - crearTipoCertificadoEntity ");
-		TipoCertificadoEntity regionEntity = tipoCertificadoRepository.save(objTipoCertificadoEntity);
+		TipoCertificadoEntity tipoCertificadoEntity = tipoCertificadoRepository.save(objTipoCertificadoEntity);
 		objLog.info("FIN - crearTipoCertificadoEntity "+objTipoCertificadoEntity.getIdTipoCertificado());
-		return regionEntity;
+		return tipoCertificadoEntity;
 	}
 	
 	/**
@@ -44,9 +44,9 @@ public class TipoCertificadoDAOImpl implements TipoCertificadoDAO{
 	 */
 	public TipoCertificadoEntity actualizarTipoCertificadoEntity(TipoCertificadoEntity objTipoCertificadoEntity){
 		objLog.info("INI - actualizarTipoCertificadoEntity "+objTipoCertificadoEntity.getIdTipoCertificado());
-		TipoCertificadoEntity regionEntity = tipoCertificadoRepository.save(objTipoCertificadoEntity);
+		TipoCertificadoEntity tipoCertificadoEntity = tipoCertificadoRepository.save(objTipoCertificadoEntity);
 		objLog.info("FIN - actualizarTipoCertificadoEntity "+objTipoCertificadoEntity.getIdTipoCertificado());
-		return regionEntity;
+		return tipoCertificadoEntity;
 	
 	}
 	
@@ -58,22 +58,22 @@ public class TipoCertificadoDAOImpl implements TipoCertificadoDAO{
 	 */
 	public TipoCertificadoEntity buscarTipoCertificadoxIdEntity(TipoCertificadoEntity objTipoCertificadoEntity) throws PersistenceImplException{
 		objLog.info("INI - buscarTipoCertificadoxIdEntity "+objTipoCertificadoEntity.getIdTipoCertificado());
-		TipoCertificadoEntity regionEntity = null;
+		TipoCertificadoEntity tipoCertificadoEntity = null;
  		try {
- 			regionEntity = tipoCertificadoRepository.findOne(objTipoCertificadoEntity.getIdTipoCertificado());
+ 			tipoCertificadoEntity = tipoCertificadoRepository.findOne(objTipoCertificadoEntity.getIdTipoCertificado());
 		} catch (PersistenceException e) {
 			objLog.error("Error en la implementacion de la Persistencia");
 			throw new PersistenceImplException(e);
 		}
  		
- 		if(regionEntity!=null){
- 			if(regionEntity.getIdTipoCertificado()!=null){
- 				objLog.info("FIN - buscarTipoCertificadoxIdEntity "+regionEntity.getIdTipoCertificado());
+ 		if(tipoCertificadoEntity!=null){
+ 			if(tipoCertificadoEntity.getIdTipoCertificado()!=null){
+ 				objLog.info("FIN - buscarTipoCertificadoxIdEntity: "+tipoCertificadoEntity.getIdTipoCertificado());
  			}
  		}
  		
  		
-		return regionEntity;
+		return tipoCertificadoEntity;
 	}
 	
 	/**
@@ -81,20 +81,37 @@ public class TipoCertificadoDAOImpl implements TipoCertificadoDAO{
 	 * @return lista List<TipoCertificado>
 	 * @exception no lanza excepciones
 	 */
-	public List<TipoCertificadoEntity> listarTipoCertificadoesEntity(){
-		objLog.info("INI - listarTipoCertificadoesEntity");
-		List<TipoCertificadoEntity> lista = null;
+	public List<TipoCertificadoEntity> listarTipoCertificadoEntity(){
+		objLog.info("INI - listarTipoCertificadoEntity");
+		List<TipoCertificadoEntity> listaTipoCertificadoEntity = null;
 		try {
-			lista = tipoCertificadoRepository.findAll();
+			listaTipoCertificadoEntity = tipoCertificadoRepository.findAll();
 		} catch (PersistenceException e) {
-			objLog.error("No se pudo obtener la lista "+lista.size());
+			objLog.error("No se pudo obtener la lista "+listaTipoCertificadoEntity.size());
 		}
 		
-		if(lista!=null){
- 				objLog.info("FIN - listarTipoCertificadosEntity "+lista.size());
+		if(listaTipoCertificadoEntity!=null){
+ 				objLog.info("FIN - listarTipoCertificadosEntity: "+listaTipoCertificadoEntity.size());
  		}
 		
-		return lista;
-	}	
+		return listaTipoCertificadoEntity;
+	}
+	
+	public List<TipoCertificadoEntity> listarTipoCertificadoOrderByCodigoTipoCertificadoEntity(TipoCertificadoEntity objTipoCertificadoEntity){
+		objLog.info("INI - listarTipoCertificadoOrderByCodigoTipoCertificadoEntity");
+		List<TipoCertificadoEntity> listaTipoCertificadoEntity = null;
+		try {
+			listaTipoCertificadoEntity = tipoCertificadoRepository.findByEstadoTipoCertificadoOrderByCodigoTipoCertificadoAsc(objTipoCertificadoEntity.getEstadoTipoCertificado());
+			
+		} catch (PersistenceException e) {
+			objLog.error("No se pudo obtener la lista "+listaTipoCertificadoEntity.size());
+		}
+		
+		if(listaTipoCertificadoEntity!=null){
+ 				objLog.info("FIN - listarTipoCertificadoOrderByCodigoTipoCertificadoEntity: "+listaTipoCertificadoEntity.size());
+ 		}
+		
+		return listaTipoCertificadoEntity;
+	}
 	
 }

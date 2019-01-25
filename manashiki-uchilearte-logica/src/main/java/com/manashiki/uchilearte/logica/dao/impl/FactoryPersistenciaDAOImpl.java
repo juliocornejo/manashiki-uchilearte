@@ -33,8 +33,6 @@ import com.manashiki.uchilearte.logica.dao.SolicitudPostulacionDAO;
 import com.manashiki.uchilearte.logica.dao.TipoCertificadoDAO;
 import com.manashiki.uchilearte.logica.dao.TipoSolicitudDAO;
 
-//import com.manashiki.uchilearte.logica.dao.VersionProgramaUniversidadDAO;
-//import com.manashiki.uchilearte.logica.dao.VersionSemestralDAO;
 
 @Repository
 public class FactoryPersistenciaDAOImpl implements FactoryPersistenciaDAO {

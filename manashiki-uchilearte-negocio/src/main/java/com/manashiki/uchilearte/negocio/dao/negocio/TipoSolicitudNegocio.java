@@ -73,18 +73,28 @@ public class TipoSolicitudNegocio implements TipoSolicitudNegocioDAO{
 		return tipoSolicitudModel;
 	}
 
-	public List<TipoSolicitudModel> listarTipoSolicitudesModel() {
-		objLog.info("INI - listarTipoSolicitudesModel");
+	public List<TipoSolicitudModel> listarTipoSolicitudModel() {
+		objLog.info("INI - listarTipoSolicitudModel");
 		List<TipoSolicitudModel> listaTipoSolicitudModel=new ArrayList<TipoSolicitudModel>();
-//		List<TipoSolicitudEntity> listaTipoSolicitudes = new ArrayList<TipoSolicitudEntity>();
-//
-//		listaTipoSolicitudes=factoryPersistenciaDAO.getTipoSolicitudDAO().listarTipoSolicitudesEntity();
-//
-//		listaTipoSolicitudModel = TipoSolicitudModelMapper.ListTipoSolicitudEntityToListTipoSolicitudModel(listaTipoSolicitudes);
 		
 		listaTipoSolicitudModel = obtenerCacheListaTipoSolicitud();
 		
-		objLog.info("FIN - listarTipoSolicitudesModel "+listaTipoSolicitudModel.size());
+		objLog.info("FIN - listarTipoSolicitudModel "+listaTipoSolicitudModel.size());
+		
+		return listaTipoSolicitudModel;
+	}
+	
+	public List<TipoSolicitudModel> listarTipoSolicitudModelOrderCodigoTipoSolicitud() {
+		objLog.info("INI - listarTipoSolicitudModelOrderCodigoTipoSolicitud");
+		List<TipoSolicitudModel> listaTipoSolicitudModel = new ArrayList<TipoSolicitudModel>();
+		TipoSolicitudModel tipoSolicitudModel = new TipoSolicitudModel();
+		tipoSolicitudModel.setEstadoTipoSolicitud(true);
+		TipoSolicitudEntity tipoSolicitudEntity = TipoSolicitudModelMapper.TipoSolicitudModelToTipoSolicitudEntity(tipoSolicitudModel);
+		
+		
+		listaTipoSolicitudModel = obtenerCacheListaTipoSolicitudOrden(tipoSolicitudEntity);
+		
+		objLog.info("FIN - listarTipoSolicitudModelOrderCodigoTipoSolicitud "+listaTipoSolicitudModel.size());
 		
 		return listaTipoSolicitudModel;
 	}
@@ -120,18 +130,7 @@ public class TipoSolicitudNegocio implements TipoSolicitudNegocioDAO{
 				listaTipoSolicitudEntity = factoryPersistenciaDAO.getTipoSolicitudDAO().listarTipoSolicitudesEntity();
 				
 				listaTipoSolicitudModel = CacheLocalRepositorio.generarCacheListaTipoSolicitud(objCacheComponent, listaTipoSolicitudEntity);
-				
-//				if(listaTipoSolicitudEntity!=null && listaTipoSolicitudEntity.size()>0){
-//					listaTipoSolicitudModel = new ArrayList<TipoSolicitudModel>();
-//					for(TipoSolicitudEntity puEnt:listaTipoSolicitudEntity){
-//						tipoSolicitudModel = new TipoSolicitudModel();
-//						tipoSolicitudModel = TipoSolicitudModelMapper.TipoSolicitudEntityToTipoSolicitudModel(puEnt);
-//						listaTipoSolicitudModel.add(tipoSolicitudModel);
-//					}
-//					
-//				
-//				}
-			
+
 			}
 		
 		}
@@ -140,5 +139,46 @@ public class TipoSolicitudNegocio implements TipoSolicitudNegocioDAO{
 		}
 		return listaTipoSolicitudModel;
 	}
+	
+	private List<TipoSolicitudModel> obtenerCacheListaTipoSolicitudOrden(TipoSolicitudEntity tipoSolicitudEntity){
+		List<TipoSolicitudModel> listaTipoSolicitudModel=new ArrayList<TipoSolicitudModel>();
+		List<TipoSolicitudEntity> listaTipoSolicitudEntity=new ArrayList<TipoSolicitudEntity>();
+		
+		try{
+			if(objCacheComponent==null){
+				objCacheComponent = CacheLocalRepositorio.crearRepositorioCacheLocal(); //Colocar el nombre de cache local del ws
+			}
+		
+		}catch(Exception e){
+			listaTipoSolicitudModel = null;
+			objLog.error("Cae al obtener el repositorio de Cache");
+		}
+		
+		try{
+			listaTipoSolicitudModel = CacheLocalRepositorio.obtenerCacheListaTipoSolicitudOrden(objCacheComponent);
+
+		}catch(Exception e){
+			
+			listaTipoSolicitudModel=null;
+		
+		}
+		
+		try{
+			if(listaTipoSolicitudModel==null || listaTipoSolicitudModel.size()==0){
+				
+				listaTipoSolicitudEntity = factoryPersistenciaDAO.getTipoSolicitudDAO().listarTipoSolicitudesOrderCodigoTipoSolicitudEntity(tipoSolicitudEntity);
+				
+				listaTipoSolicitudModel = CacheLocalRepositorio.generarCacheListaTipoSolicitudOrden(objCacheComponent, listaTipoSolicitudEntity);
+
+			}
+		
+		}
+		catch(Exception e){
+			objLog.error("Error en la implementacion del Servicio "+e.getMessage());
+		}
+		return listaTipoSolicitudModel;
+	}
+	
+	
 
 }

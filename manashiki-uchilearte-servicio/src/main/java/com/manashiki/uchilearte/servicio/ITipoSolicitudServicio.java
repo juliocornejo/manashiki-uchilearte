@@ -10,6 +10,7 @@ public interface ITipoSolicitudServicio{
 	public TipoSolicitudDTO crearTipoSolicitudDTO(TipoSolicitudDTO objTipoSolicitudDTO);
 	public TipoSolicitudDTO actualizarTipoSolicitudDTO(TipoSolicitudDTO objTipoSolicitudDTO);
 	public TipoSolicitudDTO buscarTipoSolicitudxIdDTO(TipoSolicitudDTO objTipoSolicitudDTO) throws ServicioImplException;
-	public List<TipoSolicitudDTO> listarTipoSolicitudesDTO();
+	public List<TipoSolicitudDTO> listarTipoSolicitudDTO();
+	public List<TipoSolicitudDTO> listarTipoSolicitudOrdenDTO();
 	
 }

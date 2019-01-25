@@ -22,7 +22,7 @@ public class SolicitudAcademicaModel implements Serializable{
 	private String fundamentacionSolicitud; //mail usuario
 	private boolean archivoAdjunto; 
 	private Date fechaSolicitud; //momento que que ejecutada la solicitud
-	private Integer estadoSolicitud;
+	private Integer estadoSolicitudAcademica;
 	private Integer idArchivoSolicitud;
 	
 	public SolicitudAcademicaModel() {
@@ -73,10 +73,6 @@ public class SolicitudAcademicaModel implements Serializable{
 		return fechaSolicitud;
 	}
 
-	public Integer getEstadoSolicitud() {
-		return estadoSolicitud;
-	}
-
 	public Integer getIdArchivoSolicitud() {
 		return idArchivoSolicitud;
 	}
@@ -125,10 +121,6 @@ public class SolicitudAcademicaModel implements Serializable{
 		this.fechaSolicitud = fechaSolicitud;
 	}
 
-	public void setEstadoSolicitud(Integer estadoSolicitud) {
-		this.estadoSolicitud = estadoSolicitud;
-	}
-
 	public void setIdArchivoSolicitud(Integer idArchivoSolicitud) {
 		this.idArchivoSolicitud = idArchivoSolicitud;
 	}
@@ -141,4 +133,12 @@ public class SolicitudAcademicaModel implements Serializable{
 		this.archivoAdjunto = archivoAdjunto;
 	}
 
+	public Integer getEstadoSolicitudAcademica() {
+		return estadoSolicitudAcademica;
+	}
+
+	public void setEstadoSolicitudAcademica(Integer estadoSolicitudAcademica) {
+		this.estadoSolicitudAcademica = estadoSolicitudAcademica;
+	}
+	
 }

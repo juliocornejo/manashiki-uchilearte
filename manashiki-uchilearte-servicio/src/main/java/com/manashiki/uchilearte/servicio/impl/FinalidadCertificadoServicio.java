@@ -81,11 +81,24 @@ public class FinalidadCertificadoServicio implements IFinalidadCertificadoServic
 		List<FinalidadCertificadoDTO> listaFinalidadCertificadoDTO=new ArrayList<FinalidadCertificadoDTO>();
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoModel>();
 		
-		listaFinalidadCertificadoes=factoryNegocioDAO.getFinalidadCertificadoNegocioDAO().listarFinalidadCertificadosModel();
+		listaFinalidadCertificadoes=factoryNegocioDAO.getFinalidadCertificadoNegocioDAO().listarFinalidadCertificadoModel();
 		
 		listaFinalidadCertificadoDTO = FinalidadCertificadoDTOMapper.ListFinalidadCertificadoModelToListFinalidadCertificadoDTO(listaFinalidadCertificadoes);
 		
 		objLog.info("FIN - listarFinalidadCertificadosDTO "+listaFinalidadCertificadoDTO.size());
+		return listaFinalidadCertificadoDTO;
+	}
+	
+	public List<FinalidadCertificadoDTO> listarFinalidadCertificadosOrdenDTO() {
+		objLog.info("INI - listarFinalidadCertificadosOrdenDTO");
+		List<FinalidadCertificadoDTO> listaFinalidadCertificadoDTO=new ArrayList<FinalidadCertificadoDTO>();
+		List<FinalidadCertificadoModel> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoModel>();
+		
+		listaFinalidadCertificadoes = factoryNegocioDAO.getFinalidadCertificadoNegocioDAO().listarFinalidadCertificadoModelOrden();
+		
+		listaFinalidadCertificadoDTO = FinalidadCertificadoDTOMapper.ListFinalidadCertificadoModelToListFinalidadCertificadoDTO(listaFinalidadCertificadoes);
+		
+		objLog.info("FIN - listarFinalidadCertificadosOrdenDTO "+listaFinalidadCertificadoDTO.size());
 		return listaFinalidadCertificadoDTO;
 	}
 

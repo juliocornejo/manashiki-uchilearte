@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.manashiki.uchilearte.logica.dao.TipoSolicitudDAO;
+import com.manashiki.uchilearte.logica.entidad.TipoCertificadoEntity;
 import com.manashiki.uchilearte.logica.entidad.TipoSolicitudEntity;
 import com.manashiki.uchilearte.logica.exception.PersistenceImplException;
 import com.manashiki.uchilearte.logica.repository.TipoSolicitudRepository;
@@ -21,7 +22,7 @@ public class TipoSolicitudDAOImpl implements TipoSolicitudDAO{
 	
 	
 	@Autowired
-	TipoSolicitudRepository regionRepository;
+	TipoSolicitudRepository tipoSolicitudRepository;
 	
 	/**
 	 * Crea una Entidad TipoSolicitud en la base de datos
@@ -31,7 +32,7 @@ public class TipoSolicitudDAOImpl implements TipoSolicitudDAO{
 	 */
 	public TipoSolicitudEntity crearTipoSolicitudEntity(TipoSolicitudEntity objTipoSolicitudEntity){
 		objLog.info("INI - crearTipoSolicitudEntity ");
-		TipoSolicitudEntity regionEntity = regionRepository.save(objTipoSolicitudEntity);
+		TipoSolicitudEntity regionEntity = tipoSolicitudRepository.save(objTipoSolicitudEntity);
 		objLog.info("FIN - crearTipoSolicitudEntity "+objTipoSolicitudEntity.getIdTipoSolicitud());
 		return regionEntity;
 	}
@@ -44,7 +45,7 @@ public class TipoSolicitudDAOImpl implements TipoSolicitudDAO{
 	 */
 	public TipoSolicitudEntity actualizarTipoSolicitudEntity(TipoSolicitudEntity objTipoSolicitudEntity){
 		objLog.info("INI - actualizarTipoSolicitudEntity "+objTipoSolicitudEntity.getIdTipoSolicitud());
-		TipoSolicitudEntity regionEntity = regionRepository.save(objTipoSolicitudEntity);
+		TipoSolicitudEntity regionEntity = tipoSolicitudRepository.save(objTipoSolicitudEntity);
 		objLog.info("FIN - actualizarTipoSolicitudEntity "+objTipoSolicitudEntity.getIdTipoSolicitud());
 		return regionEntity;
 	
@@ -60,7 +61,7 @@ public class TipoSolicitudDAOImpl implements TipoSolicitudDAO{
 		objLog.info("INI - buscarTipoSolicitudxIdEntity "+objTipoSolicitudEntity.getIdTipoSolicitud());
 		TipoSolicitudEntity regionEntity = null;
  		try {
- 			regionEntity = regionRepository.findOne(objTipoSolicitudEntity.getIdTipoSolicitud());
+ 			regionEntity = tipoSolicitudRepository.findOne(objTipoSolicitudEntity.getIdTipoSolicitud());
 		} catch (PersistenceException e) {
 			objLog.error("Error en la implementacion de la Persistencia");
 			throw new PersistenceImplException(e);
@@ -83,18 +84,35 @@ public class TipoSolicitudDAOImpl implements TipoSolicitudDAO{
 	 */
 	public List<TipoSolicitudEntity> listarTipoSolicitudesEntity(){
 		objLog.info("INI - listarTipoSolicitudesEntity");
-		List<TipoSolicitudEntity> lista = null;
+		List<TipoSolicitudEntity> listaTipoSolicitudEntity = null;
 		try {
-			lista = regionRepository.findAll();
+			listaTipoSolicitudEntity = tipoSolicitudRepository.findAll();
 		} catch (PersistenceException e) {
-			objLog.error("No se pudo obtener la lista "+lista.size());
+			objLog.error("No se pudo obtener la lista "+listaTipoSolicitudEntity.size());
 		}
 		
-		if(lista!=null){
- 				objLog.info("FIN - listarTipoSolicitudsEntity "+lista.size());
+		if(listaTipoSolicitudEntity!=null){
+ 				objLog.info("FIN - listarTipoSolicitudsEntity "+listaTipoSolicitudEntity.size());
  		}
 		
-		return lista;
-	}	
+		return listaTipoSolicitudEntity;
+	}
+	
+	public List<TipoSolicitudEntity> listarTipoSolicitudesOrderCodigoTipoSolicitudEntity(TipoSolicitudEntity objTipoSolicitudEntity){
+		objLog.info("INI - listarTipoSolicitudesOrderCodigoTipoSolicitudEntity");
+		List<TipoSolicitudEntity> listaTipoSolicitudEntity = null;
+		try {
+			listaTipoSolicitudEntity = tipoSolicitudRepository.findByEstadoTipoSolicitudOrderByCodigoTipoSolicitudAsc(objTipoSolicitudEntity.getEstadoTipoSolicitud());
+			
+		} catch (PersistenceException e) {
+			objLog.error("No se pudo obtener la lista "+listaTipoSolicitudEntity.size());
+		}
+		
+		if(listaTipoSolicitudEntity!=null){
+ 				objLog.info("FIN - listarTipoSolicitudesOrderCodigoTipoSolicitudEntity "+listaTipoSolicitudEntity.size());
+ 		}
+		
+		return listaTipoSolicitudEntity;
+	}
 	
 }

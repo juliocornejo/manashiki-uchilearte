@@ -11,6 +11,7 @@ public interface TipoCertificadoDAO{
 	public TipoCertificadoEntity crearTipoCertificadoEntity(TipoCertificadoEntity objTipoCertificadoEntity);
 	public TipoCertificadoEntity actualizarTipoCertificadoEntity(TipoCertificadoEntity objTipoCertificadoEntity);
 	public TipoCertificadoEntity buscarTipoCertificadoxIdEntity(TipoCertificadoEntity objTipoCertificadoEntity) throws PersistenceImplException;
-	public List<TipoCertificadoEntity> listarTipoCertificadoesEntity();
+	public List<TipoCertificadoEntity> listarTipoCertificadoEntity();
+	public List<TipoCertificadoEntity> listarTipoCertificadoOrderByCodigoTipoCertificadoEntity(TipoCertificadoEntity objTipoCertificadoEntity);
 	
 }

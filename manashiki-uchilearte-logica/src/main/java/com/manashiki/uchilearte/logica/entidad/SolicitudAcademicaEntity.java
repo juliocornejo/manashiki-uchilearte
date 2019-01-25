@@ -34,7 +34,7 @@ public class SolicitudAcademicaEntity implements Serializable {
 	@OrderBy
 	@Column(name="apellido_paterno_persona_solicitud_academica")
 	private String apellidoPaternoPersonaSolicitudAcademica;
-	/**************************/
+
 	@OrderBy
 	@Column(name="apellido_materno_persona_solicitud_academica")
 	private String apellidoMaternoPersonaSolicitudAcademica; 
@@ -79,8 +79,8 @@ public class SolicitudAcademicaEntity implements Serializable {
 	
 	@OrderBy
 	@Index(name="idx_solicitud_solicitud_estado_solicitud")
-	@Column(name="estado_solicitud")
-	private Integer estadoSolicitud;
+	@Column(name="estado_solicitud_academica")
+	private Integer estadoSolicitudAcademica;
 	
 	@OneToMany(mappedBy="fkIdSolicitudAcademica")
 	private List<LogReservaEntity> negocios_solicitudes;
@@ -137,9 +137,7 @@ public class SolicitudAcademicaEntity implements Serializable {
 		return fkIdArchivoSolicitud;
 	}
 
-	public Integer getEstadoSolicitud() {
-		return estadoSolicitud;
-	}
+	
 
 	public void setIdSolicitudAcademica(Integer idSolicitudAcademica) {
 		this.idSolicitudAcademica = idSolicitudAcademica;
@@ -189,10 +187,7 @@ public class SolicitudAcademicaEntity implements Serializable {
 		this.fkIdArchivoSolicitud = fkIdArchivoSolicitud;
 	}
 
-	public void setEstadoSolicitud(Integer estadoSolicitud) {
-		this.estadoSolicitud = estadoSolicitud;
-	}
-
+	
 	public boolean isArchivoAdjunto() {
 		return archivoAdjunto;
 	}
@@ -208,5 +203,15 @@ public class SolicitudAcademicaEntity implements Serializable {
 	public void setNegocios_solicitudes(List<LogReservaEntity> negocios_solicitudes) {
 		this.negocios_solicitudes = negocios_solicitudes;
 	}
+
+	public Integer getEstadoSolicitudAcademica() {
+		return estadoSolicitudAcademica;
+	}
+
+	public void setEstadoSolicitudAcademica(Integer estadoSolicitudAcademica) {
+		this.estadoSolicitudAcademica = estadoSolicitudAcademica;
+	}
+	
+	
 	
 }

@@ -25,6 +25,7 @@ public class TipoSolicitudModelMapper{
 			tipoSolicitud.setIdTipoSolicitud(tipoSolicitudModel.getIdTipoSolicitud());
 			tipoSolicitud.setCodigoTipoSolicitud(tipoSolicitudModel.getCodigoTipoSolicitud());
 			tipoSolicitud.setNombreTipoSolicitud(tipoSolicitudModel.getNombreTipoSolicitud());
+			tipoSolicitud.setEstadoTipoSolicitud(tipoSolicitudModel.getEstadoTipoSolicitud());
 		}
 		
 		return tipoSolicitud;
@@ -64,6 +65,7 @@ public class TipoSolicitudModelMapper{
 			tipoSolicitudModel.setIdTipoSolicitud(tipoSolicitud.getIdTipoSolicitud());
 			tipoSolicitudModel.setCodigoTipoSolicitud(tipoSolicitud.getCodigoTipoSolicitud());
 			tipoSolicitudModel.setNombreTipoSolicitud(tipoSolicitud.getNombreTipoSolicitud());
+			tipoSolicitudModel.setEstadoTipoSolicitud(tipoSolicitud.getEstadoTipoSolicitud());
 		}
 		return tipoSolicitudModel;
 	}

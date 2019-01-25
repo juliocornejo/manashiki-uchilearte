@@ -53,12 +53,6 @@ public class ProgramaUniversidadEntity implements Serializable {
 	@OneToMany(mappedBy="fkIdProgramaUniversidad")
 	private List<ProgramaActivoSemestreEntity> programas_activos_semestre;
 	
-//	@OneToMany(mappedBy="fkIdProgramaUniversidad")
-//	private List<SolicitudPostulacionEntity> solicitudes_postulaciones;
-	
-//	@OneToMany(mappedBy="fkIdProgramaUniversidad")
-//	private List<VersionProgramaUniversidadEntity> versiones_programas_universidades;
-		
 	public ProgramaUniversidadEntity() {
 		super();
 	}

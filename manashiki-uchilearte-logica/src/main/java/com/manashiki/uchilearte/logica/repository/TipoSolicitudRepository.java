@@ -9,5 +9,6 @@ public interface TipoSolicitudRepository extends JpaRepository<TipoSolicitudEnti
 //	List<TipoSolicitudEntity> findByEstadoTipoSolicitud(Integer TipoSolicitud);
 //	List<TipoSolicitudEntity> findByFkIdEmpresa(EmpresaEntity fkIdEmpresa);
 //	List<TipoSolicitudEntity> findByFkIdUsuario(UsuarioEntity fkIdUsuario);
+	java.util.List<TipoSolicitudEntity> findByEstadoTipoSolicitudOrderByCodigoTipoSolicitudAsc(Boolean estadoTipoSolicitud);
 	//Solo el Buscar Todos
 }

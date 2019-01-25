@@ -11,6 +11,7 @@ public class TipoSolicitudModel implements Serializable{
 	private Integer idTipoSolicitud;
 	private String codigoTipoSolicitud;
 	private String nombreTipoSolicitud;
+	private Boolean estadoTipoSolicitud;
 	
 	public TipoSolicitudModel() {
 		super();
@@ -39,5 +40,15 @@ public class TipoSolicitudModel implements Serializable{
 	public void setNombreTipoSolicitud(String nombreTipoSolicitud) {
 		this.nombreTipoSolicitud = nombreTipoSolicitud;
 	}
+
+	public Boolean getEstadoTipoSolicitud() {
+		return estadoTipoSolicitud;
+	}
+
+	public void setEstadoTipoSolicitud(Boolean estadoTipoSolicitud) {
+		this.estadoTipoSolicitud = estadoTipoSolicitud;
+	}
+	
+	
 	
 }

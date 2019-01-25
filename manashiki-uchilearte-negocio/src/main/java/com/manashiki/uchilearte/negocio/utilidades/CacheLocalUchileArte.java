@@ -19,8 +19,11 @@ public class CacheLocalUchileArte implements Serializable{
 	/*Todos los activos para Postulaciones, Activos, Ordenados[Postulaciones]*/
 	private List<ProgramaUniversidadPostulacionModel> listaProgramaUniversidadPostulacion;
 	private List<TipoCertificadoModel> listaTipoCertificado;
+	private List<TipoCertificadoModel> listaTipoCertificadoOrden;
 	private List<FinalidadCertificadoModel> listaFinalidadCertificado;
+	private List<FinalidadCertificadoModel> listaFinalidadCertificadoOrden;
 	private List<TipoSolicitudModel> listaTipoSolicitud;
+	private List<TipoSolicitudModel> listaTipoSolicitudOrden;
 	private List<RegionModel> listaRegion;
 	
 	public CacheLocalUchileArte() {
@@ -28,14 +31,18 @@ public class CacheLocalUchileArte implements Serializable{
 	}
 	
 	public CacheLocalUchileArte(List<ProgramaUniversidadModel> listaProgramaUniversidad, List<ProgramaUniversidadPostulacionModel> listaProgramaUniversidadPostulacion,
-			List<TipoCertificadoModel> listaTipoCertificado, List<FinalidadCertificadoModel> listaFinalidadCertificado,
-			List<TipoSolicitudModel> listaTipoSolicitud, List<RegionModel> listaRegion) {
+			List<TipoCertificadoModel> listaTipoCertificado, List<TipoCertificadoModel> listaTipoCertificadoOrden, List<FinalidadCertificadoModel> listaFinalidadCertificado,
+			List<FinalidadCertificadoModel> listaFinalidadCertificadoOrden, List<TipoSolicitudModel> listaTipoSolicitud,
+			List<TipoSolicitudModel> listaTipoSolicitudOrden, List<RegionModel> listaRegion) {
 		super();
 		this.listaProgramaUniversidad = listaProgramaUniversidad;
 		this.listaProgramaUniversidadPostulacion = listaProgramaUniversidadPostulacion;
 		this.listaTipoCertificado = listaTipoCertificado;
+		this.listaTipoCertificadoOrden = listaTipoCertificadoOrden;
 		this.listaFinalidadCertificado = listaFinalidadCertificado;
-		this.listaTipoSolicitud = listaTipoSolicitud;
+		this.listaFinalidadCertificadoOrden = listaFinalidadCertificadoOrden;
+		this.listaTipoSolicitud = listaTipoSolicitud; 
+		this.listaTipoSolicitud = listaTipoSolicitudOrden;
 		this.listaRegion = listaRegion;
 	}
 
@@ -88,6 +95,39 @@ public class CacheLocalUchileArte implements Serializable{
 
 	public void setListaRegion(List<RegionModel> listaRegion) {
 		this.listaRegion = listaRegion;
+	}
+
+	public List<ProgramaUniversidadPostulacionModel> getListaProgramaUniversidadPostulacion() {
+		return listaProgramaUniversidadPostulacion;
+	}
+
+	public void setListaProgramaUniversidadPostulacion(
+			List<ProgramaUniversidadPostulacionModel> listaProgramaUniversidadPostulacion) {
+		this.listaProgramaUniversidadPostulacion = listaProgramaUniversidadPostulacion;
+	}
+
+	public List<TipoCertificadoModel> getListaTipoCertificadoOrden() {
+		return listaTipoCertificadoOrden;
+	}
+
+	public void setListaTipoCertificadoOrden(List<TipoCertificadoModel> listaTipoCertificadoOrden) {
+		this.listaTipoCertificadoOrden = listaTipoCertificadoOrden;
+	}
+
+	public List<FinalidadCertificadoModel> getListaFinalidadCertificadoOrden() {
+		return listaFinalidadCertificadoOrden;
+	}
+
+	public void setListaFinalidadCertificadoOrden(List<FinalidadCertificadoModel> listaFinalidadCertificadoOrden) {
+		this.listaFinalidadCertificadoOrden = listaFinalidadCertificadoOrden;
+	}
+
+	public List<TipoSolicitudModel> getListaTipoSolicitudOrden() {
+		return listaTipoSolicitudOrden;
+	}
+
+	public void setListaTipoSolicitudOrden(List<TipoSolicitudModel> listaTipoSolicitudOrden) {
+		this.listaTipoSolicitudOrden = listaTipoSolicitudOrden;
 	}
 	
 }

@@ -59,7 +59,7 @@ public class SolicitudAcademicaModelMapper{
 				}
 			}
 			
-			solicitudAcademica.setEstadoSolicitud(solicitudAcademicaModel.getEstadoSolicitud());
+			solicitudAcademica.setEstadoSolicitudAcademica(solicitudAcademicaModel.getEstadoSolicitudAcademica());
 		}
 		
 		return solicitudAcademica;
@@ -123,7 +123,7 @@ public class SolicitudAcademicaModelMapper{
 			if(solicitudAcademica.getFkIdArchivoSolicitud()!=null && solicitudAcademica.getFkIdArchivoSolicitud().getIdArchivoSolicitud()!=null){
 					solicitudAcademicaModel.setIdArchivoSolicitud(solicitudAcademica.getFkIdArchivoSolicitud().getIdArchivoSolicitud());
 			}
-			solicitudAcademicaModel.setEstadoSolicitud(solicitudAcademica.getEstadoSolicitud());
+			solicitudAcademicaModel.setEstadoSolicitudAcademica(solicitudAcademica.getEstadoSolicitudAcademica());
 		}
 		return solicitudAcademicaModel;
 	}

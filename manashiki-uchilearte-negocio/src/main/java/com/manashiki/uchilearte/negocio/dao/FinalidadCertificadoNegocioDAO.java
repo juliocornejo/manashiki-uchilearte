@@ -11,6 +11,6 @@ public interface FinalidadCertificadoNegocioDAO{
 	public FinalidadCertificadoModel crearFinalidadCertificadoModel(FinalidadCertificadoModel objFinalidadCertificadoModel);
 	public FinalidadCertificadoModel actualizarFinalidadCertificadoModel(FinalidadCertificadoModel objFinalidadCertificadoModel);
 	public FinalidadCertificadoModel buscarFinalidadCertificadoxIdModel(FinalidadCertificadoModel objFinalidadCertificadoModel) throws NegocioImplException;
-	public List<FinalidadCertificadoModel> listarFinalidadCertificadosModel();
-	
+	public List<FinalidadCertificadoModel> listarFinalidadCertificadoModel();
+	public List<FinalidadCertificadoModel> listarFinalidadCertificadoModelOrden();
 }

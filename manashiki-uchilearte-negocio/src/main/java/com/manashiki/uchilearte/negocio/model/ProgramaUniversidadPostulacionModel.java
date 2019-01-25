@@ -14,7 +14,6 @@ public class ProgramaUniversidadPostulacionModel implements Serializable{
 	private String duracionProgramaUniversidadPostulacion;
 	private String costoProgramaUniversidadPostulacion;
 	private Integer clasificacionProgramaPostulacion;
-//	private Integer subClasificacionProgramaPostulacion;
 	private Integer prioridad;
 	
 	public ProgramaUniversidadPostulacionModel() {

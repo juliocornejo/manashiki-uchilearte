@@ -72,8 +72,8 @@ public class TipoCertificadoNegocio implements TipoCertificadoNegocioDAO{
 		return tipoCertificadoModel;
 	}
 
-	public List<TipoCertificadoModel> listarTipoCertificadoesModel() {
-		objLog.info("INI - listarTipoCertificadoesModel");
+	public List<TipoCertificadoModel> listarTipoCertificadoModel() {
+		objLog.info("INI - listarTipoCertificadoModel");
 		List<TipoCertificadoModel> listaTipoCertificadoModel=new ArrayList<TipoCertificadoModel>();
 //		List<TipoCertificadoEntity> listaTipoCertificadoes = new ArrayList<TipoCertificadoEntity>();
 //
@@ -83,7 +83,23 @@ public class TipoCertificadoNegocio implements TipoCertificadoNegocioDAO{
 		
 		listaTipoCertificadoModel = obtenerCacheListaTipoCertificado();
 		
-		objLog.info("FIN - listarTipoCertificadoesModel "+listaTipoCertificadoModel.size());
+		objLog.info("FIN - listarTipoCertificadoModel "+listaTipoCertificadoModel.size());
+		
+		return listaTipoCertificadoModel;
+	}
+	
+	public List<TipoCertificadoModel> listarTipoCertificadoOrdenModel() {
+		objLog.info("INI - listarTipoCertificadoOrdenModel");
+		List<TipoCertificadoModel> listaTipoCertificadoModel=new ArrayList<TipoCertificadoModel>();
+		TipoCertificadoModel tipoCertificadoModel = new TipoCertificadoModel();
+		
+		tipoCertificadoModel.setEstadoTipoCertificado(true);
+				
+		TipoCertificadoEntity tipoCertificadoEntity = TipoCertificadoModelMapper.TipoCertificadoModelToTipoCertificadoEntity(tipoCertificadoModel);
+		
+		listaTipoCertificadoModel = obtenerCacheListaTipoCertificadoOrden(tipoCertificadoEntity);
+		
+		objLog.info("FIN - listarTipoCertificadoOrdenModel "+listaTipoCertificadoModel.size());
 		
 		return listaTipoCertificadoModel;
 	}
@@ -117,7 +133,7 @@ public class TipoCertificadoNegocio implements TipoCertificadoNegocioDAO{
 		try{
 			if(listaTipoCertificadoModel==null || listaTipoCertificadoModel.size()==0){
 				
-				listaTipoCertificadoEntity = factoryPersistenciaDAO.getTipoCertificadoDAO().listarTipoCertificadoesEntity();
+				listaTipoCertificadoEntity = factoryPersistenciaDAO.getTipoCertificadoDAO().listarTipoCertificadoEntity();
 				
 				if(listaTipoCertificadoEntity!=null && listaTipoCertificadoEntity.size()>0){
 					
@@ -139,5 +155,57 @@ public class TipoCertificadoNegocio implements TipoCertificadoNegocioDAO{
 		}
 		return listaTipoCertificadoModel;
 	}
+	
+	
+	private List<TipoCertificadoModel> obtenerCacheListaTipoCertificadoOrden(TipoCertificadoEntity tipoCertificadoEntity){
+		List<TipoCertificadoModel> listaTipoCertificadoModel=new ArrayList<TipoCertificadoModel>();
+		List<TipoCertificadoEntity> listaTipoCertificadoEntity=new ArrayList<TipoCertificadoEntity>();
+		TipoCertificadoModel tipoCertificadoModel = new TipoCertificadoModel();
+
+		try{
+			if(objCacheComponent==null){
+				objCacheComponent = CacheLocalRepositorio.crearRepositorioCacheLocal(); //Colocar el nombre de cache local del ws
+			}
+		
+		}catch(Exception e){
+			listaTipoCertificadoModel = null;
+			objLog.error("Cae al obtener el repositorio de Cache");
+		}
+		
+		try{
+			listaTipoCertificadoModel = CacheLocalRepositorio.obtenerCacheListaTipoCertificadoOrden(objCacheComponent);
+
+		}catch(Exception e){
+			
+			listaTipoCertificadoModel=null;
+		
+		}
+		
+		try{
+			if(listaTipoCertificadoModel==null || listaTipoCertificadoModel.size()==0){
+				
+				listaTipoCertificadoEntity = factoryPersistenciaDAO.getTipoCertificadoDAO().listarTipoCertificadoOrderByCodigoTipoCertificadoEntity(tipoCertificadoEntity);
+				
+				if(listaTipoCertificadoEntity!=null && listaTipoCertificadoEntity.size()>0){
+					
+					listaTipoCertificadoModel = CacheLocalRepositorio.generarCacheListaTipoCertificadoOrden(objCacheComponent, listaTipoCertificadoEntity);
+					listaTipoCertificadoModel = new ArrayList<TipoCertificadoModel>();
+					for(TipoCertificadoEntity puEnt:listaTipoCertificadoEntity){
+						tipoCertificadoModel = new TipoCertificadoModel();
+						tipoCertificadoModel = TipoCertificadoModelMapper.TipoCertificadoEntityToTipoCertificadoModel(puEnt);
+						listaTipoCertificadoModel.add(tipoCertificadoModel);
+					}
+				
+				}
+			
+			}
+		
+		}
+		catch(Exception e){
+			objLog.error("Error en la implementacion del Servicio "+e.getMessage());
+		}
+		return listaTipoCertificadoModel;
+	}
+	
 
 }

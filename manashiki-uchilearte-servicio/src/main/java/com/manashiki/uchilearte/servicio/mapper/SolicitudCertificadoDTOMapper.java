@@ -38,7 +38,7 @@ public class SolicitudCertificadoDTOMapper{
 			solicitudCertificadoModel.setIdTipoCertificado(solicitudCertificadoDTO.getIdTipoCertificado());
 			solicitudCertificadoModel.setIdFinalidadCertificado(solicitudCertificadoDTO.getIdFinalidadCertificado());
 			solicitudCertificadoModel.setFechaSolicitud(solicitudCertificadoDTO.getFechaSolicitud()); 
-			solicitudCertificadoModel.setEstadoSolicitud(solicitudCertificadoDTO.getEstadoSolicitud());
+			solicitudCertificadoModel.setEstadoSolicitudCertificado(solicitudCertificadoDTO.getEstadoSolicitud());
 		}
 
 		return solicitudCertificadoModel;
@@ -89,7 +89,7 @@ public class SolicitudCertificadoDTOMapper{
 				//solicitudCertificadoDTO.setFechaSolicitud(solicitudCertificadoModel.getFechaSolicitud());
 				solicitudCertificadoDTO.setSfechaSolicitud(AppDate.obtenerFechaEnFormato(solicitudCertificadoModel.getFechaSolicitud(), TipoFormatoFecha.YYYY_MM_ddTHH_MM_SSZ));
 			}
-			solicitudCertificadoDTO.setEstadoSolicitud(solicitudCertificadoModel.getEstadoSolicitud());
+			solicitudCertificadoDTO.setEstadoSolicitud(solicitudCertificadoModel.getEstadoSolicitudCertificado());
 		}
 		return solicitudCertificadoDTO;
 	}

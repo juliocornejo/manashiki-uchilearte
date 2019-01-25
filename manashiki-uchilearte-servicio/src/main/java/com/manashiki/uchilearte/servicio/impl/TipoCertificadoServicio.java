@@ -67,16 +67,34 @@ public class TipoCertificadoServicio implements ITipoCertificadoServicio{
 		return tipoCertificadoDTO;
 	}
 
-	public List<TipoCertificadoDTO> listarTipoCertificadosDTO() {
-		objLog.info("INI - listarTipoCertificadoesDTO");
+	public List<TipoCertificadoDTO> listarTipoCertificadoDTO() {
+		objLog.info("INI - listarTipoCertificadoDTO");
 		List<TipoCertificadoDTO> listaTipoCertificadoDTO=new ArrayList<TipoCertificadoDTO>();
+		
 		List<TipoCertificadoModel> listaTipoCertificadoes = new ArrayList<TipoCertificadoModel>();
 
-		listaTipoCertificadoes=factoryNegocioDAO.getTipoCertificadoNegocioDAO().listarTipoCertificadoesModel();
+		listaTipoCertificadoes=factoryNegocioDAO.getTipoCertificadoNegocioDAO().listarTipoCertificadoModel();
 
 		listaTipoCertificadoDTO = TipoCertificadoDTOMapper.ListTipoCertificadoModelToListTipoCertificadoDTO(listaTipoCertificadoes);
 		
-		objLog.info("FIN - listarTipoCertificadoesDTO "+listaTipoCertificadoDTO.size());
+		objLog.info("FIN - listarTipoCertificadoDTO "+listaTipoCertificadoDTO.size());
+		
+		return listaTipoCertificadoDTO;
+	}
+	
+	public List<TipoCertificadoDTO> listarTipoCertificadoOrdenDTO() {
+		objLog.info("INI - listarTipoCertificadoOrdenDTO");
+		
+		List<TipoCertificadoDTO> listaTipoCertificadoDTO=new ArrayList<TipoCertificadoDTO>();
+		
+		List<TipoCertificadoModel> listaTipoCertificadoes = new ArrayList<TipoCertificadoModel>();
+
+		listaTipoCertificadoes=factoryNegocioDAO.getTipoCertificadoNegocioDAO().listarTipoCertificadoOrdenModel();
+
+		listaTipoCertificadoDTO = TipoCertificadoDTOMapper.ListTipoCertificadoModelToListTipoCertificadoDTO(listaTipoCertificadoes);
+		
+		objLog.info("FIN - listarTipoCertificadoOrdenDTO "+listaTipoCertificadoDTO.size());
+		
 		return listaTipoCertificadoDTO;
 	}
 

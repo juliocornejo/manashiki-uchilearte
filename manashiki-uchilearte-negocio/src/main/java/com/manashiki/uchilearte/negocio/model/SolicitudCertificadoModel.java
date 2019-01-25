@@ -20,7 +20,7 @@ public class SolicitudCertificadoModel implements Serializable{
 	private Integer idTipoCertificado;
 	private Integer idFinalidadCertificado;
 	private Date fechaSolicitud;
-	private Integer estadoSolicitud;
+	private Integer estadoSolicitudCertificado;
 	
 	public SolicitudCertificadoModel() {
 		super();
@@ -70,10 +70,6 @@ public class SolicitudCertificadoModel implements Serializable{
 		return fechaSolicitud;
 	}
 
-	public Integer getEstadoSolicitud() {
-		return estadoSolicitud;
-	}
-
 	public void setIdSolicitudCertificado(Integer idSolicitudCertificado) {
 		this.idSolicitudCertificado = idSolicitudCertificado;
 	}
@@ -118,7 +114,12 @@ public class SolicitudCertificadoModel implements Serializable{
 		this.fechaSolicitud = fechaSolicitud;
 	}
 
-	public void setEstadoSolicitud(Integer estadoSolicitud) {
-		this.estadoSolicitud = estadoSolicitud;
+	public Integer getEstadoSolicitudCertificado() {
+		return estadoSolicitudCertificado;
 	}
+
+	public void setEstadoSolicitudCertificado(Integer estadoSolicitudCertificado) {
+		this.estadoSolicitudCertificado = estadoSolicitudCertificado;
+	}
+	
 }
