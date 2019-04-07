@@ -101,15 +101,15 @@ public class ProgramaUniversidadPostulacionDAOImpl implements ProgramaUniversida
 	 * @return lista List<ProgramaUniversidad>
 	 * @exception no lanza excepciones
 	 */
-	public List<ProgramaUniversidadPostulacionEntity> listarProgramaUniversidadPostulacionOrdenPrioridad(){
+	public List<ProgramaUniversidadPostulacionEntity> listarProgramaUniversidadPostulacionxEstadoEntity(ProgramaUniversidadPostulacionEntity programaUniversidadPostulacionEntity){
 		objLog.info("INI - listarProgramaUniversidadPostulacionOrdenPrioridad");
 		List<ProgramaUniversidadPostulacionEntity> lista = null;
 		List<ProgramaUniversidadPostulacionEntity> metLista = null;
 		try {
-			metLista = programaUniversidadPostulacionRepository.findAllByOrderByClasificacionProgramaPostulacionAscPrioridadAsc();
+			metLista = programaUniversidadPostulacionRepository.findByEstadoProgramaUniversidadPostulacionOrderByClasificacionProgramaPostulacionAscPrioridadProgramaUniversidadPostulacionAsc(programaUniversidadPostulacionEntity.getEstadoProgramaUniversidadPostulacion());
 			lista = new ArrayList<ProgramaUniversidadPostulacionEntity>();
 			for(ProgramaUniversidadPostulacionEntity puE :metLista){
-				if(puE.getClasificacionProgramaPostulacion()>0 && puE.getPrioridad()>0 &&  !puE.getCostoProgramaUniversidadPostulacion().equals("-")){
+				if(puE.getClasificacionProgramaPostulacion()>0 && puE.getPrioridadProgramaUniversidadPostulacion()>0 &&  !puE.getCostoProgramaUniversidadPostulacion().contains("-")){
 //					System.out.println(puE.getClasificacionProgramaPostulacion() + " :: " +puE.getPrioridad() +" :: " +puE.getNombreProgramaUniversidadPostulacion()+" :: " +puE.getCostoProgramaUniversidadPostulacion());
 					lista.add(puE);
 				}

@@ -17,18 +17,19 @@ public class TipoSolicitudModelMapper{
 	
 	public static TipoSolicitudEntity TipoSolicitudModelToTipoSolicitudEntity(TipoSolicitudModel tipoSolicitudModel){
 
-		TipoSolicitudEntity tipoSolicitud=new TipoSolicitudEntity();
+		TipoSolicitudEntity tipoSolicitudEntity=new TipoSolicitudEntity();
 		if(tipoSolicitudModel==null){
 			return new TipoSolicitudEntity();
 		}
 		else{
-			tipoSolicitud.setIdTipoSolicitud(tipoSolicitudModel.getIdTipoSolicitud());
-			tipoSolicitud.setCodigoTipoSolicitud(tipoSolicitudModel.getCodigoTipoSolicitud());
-			tipoSolicitud.setNombreTipoSolicitud(tipoSolicitudModel.getNombreTipoSolicitud());
-			tipoSolicitud.setEstadoTipoSolicitud(tipoSolicitudModel.getEstadoTipoSolicitud());
+			tipoSolicitudEntity.setIdTipoSolicitud(tipoSolicitudModel.getIdTipoSolicitud());
+			tipoSolicitudEntity.setCodigoTipoSolicitud(tipoSolicitudModel.getCodigoTipoSolicitud());
+			tipoSolicitudEntity.setNombreTipoSolicitud(tipoSolicitudModel.getNombreTipoSolicitud());
+			tipoSolicitudEntity.setEstadoTipoSolicitud(tipoSolicitudModel.getEstadoTipoSolicitud());
+			tipoSolicitudEntity.setPrioridadTipoSolicitud(tipoSolicitudModel.getPrioridadTipoSolicitud());
 		}
 		
-		return tipoSolicitud;
+		return tipoSolicitudEntity;
 	}
 
 	public static List<TipoSolicitudEntity> ListTipoSolicitudModelToListTipoSolicitudEntity(List<TipoSolicitudModel> listaTipoSolicitudModel){
@@ -55,17 +56,18 @@ public class TipoSolicitudModelMapper{
 		return listaTipoSolicitudEntity;
 	}
 
-	public static TipoSolicitudModel TipoSolicitudEntityToTipoSolicitudModel(TipoSolicitudEntity tipoSolicitud){
+	public static TipoSolicitudModel TipoSolicitudEntityToTipoSolicitudModel(TipoSolicitudEntity tipoSolicitudEntity){
 
 		TipoSolicitudModel tipoSolicitudModel=new TipoSolicitudModel();
-		if(tipoSolicitud==null){
+		if(tipoSolicitudEntity==null){
 			return new TipoSolicitudModel();
 		}
 		else{
-			tipoSolicitudModel.setIdTipoSolicitud(tipoSolicitud.getIdTipoSolicitud());
-			tipoSolicitudModel.setCodigoTipoSolicitud(tipoSolicitud.getCodigoTipoSolicitud());
-			tipoSolicitudModel.setNombreTipoSolicitud(tipoSolicitud.getNombreTipoSolicitud());
-			tipoSolicitudModel.setEstadoTipoSolicitud(tipoSolicitud.getEstadoTipoSolicitud());
+			tipoSolicitudModel.setIdTipoSolicitud(tipoSolicitudEntity.getIdTipoSolicitud());
+			tipoSolicitudModel.setCodigoTipoSolicitud(tipoSolicitudEntity.getCodigoTipoSolicitud());
+			tipoSolicitudModel.setNombreTipoSolicitud(tipoSolicitudEntity.getNombreTipoSolicitud());
+			tipoSolicitudModel.setEstadoTipoSolicitud(tipoSolicitudEntity.getEstadoTipoSolicitud());
+			tipoSolicitudModel.setPrioridadTipoSolicitud(tipoSolicitudEntity.getPrioridadTipoSolicitud());
 		}
 		return tipoSolicitudModel;
 	}

@@ -18,17 +18,19 @@ public class TipoCertificadoDTOMapper{
 	
 	public static TipoCertificadoModel TipoCertificadoDTOToTipoCertificadoModel(TipoCertificadoDTO tipoCertificadoDTO){
 
-		TipoCertificadoModel tipoCertificado=new TipoCertificadoModel();
+		TipoCertificadoModel tipoCertificadoModel=new TipoCertificadoModel();
 		if(tipoCertificadoDTO==null){
 			return new TipoCertificadoModel();
 		}
 		else{
-			tipoCertificado.setIdTipoCertificado(tipoCertificadoDTO.getIdTipoCertificado());
-			tipoCertificado.setCodigoTipoCertificado(tipoCertificadoDTO.getCodigoTipoCertificado());
-			tipoCertificado.setNombreTipoCertificado(tipoCertificadoDTO.getNombreTipoCertificado());
+			tipoCertificadoModel.setIdTipoCertificado(tipoCertificadoDTO.getIdTipoCertificado());
+			tipoCertificadoModel.setCodigoTipoCertificado(tipoCertificadoDTO.getCodigoTipoCertificado());
+			tipoCertificadoModel.setNombreTipoCertificado(tipoCertificadoDTO.getNombreTipoCertificado());
+			tipoCertificadoModel.setEstadoTipoCertificado(tipoCertificadoDTO.isEstadoTipoCertificado());
+			tipoCertificadoModel.setPrioridadTipoCertificado(tipoCertificadoDTO.getPrioridadTipoCertificado());
 		}
 		
-		return tipoCertificado;
+		return tipoCertificadoModel;
 	}
 
 	public static List<TipoCertificadoModel> ListTipoCertificadoDTOToListTipoCertificadoModel(List<TipoCertificadoDTO> listaTipoCertificadoDTO){
@@ -61,9 +63,20 @@ public class TipoCertificadoDTOMapper{
 			return new TipoCertificadoDTO();
 		}
 		else{
-			tipoCertificadoDTO.setIdTipoCertificado(tipoCertificadoModel.getIdTipoCertificado());
+			if(tipoCertificadoModel.getIdTipoCertificado()!=null){
+				tipoCertificadoDTO.setIdTipoCertificado(tipoCertificadoModel.getIdTipoCertificado());
+			}
+			
 			tipoCertificadoDTO.setCodigoTipoCertificado(tipoCertificadoModel.getCodigoTipoCertificado());
 			tipoCertificadoDTO.setNombreTipoCertificado(tipoCertificadoModel.getNombreTipoCertificado());
+			if(tipoCertificadoModel.getEstadoTipoCertificado()!=null){
+				tipoCertificadoDTO.setEstadoTipoCertificado(tipoCertificadoModel.getEstadoTipoCertificado());
+			}
+			
+			if(tipoCertificadoModel.getPrioridadTipoCertificado()!=null){
+				tipoCertificadoDTO.setPrioridadTipoCertificado(tipoCertificadoModel.getPrioridadTipoCertificado());
+			}
+			
 		}
 		return tipoCertificadoDTO;
 	}

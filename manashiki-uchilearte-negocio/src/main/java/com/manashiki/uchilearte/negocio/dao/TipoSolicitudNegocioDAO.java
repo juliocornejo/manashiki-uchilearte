@@ -11,6 +11,6 @@ public interface TipoSolicitudNegocioDAO{
 	public TipoSolicitudModel actualizarTipoSolicitudModel(TipoSolicitudModel objTipoSolicitudModel);
 	public TipoSolicitudModel buscarTipoSolicitudxIdModel(TipoSolicitudModel objTipoSolicitudModel) throws NegocioImplException;
 	public List<TipoSolicitudModel> listarTipoSolicitudModel();
-	public List<TipoSolicitudModel> listarTipoSolicitudModelOrderCodigoTipoSolicitud();
+	public List<TipoSolicitudModel> listarTipoSolicitudModelxEstadoModel();
 	
 }

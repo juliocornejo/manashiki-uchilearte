@@ -10,6 +10,6 @@ public interface TipoCertificadoRepository extends JpaRepository<TipoCertificado
 //	List<TipoCertificadoEntity> findByEstadoTipoCertificado(Integer TipoCertificado);
 //	List<TipoCertificadoEntity> findByFkIdEmpresa(EmpresaEntity fkIdEmpresa);
 //	java.util.List<TipoCertificadoEntity> findAllOrderByCodigoTipoCertificadoAsc();
-	java.util.List<TipoCertificadoEntity> findByEstadoTipoCertificadoOrderByCodigoTipoCertificadoAsc(Boolean estadoTipoCertificado);
+	java.util.List<TipoCertificadoEntity> findByEstadoTipoCertificadoOrderByCodigoTipoCertificadoAscPrioridadTipoCertificadoAsc(Boolean estadoTipoCertificado);
 	//Solo el Buscar Todos
 }

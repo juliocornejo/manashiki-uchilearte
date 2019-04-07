@@ -97,18 +97,18 @@ public class TipoCertificadoDAOImpl implements TipoCertificadoDAO{
 		return listaTipoCertificadoEntity;
 	}
 	
-	public List<TipoCertificadoEntity> listarTipoCertificadoOrderByCodigoTipoCertificadoEntity(TipoCertificadoEntity objTipoCertificadoEntity){
-		objLog.info("INI - listarTipoCertificadoOrderByCodigoTipoCertificadoEntity");
+	public List<TipoCertificadoEntity> listarTipoCertificadoxEstadoEntity(TipoCertificadoEntity objTipoCertificadoEntity){
+		objLog.info("INI - listarTipoCertificadoxEstadoEntity");
 		List<TipoCertificadoEntity> listaTipoCertificadoEntity = null;
 		try {
-			listaTipoCertificadoEntity = tipoCertificadoRepository.findByEstadoTipoCertificadoOrderByCodigoTipoCertificadoAsc(objTipoCertificadoEntity.getEstadoTipoCertificado());
+			listaTipoCertificadoEntity = tipoCertificadoRepository.findByEstadoTipoCertificadoOrderByCodigoTipoCertificadoAscPrioridadTipoCertificadoAsc(objTipoCertificadoEntity.getEstadoTipoCertificado());
 			
 		} catch (PersistenceException e) {
 			objLog.error("No se pudo obtener la lista "+listaTipoCertificadoEntity.size());
 		}
 		
 		if(listaTipoCertificadoEntity!=null){
- 				objLog.info("FIN - listarTipoCertificadoOrderByCodigoTipoCertificadoEntity: "+listaTipoCertificadoEntity.size());
+ 				objLog.info("FIN - listarTipoCertificadoxEstadoEntity: "+listaTipoCertificadoEntity.size());
  		}
 		
 		return listaTipoCertificadoEntity;

@@ -22,7 +22,6 @@ public class SolicitudPostulacionEntity implements Serializable {
 
 	@Id
 	@OrderBy
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_solicitud_postulacion")
 	private Integer idSolicitudPostulacion;
 	

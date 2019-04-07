@@ -11,7 +11,7 @@ public interface ProgramaUniversidadDAO{
 	public ProgramaUniversidadEntity crearProgramaUniversidadEntity(ProgramaUniversidadEntity objProgramaUniversidadEntity);
 	public ProgramaUniversidadEntity actualizarProgramaUniversidadEntity(ProgramaUniversidadEntity objProgramaUniversidadEntity);
 	public ProgramaUniversidadEntity buscarProgramaUniversidadxIdEntity(ProgramaUniversidadEntity objProgramaUniversidadEntity) throws PersistenceImplException;
-	public List<ProgramaUniversidadEntity> listarProgramaUniversidadesEntity();
-	public List<ProgramaUniversidadEntity> listarProgramaUniversidadesOrdenPrioridad();
+	public List<ProgramaUniversidadEntity> listarProgramaUniversidadEntity();
+	public List<ProgramaUniversidadEntity> listarProgramaUniversidadxEstadoEntity(ProgramaUniversidadEntity objProgramaUniversidadEntity);
 	
 }

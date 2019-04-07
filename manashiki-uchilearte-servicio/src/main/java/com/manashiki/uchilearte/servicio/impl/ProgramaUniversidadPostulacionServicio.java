@@ -80,12 +80,12 @@ public class ProgramaUniversidadPostulacionServicio implements IProgramaUniversi
 		return listaProgramaUniversidadPostulacionDTO;
 	}
 	
-	public List<ProgramaUniversidadPostulacionDTO> listarProgramaUniversidadPostulacionConPrecioDTO() {
+	public List<ProgramaUniversidadPostulacionDTO> listarProgramaUniversidadPostulacionxEstadoDTO() {
 		objLog.info("INI - listarProgramaUniversidadPostulacionConPrecioDTO");
 		List<ProgramaUniversidadPostulacionDTO> listaProgramaUniversidadPostulacionDTO=new ArrayList<ProgramaUniversidadPostulacionDTO>();
 		List<ProgramaUniversidadPostulacionModel> listaProgramaUniversidades = new ArrayList<ProgramaUniversidadPostulacionModel>();
 
-		listaProgramaUniversidades=factoryNegocioDAO.getProgramaUniversidadPostulacionNegocioDAO().listarProgramaUniversidadPostulacionPrecioModel();
+		listaProgramaUniversidades=factoryNegocioDAO.getProgramaUniversidadPostulacionNegocioDAO().listarProgramaUniversidadPostulacionxEstadoModel();
 
 		listaProgramaUniversidadPostulacionDTO = ProgramaUniversidadPostulacionDTOMapper.ListProgramaUniversidadPostulacionModelToListProgramaUniversidadPostulacionDTO(listaProgramaUniversidades);
 		

@@ -7,41 +7,41 @@ public class AlumnoProgramaActivoSemestreDTO implements Serializable {
  
 	private static final long serialVersionUID = -7680302162672877658L;
 
-	private Integer idAlumnoProgramaActivoSemestre;
+	private int idAlumnoProgramaActivoSemestre;
 	
-	private Integer idProgramaActivoSemestre;
+	private int idProgramaActivoSemestre;
 	
-	private Integer idAlumno;
+	private int idAlumno;
 	
 	private Date fechaInicialInscripcionAlumnoProgramaActivoSemestre; 
 	
-	private Integer estadoAlumnoProgramaActivoSemestre;
+	private int estadoAlumnoProgramaActivoSemestre;
 	
 	public AlumnoProgramaActivoSemestreDTO() {
 		super();
 	}
 
-	public Integer getIdAlumnoProgramaActivoSemestre() {
+	public int getIdAlumnoProgramaActivoSemestre() {
 		return idAlumnoProgramaActivoSemestre;
 	}
 
-	public void setIdAlumnoProgramaActivoSemestre(Integer idAlumnoProgramaActivoSemestre) {
+	public void setIdAlumnoProgramaActivoSemestre(int idAlumnoProgramaActivoSemestre) {
 		this.idAlumnoProgramaActivoSemestre = idAlumnoProgramaActivoSemestre;
 	}
 
-	public Integer getIdProgramaActivoSemestre() {
+	public int getIdProgramaActivoSemestre() {
 		return idProgramaActivoSemestre;
 	}
 
-	public void setIdProgramaActivoSemestre(Integer idProgramaActivoSemestre) {
+	public void setIdProgramaActivoSemestre(int idProgramaActivoSemestre) {
 		this.idProgramaActivoSemestre = idProgramaActivoSemestre;
 	}
 
-	public Integer getIdAlumno() {
+	public int getIdAlumno() {
 		return idAlumno;
 	}
 
-	public void setIdAlumno(Integer idAlumno) {
+	public void setIdAlumno(int idAlumno) {
 		this.idAlumno = idAlumno;
 	}
 
@@ -54,13 +54,12 @@ public class AlumnoProgramaActivoSemestreDTO implements Serializable {
 		this.fechaInicialInscripcionAlumnoProgramaActivoSemestre = fechaInicialInscripcionAlumnoProgramaActivoSemestre;
 	}
 
-	public Integer getEstadoAlumnoProgramaActivoSemestre() {
+	public int getEstadoAlumnoProgramaActivoSemestre() {
 		return estadoAlumnoProgramaActivoSemestre;
 	}
 
-	public void setEstadoAlumnoProgramaActivoSemestre(Integer estadoAlumnoProgramaActivoSemestre) {
+	public void setEstadoAlumnoProgramaActivoSemestre(int estadoAlumnoProgramaActivoSemestre) {
 		this.estadoAlumnoProgramaActivoSemestre = estadoAlumnoProgramaActivoSemestre;
 	}
-	
 	
 }

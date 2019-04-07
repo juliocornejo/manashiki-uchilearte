@@ -76,8 +76,8 @@ public class FinalidadCertificadoServicio implements IFinalidadCertificadoServic
 		return finalidadCertificadoDTO;
 	}
 
-	public List<FinalidadCertificadoDTO> listarFinalidadCertificadosDTO() {
-		objLog.info("INI - listarFinalidadCertificadosDTO");
+	public List<FinalidadCertificadoDTO> listarFinalidadCertificadoDTO() {
+		objLog.info("INI - listarFinalidadCertificadoDTO");
 		List<FinalidadCertificadoDTO> listaFinalidadCertificadoDTO=new ArrayList<FinalidadCertificadoDTO>();
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoModel>();
 		
@@ -85,20 +85,20 @@ public class FinalidadCertificadoServicio implements IFinalidadCertificadoServic
 		
 		listaFinalidadCertificadoDTO = FinalidadCertificadoDTOMapper.ListFinalidadCertificadoModelToListFinalidadCertificadoDTO(listaFinalidadCertificadoes);
 		
-		objLog.info("FIN - listarFinalidadCertificadosDTO "+listaFinalidadCertificadoDTO.size());
+		objLog.info("FIN - listarFinalidadCertificadoDTO "+listaFinalidadCertificadoDTO.size());
 		return listaFinalidadCertificadoDTO;
 	}
 	
-	public List<FinalidadCertificadoDTO> listarFinalidadCertificadosOrdenDTO() {
-		objLog.info("INI - listarFinalidadCertificadosOrdenDTO");
+	public List<FinalidadCertificadoDTO> listarFinalidadCertificadoOrdenDTO() {
+		objLog.info("INI - listarFinalidadCertificadoOrdenDTO");
 		List<FinalidadCertificadoDTO> listaFinalidadCertificadoDTO=new ArrayList<FinalidadCertificadoDTO>();
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoModel>();
 		
-		listaFinalidadCertificadoes = factoryNegocioDAO.getFinalidadCertificadoNegocioDAO().listarFinalidadCertificadoModelOrden();
+		listaFinalidadCertificadoes = factoryNegocioDAO.getFinalidadCertificadoNegocioDAO().listarFinalidadCertificadoxEstadoModel();
 		
 		listaFinalidadCertificadoDTO = FinalidadCertificadoDTOMapper.ListFinalidadCertificadoModelToListFinalidadCertificadoDTO(listaFinalidadCertificadoes);
 		
-		objLog.info("FIN - listarFinalidadCertificadosOrdenDTO "+listaFinalidadCertificadoDTO.size());
+		objLog.info("FIN - listarFinalidadCertificadoOrdenDTO "+listaFinalidadCertificadoDTO.size());
 		return listaFinalidadCertificadoDTO;
 	}
 

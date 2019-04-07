@@ -35,12 +35,20 @@ public class TipoSolicitudEntity implements Serializable {
 	@Column(name="estado_tipo_solicitud")
 	private Boolean estadoTipoSolicitud;
 	
+	@OrderBy
+	@Column(name="prioridad_tipo_solicitud")
+	private Integer prioridadTipoSolicitud;
 
 	@OneToMany(mappedBy="fkIdTipoSolicitud")
 	private List<SolicitudAcademicaEntity> tipos_solicitudes;
 	
 	public TipoSolicitudEntity() {
 		super();
+	}
+
+	public TipoSolicitudEntity(Boolean estadoTipoSolicitud) {
+		super();
+		this.estadoTipoSolicitud = estadoTipoSolicitud;
 	}
 
 	public Integer getIdTipoSolicitud() {
@@ -82,5 +90,15 @@ public class TipoSolicitudEntity implements Serializable {
 	public void setEstadoTipoSolicitud(Boolean estadoTipoSolicitud) {
 		this.estadoTipoSolicitud = estadoTipoSolicitud;
 	}
+
+	public Integer getPrioridadTipoSolicitud() {
+		return prioridadTipoSolicitud;
+	}
+
+	public void setPrioridadTipoSolicitud(Integer prioridadTipoSolicitud) {
+		this.prioridadTipoSolicitud = prioridadTipoSolicitud;
+	}
+	
+	
 	
 }

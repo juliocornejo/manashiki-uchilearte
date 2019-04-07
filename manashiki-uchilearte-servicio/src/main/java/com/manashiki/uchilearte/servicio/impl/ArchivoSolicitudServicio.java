@@ -36,6 +36,19 @@ public class ArchivoSolicitudServicio implements IArchivoSolicitudServicio{
 		return archivoSolicitudDTO;
 
 	}
+	
+	public ArchivoSolicitudDTO crearArchivoSolicitudFlushDTO(ArchivoSolicitudDTO archivoSolicitudDTO) {
+		objLog.info("INI - crearArchivoSolicitudDTO");
+		ArchivoSolicitudModel archivoSolicitudModel = new ArchivoSolicitudModel();
+		archivoSolicitudModel = ArchivoSolicitudDTOMapper.ArchivoSolicitudDTOToArchivoSolicitudModel(archivoSolicitudDTO);
+
+		archivoSolicitudModel = factoryNegocioDAO.getArchivoSolicitudNegocioDAO().crearArchivoSolicitudFlushModel(archivoSolicitudModel);
+		
+		archivoSolicitudDTO = ArchivoSolicitudDTOMapper.ArchivoSolicitudModelToArchivoSolicitudDTO(archivoSolicitudModel);
+		objLog.info("FIN - crearArchivoSolicitudDTO "+archivoSolicitudDTO.getIdArchivoSolicitud());
+		return archivoSolicitudDTO;
+
+	}
 
 	public ArchivoSolicitudDTO actualizarArchivoSolicitudDTO(ArchivoSolicitudDTO archivoSolicitudDTO) {
 		objLog.info("INI - actualizarArchivoSolicitudDTO "+archivoSolicitudDTO.getIdArchivoSolicitud());
@@ -72,7 +85,7 @@ public class ArchivoSolicitudServicio implements IArchivoSolicitudServicio{
 		List<ArchivoSolicitudDTO> listaArchivoSolicitudDTO=new ArrayList<ArchivoSolicitudDTO>();
 		List<ArchivoSolicitudModel> listaArchivoSolicitudes = new ArrayList<ArchivoSolicitudModel>();
 
-		listaArchivoSolicitudes=factoryNegocioDAO.getArchivoSolicitudNegocioDAO().listarArchivoSolicitudesModel();
+		listaArchivoSolicitudes=factoryNegocioDAO.getArchivoSolicitudNegocioDAO().listarArchivoSolicitudModel();
 
 		listaArchivoSolicitudDTO = ArchivoSolicitudDTOMapper.ListArchivoSolicitudModelToListArchivoSolicitudDTO(listaArchivoSolicitudes);
 		

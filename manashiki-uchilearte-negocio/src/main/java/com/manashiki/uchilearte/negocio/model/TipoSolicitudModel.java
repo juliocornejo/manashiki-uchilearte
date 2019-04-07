@@ -12,9 +12,15 @@ public class TipoSolicitudModel implements Serializable{
 	private String codigoTipoSolicitud;
 	private String nombreTipoSolicitud;
 	private Boolean estadoTipoSolicitud;
+	private Integer prioridadTipoSolicitud;
 	
 	public TipoSolicitudModel() {
 		super();
+	}
+	
+	public TipoSolicitudModel(Boolean estadoTipoSolicitud) {
+		super();
+		this.estadoTipoSolicitud = estadoTipoSolicitud;
 	}
 
 	public Integer getIdTipoSolicitud() {
@@ -48,7 +54,13 @@ public class TipoSolicitudModel implements Serializable{
 	public void setEstadoTipoSolicitud(Boolean estadoTipoSolicitud) {
 		this.estadoTipoSolicitud = estadoTipoSolicitud;
 	}
-	
-	
+
+	public Integer getPrioridadTipoSolicitud() {
+		return prioridadTipoSolicitud;
+	}
+
+	public void setPrioridadTipoSolicitud(Integer prioridadTipoSolicitud) {
+		this.prioridadTipoSolicitud = prioridadTipoSolicitud;
+	}
 	
 }

@@ -1,6 +1,7 @@
 package com.manashiki.uchilearte.negocio.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class SemestreTemporadaModel implements Serializable {
  
@@ -9,6 +10,8 @@ public class SemestreTemporadaModel implements Serializable {
 	private Integer idSemestreTemporada;
 	private String nombreSemestreTemporada; //Nombre a Mostrar
 	private String descripcionSemestreTemporada;
+	private Date fechaActivacionDesde;
+	private Date fechaActivacionHasta;
 	
 	public SemestreTemporadaModel() {
 		super();
@@ -37,6 +40,23 @@ public class SemestreTemporadaModel implements Serializable {
 	public void setDescripcionSemestreTemporada(String descripcionSemestreTemporada) {
 		this.descripcionSemestreTemporada = descripcionSemestreTemporada;
 	}
+
+	public Date getFechaActivacionDesde() {
+		return fechaActivacionDesde;
+	}
+
+	public void setFechaActivacionDesde(Date fechaActivacionDesde) {
+		this.fechaActivacionDesde = fechaActivacionDesde;
+	}
+
+	public Date getFechaActivacionHasta() {
+		return fechaActivacionHasta;
+	}
+
+	public void setFechaActivacionHasta(Date fechaActivacionHasta) {
+		this.fechaActivacionHasta = fechaActivacionHasta;
+	}
+	
 	
 	
 }

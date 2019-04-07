@@ -7,8 +7,9 @@ import com.manashiki.uchilearte.negocio.model.ArchivoSolicitudModel;
 
 public interface ArchivoSolicitudNegocioDAO{
 	public ArchivoSolicitudModel crearArchivoSolicitudModel(ArchivoSolicitudModel archivoSolicitudModel);
+	public ArchivoSolicitudModel crearArchivoSolicitudFlushModel(ArchivoSolicitudModel archivoSolicitudModel);
 	public ArchivoSolicitudModel actualizarArchivoSolicitudModel(ArchivoSolicitudModel archivoSolicitudModel);
 	public ArchivoSolicitudModel buscarArchivoSolicitudxIdModel(ArchivoSolicitudModel archivoSolicitudModel) throws NegocioImplException;
-	public List<ArchivoSolicitudModel> listarArchivoSolicitudesModel();
+	public List<ArchivoSolicitudModel> listarArchivoSolicitudModel();
 	
 }

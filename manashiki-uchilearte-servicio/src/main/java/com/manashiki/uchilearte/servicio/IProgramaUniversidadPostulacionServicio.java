@@ -11,6 +11,6 @@ public interface IProgramaUniversidadPostulacionServicio{
 	public ProgramaUniversidadPostulacionDTO buscarProgramaUniversidadPostulacionxIdDTO(ProgramaUniversidadPostulacionDTO objProgramaUniversidadPostulacionDTO) throws ServicioImplException;
 	public List<ProgramaUniversidadPostulacionDTO> listarProgramaUniversidadPostulacionDTO(); //Las Muestra Ordenadas,	
 //	de los programas ya ordenados, mostrar solo los que tengan precio.
-	public List<ProgramaUniversidadPostulacionDTO> listarProgramaUniversidadPostulacionConPrecioDTO();
+	public List<ProgramaUniversidadPostulacionDTO> listarProgramaUniversidadPostulacionxEstadoDTO();
 	
 }

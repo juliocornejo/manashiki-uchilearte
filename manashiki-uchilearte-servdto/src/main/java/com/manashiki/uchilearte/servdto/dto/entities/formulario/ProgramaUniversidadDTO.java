@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="programaUniversidadDTO")
 public class ProgramaUniversidadDTO implements Serializable{
 
-
 	private static final long serialVersionUID = -537936973993838942L;
 	
 	private int idProgramaUniversidad = 0;
@@ -15,7 +14,9 @@ public class ProgramaUniversidadDTO implements Serializable{
 	private String nombreProgramaUniversidad = "";
 	private String duracionProgramaUniversidad = "";
 	private String costoProgramaUniversidad = "";
-	private int clasificacionPrograma;
+	private boolean estadoProgramaUniversidad = false;
+	private int prioridadProgramaUniversidad= 0;
+	private int clasificacionPrograma= 0;
 	
 	public ProgramaUniversidadDTO() {
 		super();
@@ -68,7 +69,21 @@ public class ProgramaUniversidadDTO implements Serializable{
 	public void setClasificacionPrograma(int clasificacionPrograma) {
 		this.clasificacionPrograma = clasificacionPrograma;
 	}
-	
-	
+
+	public boolean isEstadoProgramaUniversidad() {
+		return estadoProgramaUniversidad;
+	}
+
+	public void setEstadoProgramaUniversidad(boolean estadoProgramaUniversidad) {
+		this.estadoProgramaUniversidad = estadoProgramaUniversidad;
+	}
+
+	public int getPrioridadProgramaUniversidad() {
+		return prioridadProgramaUniversidad;
+	}
+
+	public void setPrioridadProgramaUniversidad(int prioridadProgramaUniversidad) {
+		this.prioridadProgramaUniversidad = prioridadProgramaUniversidad;
+	}
 	
 }

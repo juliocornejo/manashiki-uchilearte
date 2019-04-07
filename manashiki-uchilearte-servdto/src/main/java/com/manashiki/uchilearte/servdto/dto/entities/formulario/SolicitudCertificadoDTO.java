@@ -34,6 +34,26 @@ public class SolicitudCertificadoDTO implements Serializable{
 	public SolicitudCertificadoDTO() {
 		super();
 	}
+	
+	public SolicitudCertificadoDTO(int idSolicitudCertificado, String anhoIngreso,String apellidoPaternoPersonaSolicitudCertificado, String apellidoMaternoPersonaSolicitudCertificado,
+			int estadoSolicitud, Date fechaSolicitud, String mailMember ,  String nombrePersonaSolicitudCertificado, String rutPersonaSolicitudCertificado,
+			int idFinalidadCertificado, int idProgramaUniversidad, int idTipoCertificado){
+		super();
+		this.idSolicitudCertificado = idSolicitudCertificado;
+		this.nombrePersonaSolicitudCertificado = nombrePersonaSolicitudCertificado;
+		this.apellidoPaternoPersonaSolicitudCertificado = apellidoPaternoPersonaSolicitudCertificado;
+		this.apellidoMaternoPersonaSolicitudCertificado = apellidoMaternoPersonaSolicitudCertificado;
+		this.rutPersonaSolicitudCertificado = rutPersonaSolicitudCertificado;
+		this.idProgramaUniversidad = idProgramaUniversidad;
+		this.mailMember = mailMember;
+		this.anhoIngreso = anhoIngreso;
+		this.idTipoCertificado = idTipoCertificado;
+		this.idFinalidadCertificado = idFinalidadCertificado;
+		this.fechaSolicitud = fechaSolicitud;
+		this.estadoSolicitud = estadoSolicitud;
+	}
+
+
 
 	public int getIdSolicitudCertificado() {
 		return idSolicitudCertificado;

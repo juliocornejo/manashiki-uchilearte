@@ -82,14 +82,14 @@ public class TipoCertificadoServicio implements ITipoCertificadoServicio{
 		return listaTipoCertificadoDTO;
 	}
 	
-	public List<TipoCertificadoDTO> listarTipoCertificadoOrdenDTO() {
+	public List<TipoCertificadoDTO> listarTipoCertificadoxEstadoDTO() {
 		objLog.info("INI - listarTipoCertificadoOrdenDTO");
 		
 		List<TipoCertificadoDTO> listaTipoCertificadoDTO=new ArrayList<TipoCertificadoDTO>();
 		
 		List<TipoCertificadoModel> listaTipoCertificadoes = new ArrayList<TipoCertificadoModel>();
 
-		listaTipoCertificadoes=factoryNegocioDAO.getTipoCertificadoNegocioDAO().listarTipoCertificadoOrdenModel();
+		listaTipoCertificadoes=factoryNegocioDAO.getTipoCertificadoNegocioDAO().listarTipoCertificadoxEstadoModel();
 
 		listaTipoCertificadoDTO = TipoCertificadoDTOMapper.ListTipoCertificadoModelToListTipoCertificadoDTO(listaTipoCertificadoes);
 		

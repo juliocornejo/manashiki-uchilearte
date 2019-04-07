@@ -67,8 +67,8 @@ public class ProgramaUniversidadServicio implements IProgramaUniversidadServicio
 		return programaUniversidadDTO;
 	}
 
-	public List<ProgramaUniversidadDTO> listarProgramaUniversidadesDTO() {
-		objLog.info("INI - listarProgramaUniversidadesDTO");
+	public List<ProgramaUniversidadDTO> listarProgramaUniversidadDTO() {
+		objLog.info("INI - listarProgramaUniversidadDTO");
 		List<ProgramaUniversidadDTO> listaProgramaUniversidadDTO=new ArrayList<ProgramaUniversidadDTO>();
 		List<ProgramaUniversidadModel> listaProgramaUniversidades = new ArrayList<ProgramaUniversidadModel>();
 
@@ -76,20 +76,20 @@ public class ProgramaUniversidadServicio implements IProgramaUniversidadServicio
 
 		listaProgramaUniversidadDTO = ProgramaUniversidadDTOMapper.ListProgramaUniversidadModelToListProgramaUniversidadDTO(listaProgramaUniversidades);
 		
-		objLog.info("FIN - listarProgramaUniversidadesDTO "+listaProgramaUniversidadDTO.size());
+		objLog.info("FIN - listarProgramaUniversidadDTO "+listaProgramaUniversidadDTO.size());
 		return listaProgramaUniversidadDTO;
 	}
 	
-	public List<ProgramaUniversidadDTO> listarProgramaUniversidadesConPrecioDTO() {
-		objLog.info("INI - listarProgramaUniversidadesDTO");
+	public List<ProgramaUniversidadDTO> listarProgramaUniversidadxEstadoDTO() {
+		objLog.info("INI - listarProgramaUniversidadxEstadoDTO");
 		List<ProgramaUniversidadDTO> listaProgramaUniversidadDTO=new ArrayList<ProgramaUniversidadDTO>();
 		List<ProgramaUniversidadModel> listaProgramaUniversidades = new ArrayList<ProgramaUniversidadModel>();
 
-		listaProgramaUniversidades=factoryNegocioDAO.getProgramaUniversidadNegocioDAO().listarProgramaUniversidadPrecioModel();
+		listaProgramaUniversidades=factoryNegocioDAO.getProgramaUniversidadNegocioDAO().listarProgramaUniversidadxEstadoModel();
 
 		listaProgramaUniversidadDTO = ProgramaUniversidadDTOMapper.ListProgramaUniversidadModelToListProgramaUniversidadDTO(listaProgramaUniversidades);
 		
-		objLog.info("FIN - listarProgramaUniversidadesDTO "+listaProgramaUniversidadDTO.size());
+		objLog.info("FIN - listarProgramaUniversidadxEstadoDTO "+listaProgramaUniversidadDTO.size());
 		return listaProgramaUniversidadDTO;
 	}
 

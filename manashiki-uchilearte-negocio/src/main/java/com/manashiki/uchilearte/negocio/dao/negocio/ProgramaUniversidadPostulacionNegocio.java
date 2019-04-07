@@ -85,11 +85,13 @@ public class ProgramaUniversidadPostulacionNegocio implements ProgramaUniversida
 		return listaProgramaUniversidadPostulacionModel;
 	}
 	//Traer todos los programas con precios (Solo Postulaciones)
-	public List<ProgramaUniversidadPostulacionModel> listarProgramaUniversidadPostulacionPrecioModel() {
+	public List<ProgramaUniversidadPostulacionModel> listarProgramaUniversidadPostulacionxEstadoModel() {
 		objLog.info("INI - listarProgramaUniversidadesPrecioModel");
 		List<ProgramaUniversidadPostulacionModel> listaProgramaUniversidadPostulacionModel=new ArrayList<ProgramaUniversidadPostulacionModel>();
 		
-		listaProgramaUniversidadPostulacionModel = obtenerCacheListaProgramaUniversidadPostulacion();
+		ProgramaUniversidadPostulacionModel programaUniversidadPostulacionModel = new ProgramaUniversidadPostulacionModel(true); 
+		
+		listaProgramaUniversidadPostulacionModel = obtenerCacheListaProgramaUniversidadPostulacionxEstado(programaUniversidadPostulacionModel);
 		
 		if(listaProgramaUniversidadPostulacionModel!=null && listaProgramaUniversidadPostulacionModel.size()>0){
 			objLog.info("FIN - listarProgramaUniversidadesPrecioModel "+listaProgramaUniversidadPostulacionModel.size());
@@ -99,10 +101,10 @@ public class ProgramaUniversidadPostulacionNegocio implements ProgramaUniversida
 	}
 	
 	//Aca deben ir todas los Programas
-	private List<ProgramaUniversidadPostulacionModel> obtenerCacheListaProgramaUniversidadPostulacion(){
+	private List<ProgramaUniversidadPostulacionModel> obtenerCacheListaProgramaUniversidadPostulacionxEstado(ProgramaUniversidadPostulacionModel programaUniversidadPostulacionModel){
 		List<ProgramaUniversidadPostulacionModel> listaProgramaUniversidadPostulacionModel=new ArrayList<ProgramaUniversidadPostulacionModel>();
+		
 		List<ProgramaUniversidadPostulacionEntity> listaProgramaUniversidadPostulacionEntity=new ArrayList<ProgramaUniversidadPostulacionEntity>();
-		ProgramaUniversidadPostulacionModel programaUniversidadPostulacionModel = new ProgramaUniversidadPostulacionModel();
 		
 		try{
 			if(objCacheComponent==null){
@@ -127,7 +129,9 @@ public class ProgramaUniversidadPostulacionNegocio implements ProgramaUniversida
 			if(listaProgramaUniversidadPostulacionModel==null || listaProgramaUniversidadPostulacionModel.size()==0){
 //				listaProgramaUniversidadEntity = factoryPersistenciaDAO.getProgramaUniversidadDAO().listarProgramaUniversidadesEntity();
 				//Que los entregue ordenados por doc-mag-pos-dipl
-				listaProgramaUniversidadPostulacionEntity = factoryPersistenciaDAO.getProgramaUniversidadPostulacionDAO().listarProgramaUniversidadPostulacionOrdenPrioridad();
+				ProgramaUniversidadPostulacionEntity programaUniversidadPostulacionEntity = ProgramaUniversidadPostulacionModelMapper.ProgramaUniversidadPostulacionModelToProgramaUniversidadPostulacionEntity(programaUniversidadPostulacionModel);
+				
+				listaProgramaUniversidadPostulacionEntity = factoryPersistenciaDAO.getProgramaUniversidadPostulacionDAO().listarProgramaUniversidadPostulacionxEstadoEntity(programaUniversidadPostulacionEntity);
 				
 				if(listaProgramaUniversidadPostulacionEntity!=null && listaProgramaUniversidadPostulacionEntity.size()>0){
 					listaProgramaUniversidadPostulacionModel = CacheLocalRepositorio.generarCacheListaProgramaUniversidadPostulaciones(objCacheComponent, listaProgramaUniversidadPostulacionEntity);

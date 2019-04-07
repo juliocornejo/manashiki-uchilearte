@@ -8,7 +8,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import com.manashiki.uchilearte.servdto.wrapper.UchileArte;
 
-import vijnana.respuesta.wrapper.response.Error;
+import vijnana.respuesta.wrapper.response.AbstractWrapperError;
 import vijnana.respuesta.wrapper.response.AbstractWrapper;
 
 
@@ -20,7 +20,7 @@ public class WrapperUchileArte extends AbstractWrapper implements Serializable{
 	@JsonProperty("data")
 	private UchileArte data;
 	
-	public WrapperUchileArte(boolean ok, String tiempoRespuesta, int cantidadResultados, String url, Error error,
+	public WrapperUchileArte(boolean ok, String tiempoRespuesta, int cantidadResultados, String url, AbstractWrapperError error,
 			String tipoMetodo, UchileArte data) {
 		super(ok, tiempoRespuesta, cantidadResultados, url, error, tipoMetodo);
 		this.data = data;

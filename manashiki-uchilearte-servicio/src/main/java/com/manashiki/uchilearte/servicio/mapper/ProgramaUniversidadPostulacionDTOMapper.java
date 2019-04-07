@@ -26,9 +26,11 @@ public class ProgramaUniversidadPostulacionDTOMapper{
 			programaUniversidadPostulacionModel.setCodigoProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.getCodigoProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionModel.setNombreProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.getNombreProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionModel.setDuracionProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.getDuracionProgramaUniversidadPostulacion());
+			programaUniversidadPostulacionModel.setEstadoProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.isEstadoProgramaUniversidadPostulacion());
+			programaUniversidadPostulacionModel.setPrioridadProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.getPrioridadProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionModel.setCostoProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.getCostoProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionModel.setClasificacionProgramaPostulacion(programaUniversidadPostulacionDTO.getClasificacionProgramaPostulacion());
-			programaUniversidadPostulacionModel.setPrioridad(programaUniversidadPostulacionDTO.getPrioridad());
+			
 			
 		}
 		
@@ -72,11 +74,17 @@ public class ProgramaUniversidadPostulacionDTOMapper{
 			programaUniversidadPostulacionDTO.setNombreProgramaUniversidadPostulacion(programaUniversidadPostulacionModel.getNombreProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionDTO.setDuracionProgramaUniversidadPostulacion(programaUniversidadPostulacionModel.getDuracionProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionDTO.setCostoProgramaUniversidadPostulacion(programaUniversidadPostulacionModel.getCostoProgramaUniversidadPostulacion());
+			
+			if(programaUniversidadPostulacionModel.getEstadoProgramaUniversidadPostulacion()!=null){
+				programaUniversidadPostulacionModel.setEstadoProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.isEstadoProgramaUniversidadPostulacion());
+			}
+			
+			if(programaUniversidadPostulacionModel.getPrioridadProgramaUniversidadPostulacion()!=null){
+				programaUniversidadPostulacionModel.setPrioridadProgramaUniversidadPostulacion(programaUniversidadPostulacionDTO.getPrioridadProgramaUniversidadPostulacion());
+			}
+			
 			if(programaUniversidadPostulacionModel.getClasificacionProgramaPostulacion()!=null){
 				programaUniversidadPostulacionDTO.setClasificacionProgramaPostulacion(programaUniversidadPostulacionModel.getClasificacionProgramaPostulacion());
-			}
-			if(programaUniversidadPostulacionModel.getPrioridad()!=null){
-				programaUniversidadPostulacionDTO.setPrioridad(programaUniversidadPostulacionModel.getPrioridad());
 			}
 		
 		}

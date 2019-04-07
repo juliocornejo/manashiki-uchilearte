@@ -23,7 +23,6 @@ public class SolicitudCertificadoEntity implements Serializable {
 	
 	@Id
 	@OrderBy
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_solicitud_certificado")
 	private Integer idSolicitudCertificado;
 	

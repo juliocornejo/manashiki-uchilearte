@@ -83,18 +83,18 @@ public class TipoSolicitudServicio implements ITipoSolicitudServicio{
 		return listaTipoSolicitudDTO;
 	}
 	
-	public List<TipoSolicitudDTO> listarTipoSolicitudOrdenDTO() {
-		objLog.info("INI - listarTipoSolicitudOrdenDTO");
+	public List<TipoSolicitudDTO> listarTipoSolicitudOrdenxEstadoDTO() {
+		objLog.info("INI - listarTipoSolicitudOrdenxEstadoDTO");
 		
 		List<TipoSolicitudDTO> listaTipoSolicitudDTO=new ArrayList<TipoSolicitudDTO>();
 		
 		List<TipoSolicitudModel> listaTipoSolicitudes = new ArrayList<TipoSolicitudModel>();
 
-		listaTipoSolicitudes=factoryNegocioDAO.getTipoSolicitudNegocioDAO().listarTipoSolicitudModelOrderCodigoTipoSolicitud();
+		listaTipoSolicitudes=factoryNegocioDAO.getTipoSolicitudNegocioDAO().listarTipoSolicitudModelxEstadoModel();
 
 		listaTipoSolicitudDTO = TipoSolicitudDTOMapper.ListTipoSolicitudModelToListTipoSolicitudDTO(listaTipoSolicitudes);
 		
-		objLog.info("FIN - listarTipoSolicitudOrdenDTO "+listaTipoSolicitudDTO.size());
+		objLog.info("FIN - listarTipoSolicitudOrdenxEstadoDTO "+listaTipoSolicitudDTO.size());
 		
 		return listaTipoSolicitudDTO;
 	}

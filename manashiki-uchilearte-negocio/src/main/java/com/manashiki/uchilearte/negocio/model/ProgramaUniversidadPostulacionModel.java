@@ -12,12 +12,19 @@ public class ProgramaUniversidadPostulacionModel implements Serializable{
 	private String codigoProgramaUniversidadPostulacion;
 	private String nombreProgramaUniversidadPostulacion;
 	private String duracionProgramaUniversidadPostulacion;
+	private Boolean estadoProgramaUniversidadPostulacion;
+	private Integer prioridadProgramaUniversidadPostulacion;
 	private String costoProgramaUniversidadPostulacion;
 	private Integer clasificacionProgramaPostulacion;
-	private Integer prioridad;
+
 	
 	public ProgramaUniversidadPostulacionModel() {
 		super();
+	}
+	
+	public ProgramaUniversidadPostulacionModel(Boolean estadoProgramaUniversidadPostulacion) {
+		super();
+		this.estadoProgramaUniversidadPostulacion = estadoProgramaUniversidadPostulacion;
 	}
 
 	public Integer getIdProgramaUniversidadPostulacion() {
@@ -68,14 +75,32 @@ public class ProgramaUniversidadPostulacionModel implements Serializable{
 		this.clasificacionProgramaPostulacion = clasificacionProgramaPostulacion;
 	}
 
-	public Integer getPrioridad() {
-		return prioridad;
+	public Boolean getEstadoProgramaUniversidadPostulacion() {
+		return estadoProgramaUniversidadPostulacion;
 	}
 
-	public void setPrioridad(Integer prioridad) {
-		this.prioridad = prioridad;
+	public void setEstadoProgramaUniversidadPostulacion(Boolean estadoProgramaUniversidadPostulacion) {
+		this.estadoProgramaUniversidadPostulacion = estadoProgramaUniversidadPostulacion;
 	}
 
+	public Integer getPrioridadProgramaUniversidadPostulacion() {
+		return prioridadProgramaUniversidadPostulacion;
+	}
+
+	public void setPrioridadProgramaUniversidadPostulacion(Integer prioridadProgramaUniversidadPostulacion) {
+		this.prioridadProgramaUniversidadPostulacion = prioridadProgramaUniversidadPostulacion;
+	}
+
+//	public Integer getPrioridad() {
+//		return prioridad;
+//	}
+//
+//	public void setPrioridad(Integer prioridad) {
+//		this.prioridad = prioridad;
+//	}
+	
+	
+	
 //	public Integer getSubClasificacionProgramaPostulacion() {
 //		return subClasificacionProgramaPostulacion;
 //	}

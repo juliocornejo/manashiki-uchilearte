@@ -10,7 +10,7 @@ public interface IFinalidadCertificadoServicio{
 	public FinalidadCertificadoDTO crearFinalidadCertificadoDTO(FinalidadCertificadoDTO objFinalidadCertificadoDTO);
 	public FinalidadCertificadoDTO actualizarFinalidadCertificadoDTO(FinalidadCertificadoDTO objFinalidadCertificadoDTO);
 	public FinalidadCertificadoDTO buscarFinalidadCertificadoxIdDTO(FinalidadCertificadoDTO objFinalidadCertificadoDTO) throws ServicioImplException;
-	public List<FinalidadCertificadoDTO> listarFinalidadCertificadosDTO();
-	public List<FinalidadCertificadoDTO> listarFinalidadCertificadosOrdenDTO();
+	public List<FinalidadCertificadoDTO> listarFinalidadCertificadoDTO();
+	public List<FinalidadCertificadoDTO> listarFinalidadCertificadoOrdenDTO();
 	
 }

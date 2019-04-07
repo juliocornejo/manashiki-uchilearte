@@ -2,6 +2,7 @@ package com.manashiki.uchilearte.negocio.model;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.Date;
 
 public class ArchivoSolicitudModel implements Serializable{
 	
@@ -13,6 +14,7 @@ public class ArchivoSolicitudModel implements Serializable{
 	private String nombreArchivoSolicitud; //Nombre a Mostrar
 	private String direccionAlmacenamientoArchivoSolicitud;
 	private String tipoArchivoSolicitud;
+	private Date fechaArchivo;
 	
 	public ArchivoSolicitudModel() {
 		super();
@@ -49,4 +51,14 @@ public class ArchivoSolicitudModel implements Serializable{
 	public void setTipoArchivoSolicitud(String tipoArchivoSolicitud) {
 		this.tipoArchivoSolicitud = tipoArchivoSolicitud;
 	}
+
+	public Date getFechaArchivo() {
+		return fechaArchivo;
+	}
+
+	public void setFechaArchivo(Date fechaArchivo) {
+		this.fechaArchivo = fechaArchivo;
+	}
+	
+	
 }

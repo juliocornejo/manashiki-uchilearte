@@ -82,8 +82,8 @@ public class ProgramaUniversidadDAOImpl implements ProgramaUniversidadDAO{
 	 * @return lista List<ProgramaUniversidad>
 	 * @exception no lanza excepciones
 	 */
-	public List<ProgramaUniversidadEntity> listarProgramaUniversidadesEntity(){
-		objLog.info("INI - listarProgramaUniversidadesEntity");
+	public List<ProgramaUniversidadEntity> listarProgramaUniversidadEntity(){
+		objLog.info("INI - listarProgramaUniversidadEntity");
 		List<ProgramaUniversidadEntity> lista = null;
 		try {
 			lista = programaUniversidadRepository.findAll();
@@ -92,7 +92,7 @@ public class ProgramaUniversidadDAOImpl implements ProgramaUniversidadDAO{
 		}
 		
 		if(lista!=null){
- 				objLog.info("FIN - listarProgramaUniversidadesEntity "+lista.size());
+ 				objLog.info("FIN - listarProgramaUniversidadEntity "+lista.size());
  		}
 		
 		return lista;
@@ -103,12 +103,12 @@ public class ProgramaUniversidadDAOImpl implements ProgramaUniversidadDAO{
 	 * @return lista List<ProgramaUniversidad>
 	 * @exception no lanza excepciones
 	 */
-	public List<ProgramaUniversidadEntity> listarProgramaUniversidadesOrdenPrioridad(){
+	public List<ProgramaUniversidadEntity> listarProgramaUniversidadxEstadoEntity(ProgramaUniversidadEntity programaUniversidadEntity){
 		objLog.info("INI - listarProgramaUniversidadesOrdenPrioridad");
 		List<ProgramaUniversidadEntity> lista = null;
 		List<ProgramaUniversidadEntity> metLista = null;
 		try {
-			metLista = programaUniversidadRepository.findAllByOrderByClasificacionProgramaAsc();
+			metLista = programaUniversidadRepository.findByEstadoProgramaUniversidadOrderByClasificacionProgramaAscPrioridadProgramaUniversidadAsc(programaUniversidadEntity.getEstadoProgramaUniversidad());
 			lista = new ArrayList<ProgramaUniversidadEntity>();
 			for(ProgramaUniversidadEntity puE :metLista){
 				if(puE.getClasificacionPrograma()>0){

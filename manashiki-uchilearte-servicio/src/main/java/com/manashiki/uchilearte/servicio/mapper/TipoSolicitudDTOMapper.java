@@ -18,17 +18,19 @@ public class TipoSolicitudDTOMapper{
 	
 	public static TipoSolicitudModel TipoSolicitudDTOToTipoSolicitudModel(TipoSolicitudDTO tipoSolicitudDTO){
 
-		TipoSolicitudModel tipoSolicitud=new TipoSolicitudModel();
+		TipoSolicitudModel tipoSolicitudModel=new TipoSolicitudModel();
 		if(tipoSolicitudDTO==null){
 			return new TipoSolicitudModel();
 		}
 		else{
-			tipoSolicitud.setIdTipoSolicitud(tipoSolicitudDTO.getIdTipoSolicitud());
-			tipoSolicitud.setCodigoTipoSolicitud(tipoSolicitudDTO.getCodigoTipoSolicitud());
-			tipoSolicitud.setNombreTipoSolicitud(tipoSolicitudDTO.getNombreTipoSolicitud());
+			tipoSolicitudModel.setIdTipoSolicitud(tipoSolicitudDTO.getIdTipoSolicitud());
+			tipoSolicitudModel.setCodigoTipoSolicitud(tipoSolicitudDTO.getCodigoTipoSolicitud());
+			tipoSolicitudModel.setNombreTipoSolicitud(tipoSolicitudDTO.getNombreTipoSolicitud());
+			tipoSolicitudModel.setEstadoTipoSolicitud(tipoSolicitudDTO.isEstadoTipoSolicitud());
+			tipoSolicitudModel.setPrioridadTipoSolicitud(tipoSolicitudDTO.getPrioridadTipoSolicitud());
 		}
 		
-		return tipoSolicitud;
+		return tipoSolicitudModel;
 	}
 
 	public static List<TipoSolicitudModel> ListTipoSolicitudDTOToListTipoSolicitudModel(List<TipoSolicitudDTO> listaTipoSolicitudDTO){
@@ -62,9 +64,19 @@ public class TipoSolicitudDTOMapper{
 			return new TipoSolicitudDTO();
 		}
 		else{
-			tipoSolicitudDTO.setIdTipoSolicitud(tipoSolicitudModel.getIdTipoSolicitud());
+			if(tipoSolicitudModel.getIdTipoSolicitud()!=null){
+				tipoSolicitudDTO.setIdTipoSolicitud(tipoSolicitudModel.getIdTipoSolicitud());
+			}
 			tipoSolicitudDTO.setCodigoTipoSolicitud(tipoSolicitudModel.getCodigoTipoSolicitud());
 			tipoSolicitudDTO.setNombreTipoSolicitud(tipoSolicitudModel.getNombreTipoSolicitud());
+			
+			if(tipoSolicitudModel.getEstadoTipoSolicitud()!=null){
+				tipoSolicitudDTO.setEstadoTipoSolicitud(tipoSolicitudModel.getEstadoTipoSolicitud());
+			}
+			if(tipoSolicitudModel.getPrioridadTipoSolicitud()!=null){
+				tipoSolicitudDTO.setPrioridadTipoSolicitud(tipoSolicitudModel.getPrioridadTipoSolicitud());
+			}
+			
 		}
 		return tipoSolicitudDTO;
 	}

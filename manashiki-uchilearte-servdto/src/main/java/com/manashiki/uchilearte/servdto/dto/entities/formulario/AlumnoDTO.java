@@ -14,6 +14,7 @@ public class AlumnoDTO implements Serializable {
 	private int idAlumnoUchile;
 	private String descripcionAlumnosUchile; //mail de solicitante
 	private int estadoAlumnosUchile;
+	private int idUsuarioUchile;
 	
 	public AlumnoDTO() {
 		super();
@@ -41,6 +42,14 @@ public class AlumnoDTO implements Serializable {
 
 	public void setEstadoAlumnosUchile(int estadoAlumnosUchile) {
 		this.estadoAlumnosUchile = estadoAlumnosUchile;
+	}
+
+	public int getIdUsuarioUchile() {
+		return idUsuarioUchile;
+	}
+
+	public void setIdUsuarioUchile(int idUsuarioUchile) {
+		this.idUsuarioUchile = idUsuarioUchile;
 	}
 	
 }

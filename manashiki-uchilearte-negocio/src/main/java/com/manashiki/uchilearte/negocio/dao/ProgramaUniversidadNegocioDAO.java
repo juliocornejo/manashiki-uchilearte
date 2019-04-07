@@ -10,6 +10,6 @@ public interface ProgramaUniversidadNegocioDAO{
 	public ProgramaUniversidadModel actualizarProgramaUniversidadModel(ProgramaUniversidadModel objProgramaUniversidadModel);
 	public ProgramaUniversidadModel buscarProgramaUniversidadxIdModel(ProgramaUniversidadModel objProgramaUniversidadModel) throws NegocioImplException;
 	public List<ProgramaUniversidadModel> listarProgramaUniversidadModel();
-	public List<ProgramaUniversidadModel> listarProgramaUniversidadPrecioModel();
+	public List<ProgramaUniversidadModel> listarProgramaUniversidadxEstadoModel();
 	
 }

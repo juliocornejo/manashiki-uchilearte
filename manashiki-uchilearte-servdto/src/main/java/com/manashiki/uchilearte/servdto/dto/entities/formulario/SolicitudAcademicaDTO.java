@@ -38,6 +38,47 @@ public class SolicitudAcademicaDTO implements Serializable{
 	public SolicitudAcademicaDTO() {
 		super();
 	}
+	
+//	`id_solicitud_academica` int(11) NOT NULL AUTO_INCREMENT,
+//	  `anho_ingreso` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+//	  `apellido_materno_persona_solicitud_academica` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+//	  `apellido_paterno_persona_solicitud_academica` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+//	  `archivo_adjunto` tinyint(1) DEFAULT '0',
+//	  `estado_solicitud` int(11) DEFAULT NULL,
+//	  `fecha_solicitud` datetime DEFAULT NULL,
+//	  `fundamentacion_solicitud` varchar(1000) COLLATE utf8_spanish_ci DEFAULT NULL,
+//	  `mail_member` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+//	  `nombre_persona_solicitud_academica` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+//	  `rut_persona_solicitud_academica` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
+//	  `fk_id_archivo_solicitud_` int(11) DEFAULT NULL,
+//	  `fk_id_programa_universidad` int(11) DEFAULT NULL,
+//	  `fk_id_tipo_solicitud` int(11) DEFAULT NULL,
+	
+	public SolicitudAcademicaDTO(int idSolicitudAcademica , String anhoIngreso, String apellidoMaternoPersonaSolicitudAcademica, String apellidoPaternoPersonaSolicitudAcademica, 
+			boolean archivoAdjunto, int estadoSolicitud, 
+			Date fechaSolicitud,
+//			String sfechaSolicitud,
+			String fundamentacionSolicitud, String mailMember, String nombrePersonaSolicitudAcademica, String rutPersonaSolicitudAcademica,
+			int idArchivoSolicitud, int idProgramaUniversidad,	int idTipoSolicitud) {
+		super();
+		this.idSolicitudAcademica = idSolicitudAcademica;
+		this.nombrePersonaSolicitudAcademica = nombrePersonaSolicitudAcademica;
+		this.apellidoPaternoPersonaSolicitudAcademica = apellidoPaternoPersonaSolicitudAcademica;
+		this.apellidoMaternoPersonaSolicitudAcademica = apellidoMaternoPersonaSolicitudAcademica;
+		this.rutPersonaSolicitudAcademica = rutPersonaSolicitudAcademica;
+		this.idProgramaUniversidad = idProgramaUniversidad;
+		this.mailMember = mailMember;
+		this.anhoIngreso = anhoIngreso;
+		this.idTipoSolicitud = idTipoSolicitud;
+		this.fundamentacionSolicitud = fundamentacionSolicitud;
+//		this.sfechaSolicitud = sfechaSolicitud;
+		this.fechaSolicitud = fechaSolicitud;
+		this.archivoAdjunto = archivoAdjunto;
+		this.idArchivoSolicitud = idArchivoSolicitud;
+		this.estadoSolicitud = estadoSolicitud;
+	}
+
+
 
 	public int getIdSolicitudAcademica() {
 		return idSolicitudAcademica;

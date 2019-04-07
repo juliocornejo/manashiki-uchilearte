@@ -83,39 +83,32 @@ public class FinalidadCertificadoNegocio implements FinalidadCertificadoNegocioD
 	public List<FinalidadCertificadoModel> listarFinalidadCertificadoModel() {
 		objLog.info("INI - listarFinalidadCertificadosModel");
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel=new ArrayList<FinalidadCertificadoModel>();
-//		List<FinalidadCertificadoEntity> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoEntity>();
-//		
-//		listaFinalidadCertificadoes=factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoesEntity();
-		
-//		listaFinalidadCertificadoModel = FinalidadCertificadoModelMapper.ListFinalidadCertificadoEntityToListFinalidadCertificadoModel(listaFinalidadCertificadoes);
-		listaFinalidadCertificadoModel = obtenerCacheListaFinalidadCertificado();
+
+		listaFinalidadCertificadoModel = obtenerCacheListaAllFinalidadCertificado();
 		
 		objLog.info("FIN - listarFinalidadCertificadosModel "+listaFinalidadCertificadoModel.size());
 		
 		return listaFinalidadCertificadoModel;
 	}
 	
-	public List<FinalidadCertificadoModel> listarFinalidadCertificadoModelOrden() {
-		objLog.info("INI - listarFinalidadCertificadosModel");
+	public List<FinalidadCertificadoModel> listarFinalidadCertificadoxEstadoModel() {
+		objLog.info("INI - listarFinalidadCertificadoxEstadoModel");
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel=new ArrayList<FinalidadCertificadoModel>();
-//		List<FinalidadCertificadoEntity> listaFinalidadCertificadoes = new ArrayList<FinalidadCertificadoEntity>();
-//		
-//		listaFinalidadCertificadoes=factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoesEntity();
-		FinalidadCertificadoModel finalidadCertificadoModel = new FinalidadCertificadoModel();
-//		listaFinalidadCertificadoModel = FinalidadCertificadoModelMapper.ListFinalidadCertificadoEntityToListFinalidadCertificadoModel(listaFinalidadCertificadoes);
-		listaFinalidadCertificadoModel = obtenerCacheListaFinalidadCertificadoOrden(finalidadCertificadoModel);
+
+		FinalidadCertificadoModel finalidadCertificadoModel = new FinalidadCertificadoModel(true);
 		
-		objLog.info("FIN - listarFinalidadCertificadosModel "+listaFinalidadCertificadoModel.size());
+		listaFinalidadCertificadoModel = obtenerCacheListaFinalidadCertificadoxEstado(finalidadCertificadoModel);
+		
+		objLog.info("FIN - listarFinalidadCertificadoxEstadoModel "+listaFinalidadCertificadoModel.size());
 		
 		return listaFinalidadCertificadoModel;
 	}
 	
 
 	
-	private List<FinalidadCertificadoModel> obtenerCacheListaFinalidadCertificado(){
+	private List<FinalidadCertificadoModel> obtenerCacheListaAllFinalidadCertificado(){
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel=new ArrayList<FinalidadCertificadoModel>();
 		List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity=new ArrayList<FinalidadCertificadoEntity>();
-//		FinalidadCertificadoModel finalidadCertificadoModel = new FinalidadCertificadoModel();
 		try{
 			if(objCacheComponent==null){
 				objCacheComponent = CacheLocalRepositorio.crearRepositorioCacheLocal(); //Colocar el nombre de cache local del ws
@@ -155,7 +148,7 @@ public class FinalidadCertificadoNegocio implements FinalidadCertificadoNegocioD
 		return listaFinalidadCertificadoModel;
 	}
 	
-	private List<FinalidadCertificadoModel> obtenerCacheListaFinalidadCertificadoOrden(FinalidadCertificadoModel objFinalidadCertificadoModel){
+	private List<FinalidadCertificadoModel> obtenerCacheListaFinalidadCertificadoxEstado(FinalidadCertificadoModel objFinalidadCertificadoModel){
 		List<FinalidadCertificadoModel> listaFinalidadCertificadoModel=new ArrayList<FinalidadCertificadoModel>();
 		
 		List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity=new ArrayList<FinalidadCertificadoEntity>();
@@ -184,7 +177,7 @@ public class FinalidadCertificadoNegocio implements FinalidadCertificadoNegocioD
 				
 				FinalidadCertificadoEntity finalidadCertificadoEntity = FinalidadCertificadoModelMapper.FinalidadCertificadoModelToFinalidadCertificadoEntity(objFinalidadCertificadoModel);
 				
-				listaFinalidadCertificadoEntity = factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity(finalidadCertificadoEntity);
+				listaFinalidadCertificadoEntity = factoryPersistenciaDAO.getFinalidadCertificadoDAO().listarFinalidadCertificadoxEstadoEntity(finalidadCertificadoEntity);
 				
 				if(listaFinalidadCertificadoEntity!=null && listaFinalidadCertificadoEntity.size()>0){
 					listaFinalidadCertificadoModel = CacheLocalRepositorio.generarCacheListaFinalidadCertificadoOrden(objCacheComponent, listaFinalidadCertificadoEntity);

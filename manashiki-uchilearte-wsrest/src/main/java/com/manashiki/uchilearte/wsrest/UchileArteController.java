@@ -37,6 +37,8 @@ import com.manashiki.uchilearte.servicio.FactoryServicio;
 import com.manashiki.uchilearte.wrapper.WrapperUchileArte;
 //import com.manashiki.uchilearte.wrapper.WrapperUchileArte;
 
+import seguridad.aaa.Securitate;
+import seguridad.aaa.WSSeguridadSeguridad;
 import vijnana.utilidades.component.utilidades.AppDate;
 
 @Component
@@ -54,11 +56,20 @@ public class UchileArteController {
 	@Path("/prueba/{cadena}")
 	@Produces({ "application/json" })
 	public Response pruebaJson(@PathParam("cadena") String variable) {
-
+		
+		WSSeguridadSeguridad securitate = new WSSeguridadSeguridad() {
+			@Override
+			public Response pruebaJson(String variable) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		
+		}; 
 		String responseGG = ".. servicio rest uchilearte 19-11-2016";
 
 		return Response.status(201).entity(responseGG).build();
 	}
+
 
 	@POST
 	@Path("/listarProgramaUniversidad")
@@ -75,7 +86,7 @@ public class UchileArteController {
 
 		List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO = new ArrayList<ProgramaUniversidadDTO>();
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadesDTO();//Traer Todos
+		retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadDTO();
 
 		if(retListaProgramaUniversidadDTO!=null && retListaProgramaUniversidadDTO.size()>0){
 			cantidadResultados = retListaProgramaUniversidadDTO.size();
@@ -89,7 +100,7 @@ public class UchileArteController {
 
 		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
 
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), new vijnana.respuesta.wrapper.response.Error(),
+		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), new vijnana.respuesta.wrapper.response.AbstractWrapperError(),
 				this.request.getMethod(), uchileArte);
 		wrapperUchileArte.setData(uchileArte);
 
@@ -99,10 +110,10 @@ public class UchileArteController {
 	}
 
 	@POST
-	@Path("/listarProgramaUniversidadConPrecio")
+	@Path("/listarProgramaUniversidadConEstado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarProgramaUniversidadesConPrecio(RequestProductoDTO requestProductoDTO) {
+	public Response listarProgramaUniversidadConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
 		UchileArte uchileArte = new UchileArte();
@@ -114,52 +125,13 @@ public class UchileArteController {
 		List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO = new ArrayList<ProgramaUniversidadDTO>();
 
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadesConPrecioDTO();
+		retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadxEstadoDTO();
 
 		if(retListaProgramaUniversidadDTO!=null && retListaProgramaUniversidadDTO.size()>0){
 			cantidadResultados = retListaProgramaUniversidadDTO.size();
 		}
 
 		uchileArte.setListaProgramaUniversidadDTO(retListaProgramaUniversidadDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-
-
-		return Response.status(201).entity(wrapperUchileArte).build();
-
-	}
-	
-	@POST
-	@Path("/listarProgramaUniversidadPostulacionConPrecio")
-	@Consumes({ "application/json" })
-	@Produces({ "application/json" })
-	public Response listarProgramaUniversidadPostulacionConPrecio(RequestProductoDTO requestProductoDTO) {
-		WrapperUchileArte wrapperUchileArte = null;
-
-		UchileArte uchileArte = new UchileArte();
-
-		Instant start = Instant.now();
-
-		int cantidadResultados = 0;
-
-		List<ProgramaUniversidadPostulacionDTO> retListaProgramaUniversidadPostulacionDTO = new ArrayList<ProgramaUniversidadPostulacionDTO>();
-
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaProgramaUniversidadPostulacionDTO=factoryServicio.getProgramaUniversidadPostulacionServicio().listarProgramaUniversidadPostulacionConPrecioDTO();
-
-		if(retListaProgramaUniversidadPostulacionDTO!=null && retListaProgramaUniversidadPostulacionDTO.size()>0){
-			cantidadResultados = retListaProgramaUniversidadPostulacionDTO.size();
-		}
-
-		uchileArte.setListaProgramaUniversidadPostulacionDTO(retListaProgramaUniversidadPostulacionDTO);
 		/*-------------------------------------------------------------------------------------------------------------*/
 
 		Instant end = Instant.now();
@@ -214,6 +186,47 @@ public class UchileArteController {
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
+	
+	@POST
+	@Path("/listarProgramaUniversidadPostulacionConEstado")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response listarProgramaUniversidadPostulacionConEstado(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
+
+		UchileArte uchileArte = new UchileArte();
+
+		Instant start = Instant.now();
+
+		int cantidadResultados = 0;
+
+		List<ProgramaUniversidadPostulacionDTO> retListaProgramaUniversidadPostulacionDTO = new ArrayList<ProgramaUniversidadPostulacionDTO>();
+
+		/*-------------------------------------------------------------------------------------------------------------*/
+		retListaProgramaUniversidadPostulacionDTO=factoryServicio.getProgramaUniversidadPostulacionServicio().listarProgramaUniversidadPostulacionxEstadoDTO();
+
+		if(retListaProgramaUniversidadPostulacionDTO!=null && retListaProgramaUniversidadPostulacionDTO.size()>0){
+			cantidadResultados = retListaProgramaUniversidadPostulacionDTO.size();
+		}
+
+		uchileArte.setListaProgramaUniversidadPostulacionDTO(retListaProgramaUniversidadPostulacionDTO);
+		/*-------------------------------------------------------------------------------------------------------------*/
+
+		Instant end = Instant.now();
+
+		Duration duration = Duration.between(start, end);
+
+		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+
+		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
+				this.request.getContentType(), uchileArte);
+
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+
+	}
+	
+	
 
 
 	/******** Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado****/
@@ -255,10 +268,10 @@ public class UchileArteController {
 	}
 	
 	@POST
-	@Path("/listarTipoCertificadosOrden")
+	@Path("/listarTipoCertificadosConEstado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarTipoCertificadosOrden(RequestProductoDTO requestProductoDTO) {
+	public Response listarTipoCertificadosConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
 		UchileArte uchileArte = new UchileArte();
@@ -269,7 +282,7 @@ public class UchileArteController {
 
 		List<TipoCertificadoDTO> retListaTipoCertificadoDTO = new ArrayList<TipoCertificadoDTO>();
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoCertificadoDTO = factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoOrdenDTO();//Traer Todos
+		retListaTipoCertificadoDTO = factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoxEstadoDTO();
 
 		if(retListaTipoCertificadoDTO!=null && retListaTipoCertificadoDTO.size()>0){
 			cantidadResultados = retListaTipoCertificadoDTO.size();
@@ -308,7 +321,7 @@ public class UchileArteController {
 		List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO = new ArrayList<FinalidadCertificadoDTO>();
 		// Mostrar Todo
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadosDTO();//Traer Todos
+		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadoDTO();
 
 		if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
 			cantidadResultados = retListaFinalidadCertificadoDTO.size();
@@ -330,10 +343,10 @@ public class UchileArteController {
 	}
 	
 	@POST
-	@Path("/listarFinalidadCertificadosOrdenados")
+	@Path("/listarFinalidadCertificadosConEstado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarFinalidadCertificadosOrdenados(RequestProductoDTO requestProductoDTO) {
+	public Response listarFinalidadCertificadosConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
 		UchileArte uchileArte = new UchileArte();
@@ -345,7 +358,7 @@ public class UchileArteController {
 		List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO = new ArrayList<FinalidadCertificadoDTO>();
 		// Mostrar Todo
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadosOrdenDTO();//Traer Todos
+		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadoOrdenDTO();
 
 		if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
 			cantidadResultados = retListaFinalidadCertificadoDTO.size();
@@ -520,10 +533,10 @@ public class UchileArteController {
 	}
 	
 	@POST
-	@Path("/listarTipoSolicitudesOrdenados")
+	@Path("/listarTipoSolicitudesConEstado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarTipoSolicitudesOrdenados(RequestProductoDTO requestProductoDTO) {
+	public Response listarTipoSolicitudesConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
 		UchileArte uchileArte = new UchileArte();
@@ -534,7 +547,7 @@ public class UchileArteController {
 
 		List<TipoSolicitudDTO> retListaTipoSolicitudDTO = new ArrayList<TipoSolicitudDTO>();
 		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudOrdenDTO();
+		retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudOrdenxEstadoDTO();
 
 		if(retListaTipoSolicitudDTO!=null && retListaTipoSolicitudDTO.size()>0){
 			cantidadResultados = retListaTipoSolicitudDTO.size();

@@ -11,7 +11,8 @@ public class ProgramaActivoSemestreModel implements Serializable {
 	private Integer idProgramaUniversidad;
 	private Integer idSemestreTemporada;
 	private String descripcionProgramaActivoSemestre; //mail de solicitante
-	private Integer estadoProgramaActivoSemestre;
+	private Boolean estadoProgramaActivoSemestre;
+	private Integer prioridadProgramaActivoSemestre;
 	
 	public ProgramaActivoSemestreModel() {
 		super();
@@ -49,12 +50,22 @@ public class ProgramaActivoSemestreModel implements Serializable {
 		this.descripcionProgramaActivoSemestre = descripcionProgramaActivoSemestre;
 	}
 
-	public Integer getEstadoProgramaActivoSemestre() {
+	public Boolean getEstadoProgramaActivoSemestre() {
 		return estadoProgramaActivoSemestre;
 	}
 
-	public void setEstadoProgramaActivoSemestre(Integer estadoProgramaActivoSemestre) {
+	public void setEstadoProgramaActivoSemestre(Boolean estadoProgramaActivoSemestre) {
 		this.estadoProgramaActivoSemestre = estadoProgramaActivoSemestre;
 	}
+
+	public Integer getPrioridadProgramaActivoSemestre() {
+		return prioridadProgramaActivoSemestre;
+	}
+
+	public void setPrioridadProgramaActivoSemestre(Integer prioridadProgramaActivoSemestre) {
+		this.prioridadProgramaActivoSemestre = prioridadProgramaActivoSemestre;
+	}
+	
+	
 	
 }

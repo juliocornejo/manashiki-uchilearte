@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.manashiki.uchilearte.logica.dao.FinalidadCertificadoDAO;
 import com.manashiki.uchilearte.logica.entidad.FinalidadCertificadoEntity;
-import com.manashiki.uchilearte.logica.entidad.TipoCertificadoEntity;
 import com.manashiki.uchilearte.logica.exception.PersistenceImplException;
 import com.manashiki.uchilearte.logica.repository.FinalidadCertificadoRepository;
 
@@ -83,7 +82,7 @@ public class FinalidadCertificadoDAOImpl implements FinalidadCertificadoDAO{
 	 * @exception no lanza excepciones
 	 */
 	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoEntity(){
-		objLog.info("INI - listarFinalidadCertificadoesEntity");
+		objLog.info("INI - listarFinalidadCertificadoEntity");
 		List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity = null;
 		try {
 			listaFinalidadCertificadoEntity = finalidadCertificadoRepository.findAll();
@@ -92,24 +91,24 @@ public class FinalidadCertificadoDAOImpl implements FinalidadCertificadoDAO{
 		}
 		
 		if(listaFinalidadCertificadoEntity!=null){
- 				objLog.info("FIN - listarFinalidadCertificadosEntity "+listaFinalidadCertificadoEntity.size());
+ 				objLog.info("FIN - listarFinalidadCertificadoEntity "+listaFinalidadCertificadoEntity.size());
  		}
 		
 		return listaFinalidadCertificadoEntity;
 	}
 	
-	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity){
-		objLog.info("INI - listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity");
+	public List<FinalidadCertificadoEntity> listarFinalidadCertificadoxEstadoEntity(FinalidadCertificadoEntity objFinalidadCertificadoEntity){
+		objLog.info("INI - listarFinalidadCertificadoOrderByEstadoEntity");
 		List<FinalidadCertificadoEntity> listaFinalidadCertificadoEntity = null;
 		try {
-			listaFinalidadCertificadoEntity = finalidadCertificadoRepository.findByEstadoFinalidadCertificadoOrderByCodigoFinalidadCertificadoAsc(objFinalidadCertificadoEntity.getEstadoFinalidadCertificado());
+			listaFinalidadCertificadoEntity = finalidadCertificadoRepository.findByEstadoFinalidadCertificadoOrderByPrioridadFinalidadCertificadoAsc(objFinalidadCertificadoEntity.getEstadoFinalidadCertificado());
 			
 		} catch (PersistenceException e) {
 			objLog.error("No se pudo obtener la lista "+listaFinalidadCertificadoEntity.size());
 		}
 		
 		if(listaFinalidadCertificadoEntity!=null){
- 				objLog.info("FIN - listarFinalidadCertificadoOrderByCodigoFinalidadCertificadoEntity: "+listaFinalidadCertificadoEntity.size());
+ 				objLog.info("FIN - listarFinalidadCertificadoOrderByEstadoEntity: "+listaFinalidadCertificadoEntity.size());
  		}
 		
 		return listaFinalidadCertificadoEntity;

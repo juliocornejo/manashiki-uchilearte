@@ -41,6 +41,14 @@ public class ProgramaUniversidadEntity implements Serializable {
 	private String costoProgramaUniversidad;
 	
 	@OrderBy
+	@Column(name="estado_programa_universidad")
+	private Boolean estadoProgramaUniversidad;
+	
+	@OrderBy
+	@Column(name="prioridad_programa_universidad")
+	private Integer prioridadProgramaUniversidad;
+	
+	@OrderBy
 	@Column(name="clasificacion_programa")
 	private Integer clasificacionPrograma;
 
@@ -56,6 +64,15 @@ public class ProgramaUniversidadEntity implements Serializable {
 	public ProgramaUniversidadEntity() {
 		super();
 	}
+	
+	
+
+	public ProgramaUniversidadEntity(Boolean estadoProgramaUniversidad) {
+		super();
+		this.estadoProgramaUniversidad = estadoProgramaUniversidad;
+	}
+
+
 
 	public Integer getIdProgramaUniversidad() {
 		return idProgramaUniversidad;
@@ -128,5 +145,22 @@ public class ProgramaUniversidadEntity implements Serializable {
 	public void setProgramas_activos_semestre(List<ProgramaActivoSemestreEntity> programas_activos_semestre) {
 		this.programas_activos_semestre = programas_activos_semestre;
 	}
+
+	public Boolean getEstadoProgramaUniversidad() {
+		return estadoProgramaUniversidad;
+	}
+
+	public void setEstadoProgramaUniversidad(Boolean estadoProgramaUniversidad) {
+		this.estadoProgramaUniversidad = estadoProgramaUniversidad;
+	}
+
+	public Integer getPrioridadProgramaUniversidad() {
+		return prioridadProgramaUniversidad;
+	}
+
+	public void setPrioridadProgramaUniversidad(Integer prioridadProgramaUniversidad) {
+		this.prioridadProgramaUniversidad = prioridadProgramaUniversidad;
+	}
+	
 	
 }

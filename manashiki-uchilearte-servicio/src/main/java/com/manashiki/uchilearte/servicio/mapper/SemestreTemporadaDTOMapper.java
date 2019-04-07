@@ -26,6 +26,8 @@ public class SemestreTemporadaDTOMapper {
 			semestreTemporadaModel.setIdSemestreTemporada(semestreTemporadaDTO.getIdSemestreTemporada());
 			semestreTemporadaModel.setNombreSemestreTemporada(semestreTemporadaDTO.getNombreSemestreTemporada());
 			semestreTemporadaModel.setDescripcionSemestreTemporada(semestreTemporadaDTO.getDescripcionSemestreTemporada());
+			semestreTemporadaModel.setFechaActivacionDesde(semestreTemporadaDTO.getFechaActivacionDesde());
+			semestreTemporadaModel.setFechaActivacionHasta(semestreTemporadaDTO.getFechaActivacionHasta());
 		}
 		return semestreTemporadaModel;
 	}
@@ -64,6 +66,8 @@ public class SemestreTemporadaDTOMapper {
 			semestreTemporadaDTO.setIdSemestreTemporada(semestreTemporadaModel.getIdSemestreTemporada());
 			semestreTemporadaDTO.setNombreSemestreTemporada(semestreTemporadaModel.getNombreSemestreTemporada());
 			semestreTemporadaDTO.setDescripcionSemestreTemporada(semestreTemporadaModel.getDescripcionSemestreTemporada());
+			semestreTemporadaDTO.setFechaActivacionDesde(semestreTemporadaModel.getFechaActivacionDesde());
+			semestreTemporadaDTO.setFechaActivacionHasta(semestreTemporadaModel.getFechaActivacionHasta());
 		}
 		return semestreTemporadaDTO;
 	}

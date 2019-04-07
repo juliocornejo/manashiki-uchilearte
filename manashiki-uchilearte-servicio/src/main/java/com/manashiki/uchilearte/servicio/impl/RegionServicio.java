@@ -72,7 +72,7 @@ public class RegionServicio implements IRegionServicio{
 		List<RegionDTO> listaRegionDTO=new ArrayList<RegionDTO>();
 		List<RegionModel> listaRegiones = new ArrayList<RegionModel>();
 
-		listaRegiones=factoryNegocioDAO.getRegionNegocioDAO().listarRegionesModel();
+		listaRegiones=factoryNegocioDAO.getRegionNegocioDAO().listarRegionModel();
 
 		listaRegionDTO = RegionDTOMapper.ListRegionModelToListRegionDTO(listaRegiones);
 		

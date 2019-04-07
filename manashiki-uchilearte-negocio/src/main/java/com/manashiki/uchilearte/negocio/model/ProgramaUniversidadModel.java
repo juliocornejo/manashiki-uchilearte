@@ -13,10 +13,17 @@ public class ProgramaUniversidadModel implements Serializable{
 	private String nombreProgramaUniversidad;
 	private String duracionProgramaUniversidad;
 	private String costoProgramaUniversidad;
+	private Boolean estadoProgramaUniversidad;
+	private Integer prioridadProgramaUniversidad;
 	private Integer clasificacionPrograma;
 	
 	public ProgramaUniversidadModel() {
 		super();
+	}
+	
+	public ProgramaUniversidadModel(Boolean estadoProgramaUniversidad) {
+		super();
+		this.estadoProgramaUniversidad = estadoProgramaUniversidad;
 	}
 
 	public Integer getIdProgramaUniversidad() {
@@ -65,6 +72,22 @@ public class ProgramaUniversidadModel implements Serializable{
 
 	public void setClasificacionPrograma(Integer clasificacionPrograma) {
 		this.clasificacionPrograma = clasificacionPrograma;
+	}
+
+	public Boolean getEstadoProgramaUniversidad() {
+		return estadoProgramaUniversidad;
+	}
+
+	public void setEstadoProgramaUniversidad(Boolean estadoProgramaUniversidad) {
+		this.estadoProgramaUniversidad = estadoProgramaUniversidad;
+	}
+
+	public Integer getPrioridadProgramaUniversidad() {
+		return prioridadProgramaUniversidad;
+	}
+
+	public void setPrioridadProgramaUniversidad(Integer prioridadProgramaUniversidad) {
+		this.prioridadProgramaUniversidad = prioridadProgramaUniversidad;
 	}
 	
 }

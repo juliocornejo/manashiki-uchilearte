@@ -42,9 +42,12 @@ public class ProgramaActivoSemestreEntity implements Serializable {
 	private String descripcionProgramaActivoSemestre; //mail de solicitante
 	
 	@OrderBy
-	@Index(name="idx_pas_estado_programa_activo_semestre")
 	@Column(name="estado_programa_activo_semestre")
-	private Integer estadoProgramaActivoSemestre;
+	private Boolean estadoProgramaActivoSemestre;
+	
+	@OrderBy
+	@Column(name="prioridad_programa_activo_semestre")
+	private Integer prioridadProgramaActivoSemestre;
 	
 	@OneToMany(mappedBy="fkIdProgramaActivoSemestre")
 	private List<AsignaturaProgramaActivoSemestreEntity> programas_activos_semestres_asignaturas;
@@ -89,11 +92,11 @@ public class ProgramaActivoSemestreEntity implements Serializable {
 		this.descripcionProgramaActivoSemestre = descripcionProgramaActivoSemestre;
 	}
 
-	public Integer getEstadoProgramaActivoSemestre() {
+	public Boolean getEstadoProgramaActivoSemestre() {
 		return estadoProgramaActivoSemestre;
 	}
 
-	public void setEstadoProgramaActivoSemestre(Integer estadoProgramaActivoSemestre) {
+	public void setEstadoProgramaActivoSemestre(Boolean estadoProgramaActivoSemestre) {
 		this.estadoProgramaActivoSemestre = estadoProgramaActivoSemestre;
 	}
 
@@ -114,6 +117,13 @@ public class ProgramaActivoSemestreEntity implements Serializable {
 			List<AlumnoProgramaActivoSemestreEntity> alumnos_programas_activos_semestres_asignaturas) {
 		this.alumnos_programas_activos_semestres_asignaturas = alumnos_programas_activos_semestres_asignaturas;
 	}
-	
+
+	public Integer getPrioridadProgramaActivoSemestre() {
+		return prioridadProgramaActivoSemestre;
+	}
+
+	public void setPrioridadProgramaActivoSemestre(Integer prioridadProgramaActivoSemestre) {
+		this.prioridadProgramaActivoSemestre = prioridadProgramaActivoSemestre;
+	}
 	
 }

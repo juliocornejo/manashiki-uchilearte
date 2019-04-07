@@ -35,6 +35,10 @@ public class FinalidadCertificadoEntity implements Serializable {
 	@Column(name="estado_finalidad_certificado")
 	private Boolean estadoFinalidadCertificado;
 	
+	@OrderBy
+	@Column(name="prioridad_finalidad_certificado")
+	private Integer prioridadFinalidadCertificado;
+	
 
 	@OneToMany(mappedBy="fkIdFinalidadCertificado")
 	private List<SolicitudCertificadoEntity> finalidad_certificados;
@@ -82,7 +86,13 @@ public class FinalidadCertificadoEntity implements Serializable {
 	public void setEstadoFinalidadCertificado(Boolean estadoFinalidadCertificado) {
 		this.estadoFinalidadCertificado = estadoFinalidadCertificado;
 	}
-	
-	
+
+	public Integer getPrioridadFinalidadCertificado() {
+		return prioridadFinalidadCertificado;
+	}
+
+	public void setPrioridadFinalidadCertificado(Integer prioridadFinalidadCertificado) {
+		this.prioridadFinalidadCertificado = prioridadFinalidadCertificado;
+	}
 
 }

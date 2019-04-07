@@ -11,6 +11,6 @@ public interface ITipoSolicitudServicio{
 	public TipoSolicitudDTO actualizarTipoSolicitudDTO(TipoSolicitudDTO objTipoSolicitudDTO);
 	public TipoSolicitudDTO buscarTipoSolicitudxIdDTO(TipoSolicitudDTO objTipoSolicitudDTO) throws ServicioImplException;
 	public List<TipoSolicitudDTO> listarTipoSolicitudDTO();
-	public List<TipoSolicitudDTO> listarTipoSolicitudOrdenDTO();
+	public List<TipoSolicitudDTO> listarTipoSolicitudOrdenxEstadoDTO();
 	
 }

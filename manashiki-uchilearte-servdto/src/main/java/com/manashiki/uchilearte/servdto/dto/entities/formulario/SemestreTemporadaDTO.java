@@ -1,6 +1,7 @@
 package com.manashiki.uchilearte.servdto.dto.entities.formulario;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,6 +14,10 @@ public class SemestreTemporadaDTO implements Serializable {
 	private int idSemestreTemporada;
 	private String nombreSemestreTemporada; //Nombre a Mostrar
 	private String descripcionSemestreTemporada;
+	private Date fechaActivacionDesde = null;
+	private String sFechaActivacionDesde = "";
+	private Date fechaActivacionHasta = null;
+	private String sFechaActivacionHasta = "";
 	
 	public SemestreTemporadaDTO() {
 		super();
@@ -41,4 +46,38 @@ public class SemestreTemporadaDTO implements Serializable {
 	public void setDescripcionSemestreTemporada(String descripcionSemestreTemporada) {
 		this.descripcionSemestreTemporada = descripcionSemestreTemporada;
 	}
+
+	public Date getFechaActivacionDesde() {
+		return fechaActivacionDesde;
+	}
+
+	public void setFechaActivacionDesde(Date fechaActivacionDesde) {
+		this.fechaActivacionDesde = fechaActivacionDesde;
+	}
+
+	public String getsFechaActivacionDesde() {
+		return sFechaActivacionDesde;
+	}
+
+	public void setsFechaActivacionDesde(String sFechaActivacionDesde) {
+		this.sFechaActivacionDesde = sFechaActivacionDesde;
+	}
+
+	public Date getFechaActivacionHasta() {
+		return fechaActivacionHasta;
+	}
+
+	public void setFechaActivacionHasta(Date fechaActivacionHasta) {
+		this.fechaActivacionHasta = fechaActivacionHasta;
+	}
+
+	public String getsFechaActivacionHasta() {
+		return sFechaActivacionHasta;
+	}
+
+	public void setsFechaActivacionHasta(String sFechaActivacionHasta) {
+		this.sFechaActivacionHasta = sFechaActivacionHasta;
+	}
+	
+	
 }

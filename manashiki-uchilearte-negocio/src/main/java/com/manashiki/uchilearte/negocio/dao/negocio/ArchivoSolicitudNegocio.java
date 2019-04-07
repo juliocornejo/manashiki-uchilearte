@@ -36,6 +36,19 @@ public class ArchivoSolicitudNegocio implements ArchivoSolicitudNegocioDAO{
 		return archivoSolicitudModel;
 
 	}
+	
+	public ArchivoSolicitudModel crearArchivoSolicitudFlushModel(ArchivoSolicitudModel archivoSolicitudModel) {
+		objLog.info("INI - crearArchivoSolicitudModel");
+		ArchivoSolicitudEntity archivoSolicitud = new ArchivoSolicitudEntity();
+		archivoSolicitud = ArchivoSolicitudModelMapper.ArchivoSolicitudModelToArchivoSolicitudEntity(archivoSolicitudModel);
+
+		archivoSolicitud = factoryPersistenciaDAO.getArchivoSolicitudDAO().crearArchivoSolicitudFlushEntity(archivoSolicitud);
+		
+		archivoSolicitudModel = ArchivoSolicitudModelMapper.ArchivoSolicitudEntityToArchivoSolicitudModel(archivoSolicitud);
+		objLog.info("FIN - crearArchivoSolicitudModel "+archivoSolicitudModel.getIdArchivoSolicitud());
+		return archivoSolicitudModel;
+
+	}
 
 	public ArchivoSolicitudModel actualizarArchivoSolicitudModel(ArchivoSolicitudModel archivoSolicitudModel) {
 		objLog.info("INI - actualizarArchivoSolicitudModel "+archivoSolicitudModel.getIdArchivoSolicitud());
@@ -67,12 +80,12 @@ public class ArchivoSolicitudNegocio implements ArchivoSolicitudNegocioDAO{
 		return archivoSolicitudModel;
 	}
 
-	public List<ArchivoSolicitudModel> listarArchivoSolicitudesModel() {
+	public List<ArchivoSolicitudModel> listarArchivoSolicitudModel() {
 		objLog.info("INI - listarArchivoSolicitudesModel");
 		List<ArchivoSolicitudModel> listaArchivoSolicitudModel=new ArrayList<ArchivoSolicitudModel>();
 		List<ArchivoSolicitudEntity> listaArchivoSolicitudes = new ArrayList<ArchivoSolicitudEntity>();
 
-		listaArchivoSolicitudes=factoryPersistenciaDAO.getArchivoSolicitudDAO().listarArchivoSolicitudesEntity();
+		listaArchivoSolicitudes=factoryPersistenciaDAO.getArchivoSolicitudDAO().listarArchivoSolicitudEntity();
 
 		listaArchivoSolicitudModel = ArchivoSolicitudModelMapper.ListArchivoSolicitudEntityToListArchivoSolicitudModel(listaArchivoSolicitudes);
 		

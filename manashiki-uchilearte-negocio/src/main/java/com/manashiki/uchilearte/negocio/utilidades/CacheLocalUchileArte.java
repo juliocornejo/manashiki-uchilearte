@@ -42,7 +42,7 @@ public class CacheLocalUchileArte implements Serializable{
 		this.listaFinalidadCertificado = listaFinalidadCertificado;
 		this.listaFinalidadCertificadoOrden = listaFinalidadCertificadoOrden;
 		this.listaTipoSolicitud = listaTipoSolicitud; 
-		this.listaTipoSolicitud = listaTipoSolicitudOrden;
+		this.listaTipoSolicitudOrden = listaTipoSolicitudOrden;
 		this.listaRegion = listaRegion;
 	}
 

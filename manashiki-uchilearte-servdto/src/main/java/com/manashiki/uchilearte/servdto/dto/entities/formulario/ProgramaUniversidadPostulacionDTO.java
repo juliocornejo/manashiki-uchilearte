@@ -13,9 +13,10 @@ public class ProgramaUniversidadPostulacionDTO implements Serializable{
 	private String codigoProgramaUniversidadPostulacion = "";
 	private String nombreProgramaUniversidadPostulacion = "";
 	private String duracionProgramaUniversidadPostulacion = "";
+	private boolean estadoProgramaUniversidadPostulacion = false;
+	private int prioridadProgramaUniversidadPostulacion = 0;
 	private String costoProgramaUniversidadPostulacion = "";
-	private int clasificacionProgramaPostulacion;
-	private int prioridad;
+	private int clasificacionProgramaPostulacion = 0;
 	
 	public ProgramaUniversidadPostulacionDTO() {
 		super();
@@ -53,6 +54,22 @@ public class ProgramaUniversidadPostulacionDTO implements Serializable{
 		this.duracionProgramaUniversidadPostulacion = duracionProgramaUniversidadPostulacion;
 	}
 
+	public boolean isEstadoProgramaUniversidadPostulacion() {
+		return estadoProgramaUniversidadPostulacion;
+	}
+
+	public void setEstadoProgramaUniversidadPostulacion(boolean estadoProgramaUniversidadPostulacion) {
+		this.estadoProgramaUniversidadPostulacion = estadoProgramaUniversidadPostulacion;
+	}
+
+	public int getPrioridadProgramaUniversidadPostulacion() {
+		return prioridadProgramaUniversidadPostulacion;
+	}
+
+	public void setPrioridadProgramaUniversidadPostulacion(int prioridadProgramaUniversidadPostulacion) {
+		this.prioridadProgramaUniversidadPostulacion = prioridadProgramaUniversidadPostulacion;
+	}
+
 	public String getCostoProgramaUniversidadPostulacion() {
 		return costoProgramaUniversidadPostulacion;
 	}
@@ -69,21 +86,6 @@ public class ProgramaUniversidadPostulacionDTO implements Serializable{
 		this.clasificacionProgramaPostulacion = clasificacionProgramaPostulacion;
 	}
 
-	public int getPrioridad() {
-		return prioridad;
-	}
-
-	public void setPrioridad(int prioridad) {
-		this.prioridad = prioridad;
-	}
 	
-//	public int getSubClasificacionProgramaPostulacion() {
-//		return subClasificacionProgramaPostulacion;
-//	}
-//
-//	public void setSubClasificacionProgramaPostulacion(int subClasificacionProgramaPostulacion) {
-//		this.subClasificacionProgramaPostulacion = subClasificacionProgramaPostulacion;
-//	}
-//	
 	
 }

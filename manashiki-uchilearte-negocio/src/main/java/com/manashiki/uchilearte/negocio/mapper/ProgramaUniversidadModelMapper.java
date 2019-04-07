@@ -27,6 +27,8 @@ public class ProgramaUniversidadModelMapper{
 			programaUniversidad.setNombreProgramaUniversidad(programaUniversidadModel.getNombreProgramaUniversidad());
 			programaUniversidad.setDuracionProgramaUniversidad(programaUniversidadModel.getDuracionProgramaUniversidad());
 			programaUniversidad.setCostoProgramaUniversidad(programaUniversidadModel.getCostoProgramaUniversidad());
+			programaUniversidad.setEstadoProgramaUniversidad(programaUniversidadModel.getEstadoProgramaUniversidad());
+			programaUniversidad.setPrioridadProgramaUniversidad(programaUniversidadModel.getPrioridadProgramaUniversidad());
 			programaUniversidad.setClasificacionPrograma(programaUniversidadModel.getClasificacionPrograma());
 		}
 		
@@ -69,6 +71,8 @@ public class ProgramaUniversidadModelMapper{
 			programaUniversidadModel.setNombreProgramaUniversidad(programaUniversidadEntity.getNombreProgramaUniversidad());
 			programaUniversidadModel.setDuracionProgramaUniversidad(programaUniversidadEntity.getDuracionProgramaUniversidad());
 			programaUniversidadModel.setCostoProgramaUniversidad(programaUniversidadEntity.getCostoProgramaUniversidad());
+			programaUniversidadModel.setEstadoProgramaUniversidad(programaUniversidadEntity.getEstadoProgramaUniversidad());
+			programaUniversidadModel.setPrioridadProgramaUniversidad(programaUniversidadEntity.getPrioridadProgramaUniversidad());
 			programaUniversidadModel.setClasificacionPrograma(programaUniversidadEntity.getClasificacionPrograma());
 		}
 		return programaUniversidadModel;

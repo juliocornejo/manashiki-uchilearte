@@ -37,7 +37,6 @@ public class SolicitudPostulacionDTO  implements Serializable{
 	private int idComunaDomicilio;
 	private String nombreComuna;
 	private String ciudadDomicilio;
-	
 	/***/
 	private String tituloProfesional;
 	private String entidadEducacional;
@@ -57,10 +56,45 @@ public class SolicitudPostulacionDTO  implements Serializable{
 	private int estadoSolicitudPostulacion;
 	private String descripcionEstadoSolicitudPostulacion;
 	
+	
+	
 	public SolicitudPostulacionDTO() {
 		super();
 	}
 
+	public SolicitudPostulacionDTO(int idSolicitudPostulacion,  String anhoObtencionEntidadEducacional,String apellidoMaternoPersonaSolicitudPostulacion, String apellidoPaternoPersonaSolicitudPostulacion, 
+			 String celularContacto, String ciudadDomicilio, String comentarios, String domicilio, String entidadEducacional, int estadoSolicitudPostulacion, String fechaNacimiento, Date fechaSolicitudPostulacion, String fonoContacto,
+			 String fuenteFinancimiamiento, String interesPrograma, String mailMember, String nacionalidad, String nombrePersonaSolicitudPostulacion, String ocupacionActual, String paisDomicilio, String paisEntidadEducacional, 
+			 String rutPersonaSolicitudPostulacion, String tituloProfesional,  int idArchivoSolicitud, int idComunaDomicilio, int idProgramaUniversidadPostulacion) {
+		super();
+		this.idSolicitudPostulacion = idSolicitudPostulacion;
+		this.idProgramaUniversidadPostulacion = idProgramaUniversidadPostulacion;
+		this.rutPersonaSolicitudPostulacion = rutPersonaSolicitudPostulacion;
+		this.nombrePersonaSolicitudPostulacion = nombrePersonaSolicitudPostulacion;
+		this.apellidoPaternoPersonaSolicitudPostulacion = apellidoPaternoPersonaSolicitudPostulacion;
+		this.apellidoMaternoPersonaSolicitudPostulacion = apellidoMaternoPersonaSolicitudPostulacion;
+		this.fechaNacimiento = fechaNacimiento;
+		this.nacionalidad = nacionalidad;
+		this.fonoContacto = fonoContacto;
+		this.celularContacto = celularContacto;
+		this.mailMember = mailMember;
+		this.domicilio = domicilio;
+		this.paisDomicilio = paisDomicilio;
+		this.idComunaDomicilio = idComunaDomicilio;
+		this.ciudadDomicilio = ciudadDomicilio;
+		this.tituloProfesional = tituloProfesional;
+		this.entidadEducacional = entidadEducacional;
+		this.paisEntidadEducacional = paisEntidadEducacional;
+		this.anhoObtencionEntidadEducacional = anhoObtencionEntidadEducacional;
+		this.ocupacionActual = ocupacionActual;
+		this.interesPrograma = interesPrograma;
+		this.fuenteFinancimiamiento = fuenteFinancimiamiento;
+		this.comentarios = comentarios;
+		this.idArchivoSolicitud = idArchivoSolicitud;
+		this.fechaSolicitudPostulacion = fechaSolicitudPostulacion;
+		this.estadoSolicitudPostulacion = estadoSolicitudPostulacion;
+	}
+	
 	public int getIdSolicitudPostulacion() {
 		return idSolicitudPostulacion;
 	}

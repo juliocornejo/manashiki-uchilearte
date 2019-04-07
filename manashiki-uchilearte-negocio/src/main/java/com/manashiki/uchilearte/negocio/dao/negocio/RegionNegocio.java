@@ -73,8 +73,8 @@ public class RegionNegocio implements RegionNegocioDAO{
 		return regionModel;
 	}
 
-	public List<RegionModel> listarRegionesModel() {
-		objLog.info("INI - listarRegionesModel");
+	public List<RegionModel> listarRegionModel() {
+		objLog.info("INI - listarRegionModel");
 		List<RegionModel> listaRegionModel=new ArrayList<RegionModel>();
 		List<RegionEntity> listaRegiones = new ArrayList<RegionEntity>();
 
@@ -84,7 +84,7 @@ public class RegionNegocio implements RegionNegocioDAO{
 		
 		listaRegionModel = obtenerCacheListaRegion();
 		
-		objLog.info("FIN - listarRegionesModel "+listaRegionModel.size());
+		objLog.info("FIN - listarRegionModel "+listaRegionModel.size());
 		return listaRegionModel;
 	}
 	

@@ -12,8 +12,8 @@ public class ProgramaActivoSemestreDTO implements Serializable {
 	private int idProgramaActivoSemestre;
 	private int idProgramaUniversidad;
 	private int idSemestreTemporada;
-	private String descripcionProgramaActivoSemestre; //mail de solicitante
-	private int estadoProgramaActivoSemestre;
+	private String descripcionProgramaActivoSemestre;
+	private boolean estadoProgramaActivoSemestre;
 	
 	public ProgramaActivoSemestreDTO() {
 		super();
@@ -53,11 +53,11 @@ public class ProgramaActivoSemestreDTO implements Serializable {
 		this.descripcionProgramaActivoSemestre = descripcionProgramaActivoSemestre;
 	}
 
-	public int getEstadoProgramaActivoSemestre() {
+	public boolean getEstadoProgramaActivoSemestre() {
 		return estadoProgramaActivoSemestre;
 	}
 
-	public void setEstadoProgramaActivoSemestre(int estadoProgramaActivoSemestre) {
+	public void setEstadoProgramaActivoSemestre(boolean estadoProgramaActivoSemestre) {
 		this.estadoProgramaActivoSemestre = estadoProgramaActivoSemestre;
 	}
 	

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.manashiki.uchilearte.logica.dao.TipoSolicitudDAO;
-import com.manashiki.uchilearte.logica.entidad.TipoCertificadoEntity;
 import com.manashiki.uchilearte.logica.entidad.TipoSolicitudEntity;
 import com.manashiki.uchilearte.logica.exception.PersistenceImplException;
 import com.manashiki.uchilearte.logica.repository.TipoSolicitudRepository;
@@ -98,18 +97,18 @@ public class TipoSolicitudDAOImpl implements TipoSolicitudDAO{
 		return listaTipoSolicitudEntity;
 	}
 	
-	public List<TipoSolicitudEntity> listarTipoSolicitudesOrderCodigoTipoSolicitudEntity(TipoSolicitudEntity objTipoSolicitudEntity){
-		objLog.info("INI - listarTipoSolicitudesOrderCodigoTipoSolicitudEntity");
+	public List<TipoSolicitudEntity> listarTipoSolicitudesxEstadoEntity(TipoSolicitudEntity objTipoSolicitudEntity){
+		objLog.info("INI - listarTipoSolicitudesxEstadoEntity");
 		List<TipoSolicitudEntity> listaTipoSolicitudEntity = null;
 		try {
-			listaTipoSolicitudEntity = tipoSolicitudRepository.findByEstadoTipoSolicitudOrderByCodigoTipoSolicitudAsc(objTipoSolicitudEntity.getEstadoTipoSolicitud());
+			listaTipoSolicitudEntity = tipoSolicitudRepository.findByEstadoTipoSolicitudOrderByPrioridadTipoSolicitudAscCodigoTipoSolicitudAsc(objTipoSolicitudEntity.getEstadoTipoSolicitud());
 			
 		} catch (PersistenceException e) {
 			objLog.error("No se pudo obtener la lista "+listaTipoSolicitudEntity.size());
 		}
 		
 		if(listaTipoSolicitudEntity!=null){
- 				objLog.info("FIN - listarTipoSolicitudesOrderCodigoTipoSolicitudEntity "+listaTipoSolicitudEntity.size());
+ 				objLog.info("FIN - listarTipoSolicitudesxEstadoEntity "+listaTipoSolicitudEntity.size());
  		}
 		
 		return listaTipoSolicitudEntity;

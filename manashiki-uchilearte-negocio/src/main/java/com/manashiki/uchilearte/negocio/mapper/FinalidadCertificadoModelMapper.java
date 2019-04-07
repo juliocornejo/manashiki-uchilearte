@@ -26,6 +26,7 @@ public class FinalidadCertificadoModelMapper{
 			finalidadCertificado.setCodigoFinalidadCertificado(finalidadCertificadoModel.getCodigoFinalidadCertificado());
 			finalidadCertificado.setNombreFinalidadCertificado(finalidadCertificadoModel.getNombreFinalidadCertificado());
 			finalidadCertificado.setEstadoFinalidadCertificado(finalidadCertificadoModel.getEstadoFinalidadCertificado());
+			finalidadCertificado.setPrioridadFinalidadCertificado(finalidadCertificadoModel.getPrioridadFinalidadCertificado());
 			
 		}
 		
@@ -67,6 +68,7 @@ public class FinalidadCertificadoModelMapper{
 			finalidadCertificadoModel.setCodigoFinalidadCertificado(finalidadCertificado.getCodigoFinalidadCertificado());
 			finalidadCertificadoModel.setNombreFinalidadCertificado(finalidadCertificado.getNombreFinalidadCertificado());
 			finalidadCertificadoModel.setEstadoFinalidadCertificado(finalidadCertificado.getEstadoFinalidadCertificado());
+			finalidadCertificadoModel.setPrioridadFinalidadCertificado(finalidadCertificado.getPrioridadFinalidadCertificado());
 		}
 		return finalidadCertificadoModel;
 	}

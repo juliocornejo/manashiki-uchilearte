@@ -25,6 +25,8 @@ public class FinalidadCertificadoDTOMapper{
 			finalidadCertificado.setIdFinalidadCertificado(finalidadCertificadoDTO.getIdFinalidadCertificado());
 			finalidadCertificado.setCodigoFinalidadCertificado(finalidadCertificadoDTO.getCodigoFinalidadCertificado());
 			finalidadCertificado.setNombreFinalidadCertificado(finalidadCertificadoDTO.getNombreFinalidadCertificado());
+			finalidadCertificado.setEstadoFinalidadCertificado(finalidadCertificadoDTO.isEstadoFinalidadCertificado());
+			finalidadCertificado.setPrioridadFinalidadCertificado(finalidadCertificadoDTO.getPrioridadFinalidadCertificado());
 			
 		}
 		
@@ -55,17 +57,26 @@ public class FinalidadCertificadoDTOMapper{
 		return listaFinalidadCertificadoModel;
 	}
 
-	public static FinalidadCertificadoDTO FinalidadCertificadoModelToFinalidadCertificadoDTO(FinalidadCertificadoModel finalidadCertificado){
+	public static FinalidadCertificadoDTO FinalidadCertificadoModelToFinalidadCertificadoDTO(FinalidadCertificadoModel finalidadCertificadoModel){
 
 		FinalidadCertificadoDTO finalidadCertificadoDTO=new FinalidadCertificadoDTO();
-		
-		if(finalidadCertificado==null){
+
+		if(finalidadCertificadoModel==null){
 			return new FinalidadCertificadoDTO();
 		}
 		else{
-			finalidadCertificadoDTO.setIdFinalidadCertificado(finalidadCertificado.getIdFinalidadCertificado());
-			finalidadCertificadoDTO.setCodigoFinalidadCertificado(finalidadCertificado.getCodigoFinalidadCertificado());
-			finalidadCertificadoDTO.setNombreFinalidadCertificado(finalidadCertificado.getNombreFinalidadCertificado());
+			if(finalidadCertificadoModel.getIdFinalidadCertificado()!=null){
+				finalidadCertificadoDTO.setIdFinalidadCertificado(finalidadCertificadoModel.getIdFinalidadCertificado());
+			}
+			finalidadCertificadoDTO.setCodigoFinalidadCertificado(finalidadCertificadoModel.getCodigoFinalidadCertificado());
+			finalidadCertificadoDTO.setNombreFinalidadCertificado(finalidadCertificadoModel.getNombreFinalidadCertificado());
+
+			if(finalidadCertificadoModel.getEstadoFinalidadCertificado()!=null){
+				finalidadCertificadoDTO.setEstadoFinalidadCertificado(finalidadCertificadoModel.getEstadoFinalidadCertificado());
+			}
+			if(finalidadCertificadoModel.getPrioridadFinalidadCertificado()!=null){
+				finalidadCertificadoDTO.setPrioridadFinalidadCertificado(finalidadCertificadoModel.getPrioridadFinalidadCertificado());
+			}
 		}
 		return finalidadCertificadoDTO;
 	}

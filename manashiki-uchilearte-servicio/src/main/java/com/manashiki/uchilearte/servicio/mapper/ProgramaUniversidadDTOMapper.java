@@ -27,6 +27,8 @@ public class ProgramaUniversidadDTOMapper{
 			programaUniversidadModel.setNombreProgramaUniversidad(programaUniversidadDTO.getNombreProgramaUniversidad());
 			programaUniversidadModel.setDuracionProgramaUniversidad(programaUniversidadDTO.getDuracionProgramaUniversidad());
 			programaUniversidadModel.setCostoProgramaUniversidad(programaUniversidadDTO.getCostoProgramaUniversidad());
+			programaUniversidadModel.setEstadoProgramaUniversidad(programaUniversidadDTO.isEstadoProgramaUniversidad());
+			programaUniversidadModel.setPrioridadProgramaUniversidad(programaUniversidadDTO.getPrioridadProgramaUniversidad());
 			programaUniversidadModel.setClasificacionPrograma(programaUniversidadDTO.getClasificacionPrograma());
 		}
 		
@@ -72,6 +74,14 @@ public class ProgramaUniversidadDTOMapper{
 			programaUniversidadDTO.setNombreProgramaUniversidad(programaUniversidadModel.getNombreProgramaUniversidad());
 			programaUniversidadDTO.setDuracionProgramaUniversidad(programaUniversidadModel.getDuracionProgramaUniversidad());
 			programaUniversidadDTO.setCostoProgramaUniversidad(programaUniversidadModel.getCostoProgramaUniversidad());
+			if(programaUniversidadModel.getEstadoProgramaUniversidad()!=null){
+				programaUniversidadDTO.setEstadoProgramaUniversidad(programaUniversidadModel.getEstadoProgramaUniversidad());
+			}
+			
+			if(programaUniversidadModel.getPrioridadProgramaUniversidad()!=null){
+				programaUniversidadDTO.setPrioridadProgramaUniversidad(programaUniversidadModel.getPrioridadProgramaUniversidad());
+			}
+			
 			if(programaUniversidadModel.getClasificacionPrograma()!=null){
 				programaUniversidadDTO.setClasificacionPrograma(programaUniversidadModel.getClasificacionPrograma());
 			}

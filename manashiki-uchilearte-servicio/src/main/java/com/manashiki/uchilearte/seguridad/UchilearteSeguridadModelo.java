@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import vijnana.utilidades.component.utilidades.AppDate;
 import vijnana.utilidades.component.utilidades.Ip;
 import vijnana.utilidades.component.utilidades.JsonMappeo;
 import vijnana.utilidades.component.utilidades.TipoFormatoFecha;
+import vijnana.wsrest.seguridad.Seguridad;
 
 public class UchilearteSeguridadModelo {
 
@@ -46,31 +48,22 @@ public class UchilearteSeguridadModelo {
 	}
 	
 	//Validar el metodo si tenemos acceso a seguridad por uchilearte.
-	public SessionPlataforma obtenerUsuarioLogin(SessionPlataforma sessionPlataforma, String usernamePerfil, String passwordContrasenha) throws Exception{
-
-
-		ConsultaSeguridad consultaSeguridad = new ConsultaSeguridad();
-
-		consultaSeguridad.setDominioEmpresa(UchileOrquestadorConstantes.getDominioempresa()); // httpServletRequest.get
-		consultaSeguridad.setRolContexto(UchileOrquestadorConstantes.getRolusuario());
-		//---------------------------------------
-		consultaSeguridad.setNombreAplicacion(UchileOrquestadorConstantes.getAplicacion());
-		consultaSeguridad.setKeySeguridad(sessionPlataforma.getDataPlataformaAutentificacion().get("seguridad").getEnterpriseContext().getKeyEnterprise());
-
-		//ir a buscar todos los metodos que van a ser utilizados
-
-		clienteSeguridad = new ClienteSeguridad(usernamePerfil, passwordContrasenha,
-				vijnanaSeguridadProperties.getVijnanaClientTimeoutConexion(),
-				vijnanaSeguridadProperties.getVijnanaClientReadConexion());
+	
+	public SessionPlataforma obtenerUsuarioLogin(String remoteAddr, String remoteHost, String dataRequest,
+			String nombreAplicacionSeguridad, String nombreAplicacion, String nombreAplicacionProducto,
+			String nombreAplicacionProductoServicio, String metodoHttp, String dominioEmpresa, String rolContexto, String keySeguridad,
+			int ttlSession, String nombreUsuario, String contrasenhaUsuarioEmpresa) throws Exception{
+			
 		
-		AutentificacionResponse autentificacionResponse = clienteSeguridad.postConsultaSeguridad(consultaSeguridad, vijnanaSeguridadProperties.getVijnanaServidor(), vijnanaSeguridadProperties.getLocalObtenerUsuarioLogin());
+		ConsultaSeguridad consultaSeguridad = new ConsultaSeguridad(remoteAddr,remoteHost,dataRequest,nombreAplicacionSeguridad,
+				nombreAplicacion,nombreAplicacionProducto,nombreAplicacionProductoServicio,
+				metodoHttp,dominioEmpresa,rolContexto,keySeguridad, ttlSession,
+				nombreUsuario,contrasenhaUsuarioEmpresa);
+		
+//		Seguridad seguridad = new Seguridad(consultaSeguridad);
 
-		if(autentificacionResponse!=null && autentificacionResponse.getBasicContext()!=null){
-			sessionPlataforma.setDataUsuarioBasic(new HashMap<String, BasicContext>());  
-			sessionPlataforma.getDataUsuarioBasic().put(usernamePerfil, autentificacionResponse.getBasicContext());
-		}
 
-		return sessionPlataforma;
+		return null;
 	}
 
 	

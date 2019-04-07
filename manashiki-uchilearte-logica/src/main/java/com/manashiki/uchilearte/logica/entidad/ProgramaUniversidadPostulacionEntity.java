@@ -34,6 +34,14 @@ public class ProgramaUniversidadPostulacionEntity{
 	private String duracionProgramaUniversidadPostulacion;
 	
 	@OrderBy
+	@Column(name="estado_programa_universidad_postulacion")
+	private Boolean estadoProgramaUniversidadPostulacion;
+	
+	@OrderBy
+	@Column(name="prioridad_programa_universidad_postulacion")
+	private Integer prioridadProgramaUniversidadPostulacion;
+	
+	@OrderBy
 	@Column(name="costo_programa_universidad_postulacion")
 	private String costoProgramaUniversidadPostulacion;
 	
@@ -41,15 +49,20 @@ public class ProgramaUniversidadPostulacionEntity{
 	@Column(name="clasificacion_programa_postulacion")
 	private Integer clasificacionProgramaPostulacion;
 	
-	@OrderBy
-	@Column(name="prioridad")
-	private Integer prioridad;
+//	@OrderBy
+//	@Column(name="prioridad")
+//	private Integer prioridad;
 	
 	@OneToMany(mappedBy="fkIdProgramaUniversidadPostulacion")
 	private List<SolicitudPostulacionEntity> solicitudes_postulaciones;
 	
 	public ProgramaUniversidadPostulacionEntity() {
 		super();
+	}
+	
+	public ProgramaUniversidadPostulacionEntity(Boolean estadoProgramaUniversidadPostulacion) {
+		super();
+		this.estadoProgramaUniversidadPostulacion = estadoProgramaUniversidadPostulacion;
 	}
 
 	public Integer getIdProgramaUniversidadPostulacion() {
@@ -92,13 +105,13 @@ public class ProgramaUniversidadPostulacionEntity{
 		this.costoProgramaUniversidadPostulacion = costoProgramaUniversidadPostulacion;
 	}
 	
-	public Integer getPrioridad() {
-		return prioridad;
-	}
-
-	public void setPrioridad(Integer prioridad) {
-		this.prioridad = prioridad;
-	}
+//	public Integer getPrioridad() {
+//		return prioridad;
+//	}
+//
+//	public void setPrioridad(Integer prioridad) {
+//		this.prioridad = prioridad;
+//	}
 
 	public Integer getClasificacionProgramaPostulacion() {
 		return clasificacionProgramaPostulacion;
@@ -114,6 +127,22 @@ public class ProgramaUniversidadPostulacionEntity{
 
 	public void setSolicitudes_postulaciones(List<SolicitudPostulacionEntity> solicitudes_postulaciones) {
 		this.solicitudes_postulaciones = solicitudes_postulaciones;
+	}
+
+	public Integer getPrioridadProgramaUniversidadPostulacion() {
+		return prioridadProgramaUniversidadPostulacion;
+	}
+
+	public void setPrioridadProgramaUniversidadPostulacion(Integer prioridadProgramaUniversidadPostulacion) {
+		this.prioridadProgramaUniversidadPostulacion = prioridadProgramaUniversidadPostulacion;
+	}
+
+	public Boolean getEstadoProgramaUniversidadPostulacion() {
+		return estadoProgramaUniversidadPostulacion;
+	}
+
+	public void setEstadoProgramaUniversidadPostulacion(Boolean estadoProgramaUniversidadPostulacion) {
+		this.estadoProgramaUniversidadPostulacion = estadoProgramaUniversidadPostulacion;
 	}
 	
 }

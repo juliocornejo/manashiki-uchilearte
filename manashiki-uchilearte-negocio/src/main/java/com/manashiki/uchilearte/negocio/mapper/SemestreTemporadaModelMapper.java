@@ -6,6 +6,8 @@ import java.util.List;
 import com.manashiki.uchilearte.logica.entidad.SemestreTemporadaEntity;
 import com.manashiki.uchilearte.negocio.model.SemestreTemporadaModel;
 
+import vijnana.utilidades.component.utilidades.DateMapper;
+
 
 public class SemestreTemporadaModelMapper {
 	
@@ -27,6 +29,8 @@ public class SemestreTemporadaModelMapper {
 			semestreTemporadaEntity.setIdSemestreTemporada(semestreTemporadaModel.getIdSemestreTemporada());
 			semestreTemporadaEntity.setNombreSemestreTemporada(semestreTemporadaModel.getNombreSemestreTemporada());
 			semestreTemporadaEntity.setDescripcionSemestreTemporada(semestreTemporadaModel.getDescripcionSemestreTemporada());
+			semestreTemporadaEntity.setFechaActivacionDesde(DateMapper.DateUtilToTimestamp(semestreTemporadaModel.getFechaActivacionDesde()));
+			semestreTemporadaEntity.setFechaActivacionHasta(DateMapper.DateUtilToTimestamp(semestreTemporadaModel.getFechaActivacionHasta()));
 		}
 		return semestreTemporadaEntity;
 	}
@@ -65,6 +69,8 @@ public class SemestreTemporadaModelMapper {
 			semestreTemporadaModel.setIdSemestreTemporada(semestreTemporadaEntity.getIdSemestreTemporada());
 			semestreTemporadaModel.setNombreSemestreTemporada(semestreTemporadaEntity.getNombreSemestreTemporada());
 			semestreTemporadaModel.setDescripcionSemestreTemporada(semestreTemporadaEntity.getDescripcionSemestreTemporada());
+			semestreTemporadaModel.setFechaActivacionDesde(DateMapper.TimestampToDateUtil(semestreTemporadaEntity.getFechaActivacionDesde()));
+			semestreTemporadaModel.setFechaActivacionHasta(DateMapper.TimestampToDateUtil(semestreTemporadaEntity.getFechaActivacionHasta()));
 		}
 		return semestreTemporadaModel;
 	}

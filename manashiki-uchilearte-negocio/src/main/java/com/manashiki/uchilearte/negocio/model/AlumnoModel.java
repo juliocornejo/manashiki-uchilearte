@@ -11,6 +11,7 @@ public class AlumnoModel implements Serializable {
 	private Integer idAlumnoUchile;
 	private String descripcionAlumnosUchile;
 	private Integer estadoAlumnosUchile;
+	private Integer idUsuario;
 	
 	public AlumnoModel() {
 		super();
@@ -39,5 +40,14 @@ public class AlumnoModel implements Serializable {
 	public void setEstadoAlumnosUchile(Integer estadoAlumnosUchile) {
 		this.estadoAlumnosUchile = estadoAlumnosUchile;
 	}
+
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
 	
 }

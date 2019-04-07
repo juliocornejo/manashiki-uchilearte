@@ -13,9 +13,15 @@ public class FinalidadCertificadoModel implements Serializable{
 	private String codigoFinalidadCertificado;
 	private String nombreFinalidadCertificado;
 	private Boolean estadoFinalidadCertificado;
+	private Integer prioridadFinalidadCertificado;
 
 	public FinalidadCertificadoModel() {
 		super();
+	}
+	
+	public FinalidadCertificadoModel(Boolean estadoFinalidadCertificado) {
+		super();
+		this.estadoFinalidadCertificado = estadoFinalidadCertificado;
 	}
 
 	public Integer getIdFinalidadCertificado() {
@@ -48,6 +54,14 @@ public class FinalidadCertificadoModel implements Serializable{
 
 	public void setEstadoFinalidadCertificado(Boolean estadoFinalidadCertificado) {
 		this.estadoFinalidadCertificado = estadoFinalidadCertificado;
+	}
+
+	public Integer getPrioridadFinalidadCertificado() {
+		return prioridadFinalidadCertificado;
+	}
+
+	public void setPrioridadFinalidadCertificado(Integer prioridadFinalidadCertificado) {
+		this.prioridadFinalidadCertificado = prioridadFinalidadCertificado;
 	}
 	
 }

@@ -87,9 +87,6 @@ public class AlumnoProgramaActivoSemestreModelMapper {
 			return new AlumnoProgramaActivoSemestreModel();
 		}
 		else{
-			if(alumnoProgramaActivoSemestreModel.getIdAlumnoProgramaActivoSemestre()!=null){
-				
-			}
 			alumnoProgramaActivoSemestreModel.setIdAlumnoProgramaActivoSemestre(alumnoProgramaActivoSemestreEntity.getIdAlumnoProgramaActivoSemestre());
 			
 			if(alumnoProgramaActivoSemestreEntity.getFkIdProgramaActivoSemestre()!=null && alumnoProgramaActivoSemestreEntity.getFkIdProgramaActivoSemestre().getIdProgramaActivoSemestre()!=null){

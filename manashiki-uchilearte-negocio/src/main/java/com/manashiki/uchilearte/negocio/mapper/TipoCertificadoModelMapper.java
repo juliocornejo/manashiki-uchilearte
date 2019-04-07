@@ -17,18 +17,19 @@ public class TipoCertificadoModelMapper{
 	
 	public static TipoCertificadoEntity TipoCertificadoModelToTipoCertificadoEntity(TipoCertificadoModel tipoCertificadoModel){
 
-		TipoCertificadoEntity tipoCertificado=new TipoCertificadoEntity();
+		TipoCertificadoEntity tipoCertificadoEntity=new TipoCertificadoEntity();
 		if(tipoCertificadoModel==null){
 			return new TipoCertificadoEntity();
 		}
 		else{
-			tipoCertificado.setIdTipoCertificado(tipoCertificadoModel.getIdTipoCertificado());
-			tipoCertificado.setCodigoTipoCertificado(tipoCertificadoModel.getCodigoTipoCertificado());
-			tipoCertificado.setNombreTipoCertificado(tipoCertificadoModel.getNombreTipoCertificado());
-			tipoCertificado.setEstadoTipoCertificado(tipoCertificadoModel.getEstadoTipoCertificado());
+			tipoCertificadoEntity.setIdTipoCertificado(tipoCertificadoModel.getIdTipoCertificado());
+			tipoCertificadoEntity.setCodigoTipoCertificado(tipoCertificadoModel.getCodigoTipoCertificado());
+			tipoCertificadoEntity.setNombreTipoCertificado(tipoCertificadoModel.getNombreTipoCertificado());
+			tipoCertificadoEntity.setEstadoTipoCertificado(tipoCertificadoModel.getEstadoTipoCertificado());
+			tipoCertificadoEntity.setPrioridadTipoCertificado(tipoCertificadoModel.getPrioridadTipoCertificado());
 		}
 		
-		return tipoCertificado;
+		return tipoCertificadoEntity;
 	}
 
 	public static List<TipoCertificadoEntity> ListTipoCertificadoModelToListTipoCertificadoEntity(List<TipoCertificadoModel> listaTipoCertificadoModel){
@@ -54,17 +55,18 @@ public class TipoCertificadoModelMapper{
 		return listalistaTipoCertificadoEntity;
 	}
 
-	public static TipoCertificadoModel TipoCertificadoEntityToTipoCertificadoModel(TipoCertificadoEntity tipoCertificado){
+	public static TipoCertificadoModel TipoCertificadoEntityToTipoCertificadoModel(TipoCertificadoEntity tipoCertificadoEntity){
 
 		TipoCertificadoModel tipoCertificadoModel=new TipoCertificadoModel();
-		if(tipoCertificado==null){
+		if(tipoCertificadoEntity==null){
 			return new TipoCertificadoModel();
 		}
 		else{
-			tipoCertificadoModel.setIdTipoCertificado(tipoCertificado.getIdTipoCertificado());
-			tipoCertificadoModel.setCodigoTipoCertificado(tipoCertificado.getCodigoTipoCertificado());
-			tipoCertificadoModel.setNombreTipoCertificado(tipoCertificado.getNombreTipoCertificado());
-			tipoCertificadoModel.setEstadoTipoCertificado(tipoCertificado.getEstadoTipoCertificado());
+			tipoCertificadoModel.setIdTipoCertificado(tipoCertificadoEntity.getIdTipoCertificado());
+			tipoCertificadoModel.setCodigoTipoCertificado(tipoCertificadoEntity.getCodigoTipoCertificado());
+			tipoCertificadoModel.setNombreTipoCertificado(tipoCertificadoEntity.getNombreTipoCertificado());
+			tipoCertificadoModel.setEstadoTipoCertificado(tipoCertificadoEntity.getEstadoTipoCertificado());
+			tipoCertificadoModel.setPrioridadTipoCertificado(tipoCertificadoEntity.getPrioridadTipoCertificado());
 		}
 		return tipoCertificadoModel;
 	}

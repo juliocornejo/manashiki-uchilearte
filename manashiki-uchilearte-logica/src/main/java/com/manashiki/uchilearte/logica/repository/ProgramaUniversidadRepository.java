@@ -12,6 +12,6 @@ public interface ProgramaUniversidadRepository extends JpaRepository<ProgramaUni
 //	List<ProgramaUniversidadEntity> findByFkIdEmpresa(EmpresaEntity fkIdEmpresa);
 //	List<ProgramaUniversidadEntity> findByFkIdUsuario(UsuarioEntity fkIdUsuario);
 	//Solo el Buscar Todos
-
-	List<ProgramaUniversidadEntity> findAllByOrderByClasificacionProgramaAsc();
+	List<ProgramaUniversidadEntity> findByEstadoProgramaUniversidadOrderByClasificacionProgramaAscPrioridadProgramaUniversidadAsc(Boolean estadoProgramaUniversidad);
+//	List<ProgramaUniversidadEntity> findAllByOrderByClasificacionProgramaAsc();
 }

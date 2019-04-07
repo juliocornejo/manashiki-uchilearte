@@ -2,9 +2,12 @@ package com.manashiki.uchilearte.logica.entidad;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.IndexColumn;
 
 /**
  * Entity implementation class for Entity: Usuario
@@ -33,6 +36,10 @@ public class ArchivoSolicitudEntity implements Serializable {
 
 	@Column(name="tipo_archivo_solicitud")
 	private String tipoArchivoSolicitud;
+	
+	@IndexColumn(name="idx_archivo_solicitud_fecha_archivo")
+	@Column(name="fecha_archivo")
+	private Timestamp fechaArchivo; //momento que que ejecutada la solicitud
 	
 	@OneToMany(mappedBy="fkIdArchivoSolicitud")
 	private List<SolicitudAcademicaEntity> solicitudes_academicas;
@@ -91,4 +98,14 @@ public class ArchivoSolicitudEntity implements Serializable {
 	public void setSolicitudes_postulaciones(List<SolicitudPostulacionEntity> solicitudes_postulaciones) {
 		this.solicitudes_postulaciones = solicitudes_postulaciones;
 	}
+
+	public Timestamp getFechaArchivo() {
+		return fechaArchivo;
+	}
+
+	public void setFechaArchivo(Timestamp fechaArchivo) {
+		this.fechaArchivo = fechaArchivo;
+	}
+	
+	
 }

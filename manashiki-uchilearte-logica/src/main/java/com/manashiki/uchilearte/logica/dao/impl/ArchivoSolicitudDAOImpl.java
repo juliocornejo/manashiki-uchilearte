@@ -36,6 +36,13 @@ public class ArchivoSolicitudDAOImpl implements ArchivoSolicitudDAO{
 		return archivoSolicitudAcademicaEntity;
 	}
 	
+	public ArchivoSolicitudEntity crearArchivoSolicitudFlushEntity(ArchivoSolicitudEntity archivoSolicitudEntity){
+		objLog.info("INI - crearArchivoSolicitudEntity ");
+		ArchivoSolicitudEntity archivoSolicitudAcademicaEntity = archivoSolicitudRepository.saveAndFlush(archivoSolicitudEntity);
+		objLog.info("FIN - crearArchivoSolicitudEntity "+archivoSolicitudEntity.getIdArchivoSolicitud());
+		return archivoSolicitudAcademicaEntity;
+	}
+	
 	/**
 	 * Actualiza un Entidad ArchivoSolicitudAcademica en la base de datos 
 	 * @param  aplicacion ArchivoSolicitudAcademica
@@ -47,7 +54,6 @@ public class ArchivoSolicitudDAOImpl implements ArchivoSolicitudDAO{
 		ArchivoSolicitudEntity archivoSolicitudAcademicaEntity = archivoSolicitudRepository.save(archivoSolicitudEntity);
 		objLog.info("FIN - actualizarArchivoSolicitudEntity "+archivoSolicitudEntity.getIdArchivoSolicitud());
 		return archivoSolicitudAcademicaEntity;
-	
 	}
 	
 	/**
@@ -72,7 +78,6 @@ public class ArchivoSolicitudDAOImpl implements ArchivoSolicitudDAO{
  			}
  		}
  		
- 		
 		return archivoSolicitudAcademicaEntity;
 	}
 	
@@ -81,7 +86,7 @@ public class ArchivoSolicitudDAOImpl implements ArchivoSolicitudDAO{
 	 * @return lista List<ArchivoSolicitudAcademica>
 	 * @exception no lanza excepciones
 	 */
-	public List<ArchivoSolicitudEntity> listarArchivoSolicitudesEntity(){
+	public List<ArchivoSolicitudEntity> listarArchivoSolicitudEntity(){
 		objLog.info("INI - listarArchivoSolicitudEntity");
 		List<ArchivoSolicitudEntity> lista = null;
 		try {

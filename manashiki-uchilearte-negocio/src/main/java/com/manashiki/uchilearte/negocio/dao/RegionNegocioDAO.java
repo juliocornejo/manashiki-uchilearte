@@ -9,6 +9,6 @@ public interface RegionNegocioDAO{
 	public RegionModel crearRegionModel(RegionModel objRegionModel);
 	public RegionModel actualizarRegionModel(RegionModel objRegionModel);
 	public RegionModel buscarRegionxIdModel(RegionModel objRegionModel) throws NegocioImplException;
-	public List<RegionModel> listarRegionesModel();
+	public List<RegionModel> listarRegionModel();
 	
 }

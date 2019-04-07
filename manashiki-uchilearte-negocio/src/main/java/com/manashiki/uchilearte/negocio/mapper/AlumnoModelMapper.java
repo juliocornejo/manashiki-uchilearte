@@ -27,6 +27,8 @@ public class AlumnoModelMapper {
 			alumnoEntity.setIdAlumnoUchile(alumnoModel.getIdAlumnoUchile());
 			alumnoEntity.setDescripcionAlumnosUchile(alumnoModel.getDescripcionAlumnosUchile());
 			alumnoEntity.setEstadoAlumnosUchile(alumnoModel.getEstadoAlumnosUchile());
+			alumnoEntity.setFkIdUsuario(alumnoModel.getIdUsuario());
+		
 		}
 		return alumnoEntity;
 	}
@@ -65,6 +67,7 @@ public class AlumnoModelMapper {
 			alumnoModel.setIdAlumnoUchile(alumnoEntity.getIdAlumnoUchile());
 			alumnoModel.setDescripcionAlumnosUchile(alumnoEntity.getDescripcionAlumnosUchile());
 			alumnoModel.setEstadoAlumnosUchile(alumnoEntity.getEstadoAlumnosUchile());
+			alumnoModel.setIdUsuario(alumnoEntity.getFkIdUsuario());
 		}
 		return alumnoModel;
 	}

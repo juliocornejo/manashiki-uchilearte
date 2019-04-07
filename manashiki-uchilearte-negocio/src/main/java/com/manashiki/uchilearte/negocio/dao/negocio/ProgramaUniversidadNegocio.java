@@ -20,21 +20,21 @@ import vijnana.cache.component.ICacheComponent;
 
 @Component
 public class ProgramaUniversidadNegocio implements ProgramaUniversidadNegocioDAO{
-	
+
 	private static final Logger objLog = LoggerFactory.getLogger(ProgramaUniversidadNegocio.class);
-	
+
 	@Autowired
 	FactoryPersistenciaDAO factoryPersistenciaDAO;
-	
+
 	ICacheComponent objCacheComponent = null;
-	
+
 	public ProgramaUniversidadModel crearProgramaUniversidadModel(ProgramaUniversidadModel programaUniversidadModel) {
 		objLog.info("INI - crearProgramaUniversidadModel");
 		ProgramaUniversidadEntity programaUniversidad = new ProgramaUniversidadEntity();
 		programaUniversidad = ProgramaUniversidadModelMapper.ProgramaUniversidadModelToProgramaUniversidadEntity(programaUniversidadModel);
 
 		programaUniversidad = factoryPersistenciaDAO.getProgramaUniversidadDAO().crearProgramaUniversidadEntity(programaUniversidad);
-		
+
 		programaUniversidadModel = ProgramaUniversidadModelMapper.ProgramaUniversidadEntityToProgramaUniversidadModel(programaUniversidad);
 		objLog.info("FIN - crearProgramaUniversidadModel "+programaUniversidadModel.getIdProgramaUniversidad());
 		return programaUniversidadModel;
@@ -47,7 +47,7 @@ public class ProgramaUniversidadNegocio implements ProgramaUniversidadNegocioDAO
 		programaUniversidad = ProgramaUniversidadModelMapper.ProgramaUniversidadModelToProgramaUniversidadEntity(programaUniversidadModel);
 
 		programaUniversidad = factoryPersistenciaDAO.getProgramaUniversidadDAO().actualizarProgramaUniversidadEntity(programaUniversidad);
-		
+
 		programaUniversidadModel = ProgramaUniversidadModelMapper.ProgramaUniversidadEntityToProgramaUniversidadModel(programaUniversidad);
 		objLog.info("FIN - actualizarProgramaUniversidadModel "+programaUniversidadModel.getIdProgramaUniversidad());
 		return programaUniversidadModel;
@@ -66,7 +66,7 @@ public class ProgramaUniversidadNegocio implements ProgramaUniversidadNegocioDAO
 			throw new NegocioImplException(e);
 		}
 		programaUniversidadModel = ProgramaUniversidadModelMapper.ProgramaUniversidadEntityToProgramaUniversidadModel(programaUniversidad);
-		
+
 		objLog.info("FIN - buscarProgramaUniversidadxIdModel "+programaUniversidadModel.getIdProgramaUniversidad());
 		return programaUniversidadModel;
 	}
@@ -74,125 +74,119 @@ public class ProgramaUniversidadNegocio implements ProgramaUniversidadNegocioDAO
 	public List<ProgramaUniversidadModel> listarProgramaUniversidadModel() {
 		objLog.info("INI - listarProgramaUniversidadModel");
 		List<ProgramaUniversidadModel> listaProgramaUniversidadModel=new ArrayList<ProgramaUniversidadModel>();
-//		List<ProgramaUniversidadEntity> listaProgramaUniversidades = new ArrayList<ProgramaUniversidadEntity>();
-//		listaProgramaUniversidades = factoryPersistenciaDAO.getProgramaUniversidadDAO().listarProgramaUniversidadesEntity();
-//		listaProgramaUniversidadModel = ProgramaUniversidadModelMapper.ListProgramaUniversidadEntityToListProgramaUniversidadModel(listaProgramaUniversidades);
-		listaProgramaUniversidadModel = obtenerCacheListaProgramaUniversidad();
+		
+		List<ProgramaUniversidadEntity> listaProgramaUniversidadEntity = new ArrayList<ProgramaUniversidadEntity>();
+		
+		listaProgramaUniversidadEntity = factoryPersistenciaDAO.getProgramaUniversidadDAO().listarProgramaUniversidadEntity();
+		
+		listaProgramaUniversidadModel = ProgramaUniversidadModelMapper.ListProgramaUniversidadEntityToListProgramaUniversidadModel(listaProgramaUniversidadEntity);
 		
 		objLog.info("FIN - listarProgramaUniversidadModel "+listaProgramaUniversidadModel.size());
-		
+
 		return listaProgramaUniversidadModel;
 	}
 	//Traer todos los programas con precios (Solo Postulaciones)
-	public List<ProgramaUniversidadModel> listarProgramaUniversidadPrecioModel() {
+	public List<ProgramaUniversidadModel> listarProgramaUniversidadxEstadoModel() {
 		objLog.info("INI - listarProgramaUniversidadPrecioModel");
 		List<ProgramaUniversidadModel> listaProgramaUniversidadModel=new ArrayList<ProgramaUniversidadModel>();
 		
-		listaProgramaUniversidadModel = obtenerCacheListaProgramaUniversidades();
+		ProgramaUniversidadModel programaUniversidadModel = new ProgramaUniversidadModel(true);
+		
+		listaProgramaUniversidadModel = obtenerCacheListaProgramaUniversidadxEstado(programaUniversidadModel);
 		
 		if(listaProgramaUniversidadModel!=null && listaProgramaUniversidadModel.size()>0){
 			objLog.info("FIN - listarProgramaUniversidadPrecioModel "+listaProgramaUniversidadModel.size());
 		}
-		
+
 		return listaProgramaUniversidadModel;
 	}
-	
+
 	//Aca deben ir todas los Programas, por orden de prioridad
-	private List<ProgramaUniversidadModel> obtenerCacheListaProgramaUniversidad(){
+//	private List<ProgramaUniversidadModel> obtenerCacheListaAllProgramaUniversidad(){
+//		List<ProgramaUniversidadModel> listaProgramaUniversidadModel=new ArrayList<ProgramaUniversidadModel>();
+//		List<ProgramaUniversidadEntity> listaProgramaUniversidadEntity=new ArrayList<ProgramaUniversidadEntity>();
+//		ProgramaUniversidadModel programaUniversidadModel = new ProgramaUniversidadModel();
+//
+//		try{
+//			if(objCacheComponent==null){
+//				objCacheComponent = CacheLocalRepositorio.crearRepositorioCacheLocal(); //Colocar el nombre de cache local del ws
+//			}
+//
+//		}catch(Exception e){
+//			listaProgramaUniversidadModel = null;
+//			objLog.error("Cae al obtener el repositorio de Cache");
+//		}
+//
+//		try{
+//			listaProgramaUniversidadModel = CacheLocalRepositorio.obtenerCacheListaProgramaUniversidad(objCacheComponent);
+//
+//		}catch(Exception e){
+//
+//			listaProgramaUniversidadModel=null;
+//
+//		}
+//
+//		try{
+//			if(listaProgramaUniversidadModel==null || listaProgramaUniversidadModel.size()==0){
+//				//Que los entregue ordenados por doc-mag-pos-dipl
+//				listaProgramaUniversidadEntity = factoryPersistenciaDAO.getProgramaUniversidadDAO().listarProgramaUniversidadEntity();
+//
+//				if(listaProgramaUniversidadEntity!=null && listaProgramaUniversidadEntity.size()>0){
+//					listaProgramaUniversidadModel = CacheLocalRepositorio.generarCacheListaProgramaUniversidad(objCacheComponent, listaProgramaUniversidadEntity);
+//					listaProgramaUniversidadModel = new ArrayList<ProgramaUniversidadModel>();
+//					for(ProgramaUniversidadEntity puEnt:listaProgramaUniversidadEntity){
+//						programaUniversidadModel = new ProgramaUniversidadModel();
+//						programaUniversidadModel = ProgramaUniversidadModelMapper.ProgramaUniversidadEntityToProgramaUniversidadModel(puEnt);
+//						listaProgramaUniversidadModel.add(programaUniversidadModel);
+//					}
+//				}
+//			}
+//		}
+//		catch(Exception e){
+//			objLog.error("Error en la implementacion del Servicio "+e.getMessage());
+//		}
+//		return listaProgramaUniversidadModel;
+//	}
+
+	//Aca deben ir todas los Programas ordenados por prioridad
+	private List<ProgramaUniversidadModel> obtenerCacheListaProgramaUniversidadxEstado(ProgramaUniversidadModel programaUniversidadModel){
 		List<ProgramaUniversidadModel> listaProgramaUniversidadModel=new ArrayList<ProgramaUniversidadModel>();
 		List<ProgramaUniversidadEntity> listaProgramaUniversidadEntity=new ArrayList<ProgramaUniversidadEntity>();
-		ProgramaUniversidadModel programaUniversidadModel = new ProgramaUniversidadModel();
-		
 		try{
 			if(objCacheComponent==null){
 				objCacheComponent = CacheLocalRepositorio.crearRepositorioCacheLocal(); //Colocar el nombre de cache local del ws
 			}
-		
+
 		}catch(Exception e){
 			listaProgramaUniversidadModel = null;
 			objLog.error("Cae al obtener el repositorio de Cache");
 		}
-		
+
 		try{
 			listaProgramaUniversidadModel = CacheLocalRepositorio.obtenerCacheListaProgramaUniversidad(objCacheComponent);
 
 		}catch(Exception e){
-			
+
 			listaProgramaUniversidadModel=null;
-		
+
 		}
-		
+
 		try{
 			if(listaProgramaUniversidadModel==null || listaProgramaUniversidadModel.size()==0){
-				//Que los entregue ordenados por doc-mag-pos-dipl
-				listaProgramaUniversidadEntity = factoryPersistenciaDAO.getProgramaUniversidadDAO().listarProgramaUniversidadesOrdenPrioridad();
+				//Traer Todos los Programas desde la Base de Datos con estado = 1;
+				ProgramaUniversidadEntity  objProgramaUniversidadEntity = ProgramaUniversidadModelMapper.ProgramaUniversidadModelToProgramaUniversidadEntity(programaUniversidadModel);
 				
-				if(listaProgramaUniversidadEntity!=null && listaProgramaUniversidadEntity.size()>0){
+				listaProgramaUniversidadEntity = factoryPersistenciaDAO.getProgramaUniversidadDAO().listarProgramaUniversidadxEstadoEntity(objProgramaUniversidadEntity);
+
+				if(listaProgramaUniversidadEntity!=null && listaProgramaUniversidadEntity.size()>0 ){
+
 					listaProgramaUniversidadModel = CacheLocalRepositorio.generarCacheListaProgramaUniversidad(objCacheComponent, listaProgramaUniversidadEntity);
 					listaProgramaUniversidadModel = new ArrayList<ProgramaUniversidadModel>();
+
 					for(ProgramaUniversidadEntity puEnt:listaProgramaUniversidadEntity){
 						programaUniversidadModel = new ProgramaUniversidadModel();
 						programaUniversidadModel = ProgramaUniversidadModelMapper.ProgramaUniversidadEntityToProgramaUniversidadModel(puEnt);
 						listaProgramaUniversidadModel.add(programaUniversidadModel);
-					}
-				}
-			}
-		}
-		catch(Exception e){
-			objLog.error("Error en la implementacion del Servicio "+e.getMessage());
-		}
-		return listaProgramaUniversidadModel;
-	}
-	
-	//Aca deben ir todas los Programas ordenados por prioridad
-	private List<ProgramaUniversidadModel> obtenerCacheListaProgramaUniversidades(){
-		List<ProgramaUniversidadModel> listaProgramaUniversidadModel=new ArrayList<ProgramaUniversidadModel>();
-		List<ProgramaUniversidadEntity> listaProgramaUniversidadEntity=new ArrayList<ProgramaUniversidadEntity>();
-		ProgramaUniversidadModel programaUniversidadModel = new ProgramaUniversidadModel();
-		try{
-			if(objCacheComponent==null){
-				objCacheComponent = CacheLocalRepositorio.crearRepositorioCacheLocal(); //Colocar el nombre de cache local del ws
-			}
-		
-		}catch(Exception e){
-			listaProgramaUniversidadModel = null;
-			objLog.error("Cae al obtener el repositorio de Cache");
-		}
-		
-		try{
-			listaProgramaUniversidadModel = CacheLocalRepositorio.obtenerCacheListaProgramaUniversidad(objCacheComponent);
-
-		}catch(Exception e){
-			
-			listaProgramaUniversidadModel=null;
-		
-		}
-		
-		try{
-			if(listaProgramaUniversidadModel==null || listaProgramaUniversidadModel.size()==0){
-				//Traer Todos los Programas desde la Base de Datos
-				listaProgramaUniversidadEntity = factoryPersistenciaDAO.getProgramaUniversidadDAO().listarProgramaUniversidadesOrdenPrioridad();
-				
-				if(listaProgramaUniversidadEntity!=null && listaProgramaUniversidadEntity.size()>0 ){
-					
-					List<ProgramaUniversidadEntity> metListaProgramaUniversidadEntity = new ArrayList<ProgramaUniversidadEntity>();
-					
-					for(ProgramaUniversidadEntity pum:listaProgramaUniversidadEntity){
-						if(pum.getCostoProgramaUniversidad().equals("-") || pum.getCostoProgramaUniversidad().equals(" - ") || pum.getCostoProgramaUniversidad().equals("- ")){
-							
-						}else{
-							metListaProgramaUniversidadEntity.add(pum);
-						}
-					}
-					
-					if(metListaProgramaUniversidadEntity!=null && metListaProgramaUniversidadEntity.size()>0){
-						listaProgramaUniversidadModel = CacheLocalRepositorio.generarCacheListaProgramaUniversidad(objCacheComponent, metListaProgramaUniversidadEntity);
-						listaProgramaUniversidadModel = new ArrayList<ProgramaUniversidadModel>();
-						for(ProgramaUniversidadEntity puEnt:listaProgramaUniversidadEntity){
-							programaUniversidadModel = new ProgramaUniversidadModel();
-							programaUniversidadModel = ProgramaUniversidadModelMapper.ProgramaUniversidadEntityToProgramaUniversidadModel(puEnt);
-							listaProgramaUniversidadModel.add(programaUniversidadModel);
-						}
 					}
 				}
 			}

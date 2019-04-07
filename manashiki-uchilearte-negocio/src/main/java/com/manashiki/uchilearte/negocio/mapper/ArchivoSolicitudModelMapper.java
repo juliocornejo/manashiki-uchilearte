@@ -6,6 +6,8 @@ import java.util.List;
 import com.manashiki.uchilearte.logica.entidad.ArchivoSolicitudEntity;
 import com.manashiki.uchilearte.negocio.model.ArchivoSolicitudModel;
 
+import vijnana.utilidades.component.utilidades.DateMapper;
+
 public class ArchivoSolicitudModelMapper{
 
 	/**
@@ -27,6 +29,7 @@ public class ArchivoSolicitudModelMapper{
 			archivoSolicitudEntity.setNombreArchivoSolicitud(archivoSolicitudModel.getNombreArchivoSolicitud());
 			archivoSolicitudEntity.setDireccionAlmacenamientoArchivoSolicitud(archivoSolicitudModel.getDireccionAlmacenamientoArchivoSolicitud());
 			archivoSolicitudEntity.setTipoArchivoSolicitud(archivoSolicitudModel.getTipoArchivoSolicitud());
+			archivoSolicitudEntity.setFechaArchivo(DateMapper.DateUtilToTimestamp(archivoSolicitudModel.getFechaArchivo()));
 		}
 		return archivoSolicitudEntity;
 	}
@@ -66,6 +69,7 @@ public class ArchivoSolicitudModelMapper{
 			archivoSolicitudModel.setNombreArchivoSolicitud(archivoSolicitudEntity.getNombreArchivoSolicitud());
 			archivoSolicitudModel.setDireccionAlmacenamientoArchivoSolicitud(archivoSolicitudEntity.getDireccionAlmacenamientoArchivoSolicitud());
 			archivoSolicitudModel.setTipoArchivoSolicitud(archivoSolicitudEntity.getTipoArchivoSolicitud());
+			archivoSolicitudModel.setFechaArchivo(DateMapper.TimestampToDateUtil(archivoSolicitudEntity.getFechaArchivo()));
 		}
 		return archivoSolicitudModel;
 	}

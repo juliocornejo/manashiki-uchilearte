@@ -12,6 +12,6 @@ public interface TipoSolicitudDAO{
 	public TipoSolicitudEntity actualizarTipoSolicitudEntity(TipoSolicitudEntity objTipoSolicitudEntity);
 	public TipoSolicitudEntity buscarTipoSolicitudxIdEntity(TipoSolicitudEntity objTipoSolicitudEntity) throws PersistenceImplException;
 	public List<TipoSolicitudEntity> listarTipoSolicitudesEntity();
-	public List<TipoSolicitudEntity> listarTipoSolicitudesOrderCodigoTipoSolicitudEntity(TipoSolicitudEntity objTipoSolicitudEntity);
+	public List<TipoSolicitudEntity> listarTipoSolicitudesxEstadoEntity(TipoSolicitudEntity objTipoSolicitudEntity);
 	
 }

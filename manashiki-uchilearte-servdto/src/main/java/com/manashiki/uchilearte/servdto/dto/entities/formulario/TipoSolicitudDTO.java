@@ -12,6 +12,8 @@ public class TipoSolicitudDTO implements Serializable{
 	private int idTipoSolicitud;
 	private String codigoTipoSolicitud;
 	private String nombreTipoSolicitud;
+	private boolean estadoTipoSolicitud;
+	private int prioridadTipoSolicitud;
 	
 	public TipoSolicitudDTO() {
 		super();
@@ -40,5 +42,20 @@ public class TipoSolicitudDTO implements Serializable{
 	public void setNombreTipoSolicitud(String nombreTipoSolicitud) {
 		this.nombreTipoSolicitud = nombreTipoSolicitud;
 	}
-	
+
+	public int getPrioridadTipoSolicitud() {
+		return prioridadTipoSolicitud;
+	}
+
+	public void setPrioridadTipoSolicitud(int prioridadTipoSolicitud) {
+		this.prioridadTipoSolicitud = prioridadTipoSolicitud;
+	}
+
+	public boolean isEstadoTipoSolicitud() {
+		return estadoTipoSolicitud;
+	}
+
+	public void setEstadoTipoSolicitud(boolean estadoTipoSolicitud) {
+		this.estadoTipoSolicitud = estadoTipoSolicitud;
+	}
 }

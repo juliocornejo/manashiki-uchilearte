@@ -29,7 +29,8 @@ public class ProgramaUniversidadPostulacionModelMapper{
 			programaUniversidadPostulacionEntity.setCostoProgramaUniversidadPostulacion(programaUniversidadPostulacionModel.getCostoProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionEntity.setClasificacionProgramaPostulacion(programaUniversidadPostulacionModel.getClasificacionProgramaPostulacion());
 //			programaUniversidadPostulacionEntity.setPrioridad(programaUniversidadPostulacionModel.getSubClasificacionProgramaPostulacion());
-			programaUniversidadPostulacionEntity.setPrioridad(programaUniversidadPostulacionModel.getPrioridad());
+			programaUniversidadPostulacionEntity.setEstadoProgramaUniversidadPostulacion(programaUniversidadPostulacionModel.getEstadoProgramaUniversidadPostulacion());
+			programaUniversidadPostulacionEntity.setPrioridadProgramaUniversidadPostulacion(programaUniversidadPostulacionModel.getPrioridadProgramaUniversidadPostulacion());
 		}
 		
 		return programaUniversidadPostulacionEntity;
@@ -71,7 +72,10 @@ public class ProgramaUniversidadPostulacionModelMapper{
 			programaUniversidadPostulacionModel.setDuracionProgramaUniversidadPostulacion(programaUniversidadPostulacionEntity.getDuracionProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionModel.setCostoProgramaUniversidadPostulacion(programaUniversidadPostulacionEntity.getCostoProgramaUniversidadPostulacion());
 			programaUniversidadPostulacionModel.setClasificacionProgramaPostulacion(programaUniversidadPostulacionEntity.getClasificacionProgramaPostulacion());
-			programaUniversidadPostulacionModel.setPrioridad(programaUniversidadPostulacionEntity.getPrioridad());
+			programaUniversidadPostulacionModel.setEstadoProgramaUniversidadPostulacion(programaUniversidadPostulacionEntity.getEstadoProgramaUniversidadPostulacion());
+			programaUniversidadPostulacionModel.setPrioridadProgramaUniversidadPostulacion(programaUniversidadPostulacionEntity.getPrioridadProgramaUniversidadPostulacion());
+			
+//			programaUniversidadPostulacionModel.setPrioridad(programaUniversidadPostulacionEntity.getPrioridad());
 		}
 		return programaUniversidadPostulacionModel;
 	}

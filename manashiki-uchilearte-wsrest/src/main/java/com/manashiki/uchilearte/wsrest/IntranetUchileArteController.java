@@ -81,7 +81,7 @@ public class IntranetUchileArteController {
 	public Response listarSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -120,7 +120,7 @@ public class IntranetUchileArteController {
 	public Response crearSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -159,7 +159,7 @@ public class IntranetUchileArteController {
 	public Response actualizarSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -198,7 +198,7 @@ public class IntranetUchileArteController {
 	public Response buscarSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -243,7 +243,7 @@ public class IntranetUchileArteController {
 		public Response crearAlumno(RequestProductoDTO requestProductoDTO) {
 			WrapperUchileArte wrapperUchileArte = null;
 			
-			vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+			vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 			
 			UchileArte uchileArte = new UchileArte();
 
@@ -281,7 +281,7 @@ public class IntranetUchileArteController {
 		public Response actualizarAlumno(RequestProductoDTO requestProductoDTO) {
 			WrapperUchileArte wrapperUchileArte = null;
 			
-			vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+			vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 			
 			UchileArte uchileArte = new UchileArte();
 
@@ -319,7 +319,7 @@ public class IntranetUchileArteController {
 		public Response obtenerAlumnoxUsuario(RequestProductoDTO requestProductoDTO) {
 			WrapperUchileArte wrapperUchileArte = null;
 			
-			vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+			vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 			
 			UchileArte uchileArte = new UchileArte();
 
@@ -364,7 +364,7 @@ public class IntranetUchileArteController {
 	public Response listarAlumnoNoAsociadoToUsuario(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -410,7 +410,7 @@ public class IntranetUchileArteController {
 	public Response listarAlumnoNoAsociadoToSeguridad(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -454,7 +454,7 @@ public class IntranetUchileArteController {
 	public Response crearProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -493,7 +493,7 @@ public class IntranetUchileArteController {
 	public Response actualizarProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -532,7 +532,7 @@ public class IntranetUchileArteController {
 	public Response buscarProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -577,7 +577,7 @@ public class IntranetUchileArteController {
 	public Response listarProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -616,7 +616,7 @@ public class IntranetUchileArteController {
 	public Response crearAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -655,7 +655,7 @@ public class IntranetUchileArteController {
 	public Response actualizarAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -694,7 +694,7 @@ public class IntranetUchileArteController {
 	public Response buscarAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -739,7 +739,7 @@ public class IntranetUchileArteController {
 	public Response listarAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -778,7 +778,7 @@ public class IntranetUchileArteController {
 	public Response crearAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -817,7 +817,7 @@ public class IntranetUchileArteController {
 	public Response actualizarAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -856,7 +856,7 @@ public class IntranetUchileArteController {
 	public Response buscarAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -901,7 +901,7 @@ public class IntranetUchileArteController {
 	public Response listarAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -942,7 +942,7 @@ public class IntranetUchileArteController {
 	public Response crearAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -981,7 +981,7 @@ public class IntranetUchileArteController {
 	public Response actualizarAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -1020,7 +1020,7 @@ public class IntranetUchileArteController {
 	public Response buscarAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
@@ -1066,7 +1066,7 @@ public class IntranetUchileArteController {
 	public Response listarAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 		
-		vijnana.respuesta.wrapper.response.Error error = new vijnana.respuesta.wrapper.response.Error();
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
 		
 		UchileArte uchileArte = new UchileArte();
 
