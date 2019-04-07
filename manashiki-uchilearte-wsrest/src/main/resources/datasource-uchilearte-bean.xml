@@ -13,7 +13,7 @@
 	
 	<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://162.243.152.10:3306/dbadmuchile" />
+		<property name="url" value="jdbc:mysql://162.243.152.10:3306/dbadmuchiledos" />
 		<property name="username" value="tomcat" />
  		<property name="password" value="tomcat.2017!" /> 
 	</bean>
