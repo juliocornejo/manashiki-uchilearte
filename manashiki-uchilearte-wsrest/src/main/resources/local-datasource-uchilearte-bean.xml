@@ -13,11 +13,17 @@
 	
 	<tx:annotation-driven />
 	
+<!-- 	<bean id="datasourceUchile" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/dbadmuchile" /> -->
+<!-- 		<property name="username" value="root" /> -->
+<!--  		<property name="password" value="1234" />  -->
+<!-- 	</bean> -->
 	<bean id="datasourceUchile" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/dbadmuchile" />
-		<property name="username" value="root" />
- 		<property name="password" value="1234" /> 
+		<property name="driverClassName" value="${configuracion_uchile.driver}" />
+		<property name="url" value="${configuracion_uchile.repositorio}" />
+		<property name="username" value="${configuracion_uchile.username}" />
+		<property name="password" value="${configuracion_uchile.contrasenha}" />
 	</bean>
 		
 	<!-- Entity Manager -->

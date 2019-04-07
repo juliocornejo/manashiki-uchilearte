@@ -17,7 +17,8 @@
 	<context:component-scan base-package="com.manashiki.uchilearte.logica.dao" />
 	<context:component-scan base-package="com.manashiki.uchilearte.negocio.dao" />
 	<context:component-scan base-package="com.manashiki.uchilearte.servicio" />
-
+	
+	<context:property-placeholder location="classpath:configuracion-uchile.properties" />
 	<import resource="local-datasource-uchilearte-bean.xml" />	
 
 
