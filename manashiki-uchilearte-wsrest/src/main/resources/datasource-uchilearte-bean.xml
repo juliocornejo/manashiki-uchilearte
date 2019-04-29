@@ -11,17 +11,17 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd">
 	
-	<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://162.243.152.10:3306/dbadmuchiledos" />
-		<property name="username" value="tomcat" />
- 		<property name="password" value="tomcat.2017!" /> 
+	<bean id="datasourceUchile" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${p_configuracion_uchile.driver}" />
+		<property name="url" value="${p_configuracion_uchile.repositorio}" />
+		<property name="username" value="${p_configuracion_uchile.username}" />
+		<property name="password" value="${p_configuracion_uchile.contrasenha}" />
 	</bean>
 
 	<!-- Entity Manager -->
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="datasource" />
+		<property name="dataSource" ref="datasourceUchile" />
 		<property name="persistenceUnitName" value="manashiki-uchilearte" />
 	</bean>
 

@@ -53,26 +53,18 @@ public class PagoController {
 	public Response crearLogReserva(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = null;
+		
 		UchileArte uchileArte = new UchileArte();
-
+		
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		/*-------------------------------------------------------------------------------------------------------------*/
 		LogReservaDTO logReservaDTO = factoryServicio.getLogReservaServicio().crearLogReservaDTO(requestProductoDTO.getLogReservaDTO());
-
-		cantidadResultados = 1;
 
 		uchileArte.setLogReservaDTO(logReservaDTO);
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.request.getRequestURL().toString(),
+				this.request.getMethod(), uchileArte);
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}

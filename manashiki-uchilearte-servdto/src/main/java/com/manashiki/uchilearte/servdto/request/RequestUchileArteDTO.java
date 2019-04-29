@@ -47,10 +47,10 @@ public class RequestUchileArteDTO implements Serializable {
 	private LogReservaDTO logReservaDTO;
 	/************************************/
 	private AlumnoDTO alumnoDTO;
-	private ProgramaActivoSemestreDTO programaActivoSemestreDTO;
 	private AlumnoProgramaActivoSemestreDTO alumnoProgramaActivoSemestreDTO;
 	private AsignaturaProgramaActivoSemestreDTO asignaturaProgramaActivoSemestreDTO;
 	private AsignaturaTomadaProgramaActivoSemestreDTO asignaturaTomadaProgramaActivoSemestreDTO;
+	private ProgramaActivoSemestreDTO programaActivoSemestreDTO;
 	private SemestreTemporadaDTO semestreTemporadaDTO;
 	/************************************/
 

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RequestProductoDTO extends RequestUchileArteDTO{
 
 	private static final long serialVersionUID = 7390790957024310872L;
-
+	
 	public RequestProductoDTO() {
 		super();
 	}

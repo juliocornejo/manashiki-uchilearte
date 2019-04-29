@@ -21,6 +21,10 @@ public class ProgramaUniversidadDTO implements Serializable{
 	public ProgramaUniversidadDTO() {
 		super();
 	}
+	
+	public ProgramaUniversidadDTO(String nombreProgramaUniversidad) {
+		this.nombreProgramaUniversidad = nombreProgramaUniversidad;
+	}
 
 	public int getIdProgramaUniversidad() {
 		return idProgramaUniversidad;

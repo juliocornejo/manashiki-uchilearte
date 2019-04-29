@@ -20,9 +20,9 @@ public class WrapperUchileArte extends AbstractWrapper implements Serializable{
 	@JsonProperty("data")
 	private UchileArte data;
 	
-	public WrapperUchileArte(boolean ok, String tiempoRespuesta, int cantidadResultados, String url, AbstractWrapperError error,
+	public WrapperUchileArte( AbstractWrapperError error, String tiempoRespuesta, String url,
 			String tipoMetodo, UchileArte data) {
-		super(ok, tiempoRespuesta, cantidadResultados, url, error, tipoMetodo);
+		super(tiempoRespuesta, url, error, tipoMetodo);
 		this.data = data;
 	}
 	

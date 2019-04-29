@@ -19,7 +19,10 @@
 	<context:component-scan base-package="com.manashiki.uchilearte.servicio" />
 	
 	<context:property-placeholder location="classpath:configuracion-uchile.properties" />
-	<import resource="datasource-uchilearte-bean.xml" />	
+	<import resource="datasource-uchilearte-bean-local.xml" />	
+	
+<!-- 	<context:property-placeholder location="classpath:configuracion-uchile-prod.properties" /> -->
+<!-- 	<import resource="datasource-uchilearte-bean.xml" />	 -->
 
 
 

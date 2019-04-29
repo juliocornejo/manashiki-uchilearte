@@ -2,7 +2,6 @@ package com.manashiki.uchilearte.wsrest;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,8 +36,8 @@ import com.manashiki.uchilearte.servicio.FactoryServicio;
 import com.manashiki.uchilearte.wrapper.WrapperUchileArte;
 //import com.manashiki.uchilearte.wrapper.WrapperUchileArte;
 
-import seguridad.aaa.Securitate;
-import seguridad.aaa.WSSeguridadSeguridad;
+import seguridad.sucuritate.impl.Securitate;
+import vijnana.respuesta.wrapper.response.AbstractWrapperError;
 import vijnana.utilidades.component.utilidades.AppDate;
 
 @Component
@@ -47,24 +46,26 @@ public class UchileArteController {
 
 
 	@Context
-	private HttpServletRequest request;
+	private HttpServletRequest httpServletRequest;
 
 	@Autowired
 	FactoryServicio factoryServicio;
+
+	@Autowired
+	Securitate securitate;
 
 	@GET
 	@Path("/prueba/{cadena}")
 	@Produces({ "application/json" })
 	public Response pruebaJson(@PathParam("cadena") String variable) {
-		
-		WSSeguridadSeguridad securitate = new WSSeguridadSeguridad() {
-			@Override
-			public Response pruebaJson(String variable) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		
-		}; 
+
+		//		securitate = new WSSeguridadSeguridad() {
+		//			boolean security (HttpServletRequest httpServletRequest){
+		//				// TODO Auto-generated method stub
+		//				return false;
+		//			}
+		//		
+		//		}; 
 		String responseGG = ".. servicio rest uchilearte 19-11-2016";
 
 		return Response.status(201).entity(responseGG).build();
@@ -78,34 +79,42 @@ public class UchileArteController {
 	public Response listarProgramaUniversidad(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try {
+			//enviar AutenticationContext por la autorizacion
+			//keySession
+			//obtener la lista de servicios disponibles
+			if(securitate.security(httpServletRequest)){
+				List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadDTO();
 
-		List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO = new ArrayList<ProgramaUniversidadDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadDTO();
+				if(retListaProgramaUniversidadDTO!=null && retListaProgramaUniversidadDTO.size()>0){
+					uchileArte.setListaProgramaUniversidadDTO(retListaProgramaUniversidadDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaProgramaUniversidadDTO!=null && retListaProgramaUniversidadDTO.size()>0){
-			cantidadResultados = retListaProgramaUniversidadDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+
+		} 
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
 		}
 
-		uchileArte.setListaProgramaUniversidadDTO(retListaProgramaUniversidadDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), new vijnana.respuesta.wrapper.response.AbstractWrapperError(),
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
-
 		return Response.status(201).entity(wrapperUchileArte).build();
-		
+
 
 	}
 
@@ -116,38 +125,46 @@ public class UchileArteController {
 	public Response listarProgramaUniversidadConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try {
+			//enviar AutenticationContext por la autorizacion
+			//keySession
+			//obtener la lista de servicios disponibles
+			if(securitate.security(httpServletRequest)){
+				List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadxEstadoDTO();
 
-		List<ProgramaUniversidadDTO> retListaProgramaUniversidadDTO = new ArrayList<ProgramaUniversidadDTO>();
+				if(retListaProgramaUniversidadDTO!=null && retListaProgramaUniversidadDTO.size()>0){
+					uchileArte.setListaProgramaUniversidadDTO(retListaProgramaUniversidadDTO);
+				}
+			}
 
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaProgramaUniversidadDTO=factoryServicio.getProgramaUniversidadServicio().listarProgramaUniversidadxEstadoDTO();
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaProgramaUniversidadDTO!=null && retListaProgramaUniversidadDTO.size()>0){
-			cantidadResultados = retListaProgramaUniversidadDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+
+		} 
+
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
 		}
-
-		uchileArte.setListaProgramaUniversidadDTO(retListaProgramaUniversidadDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/listarProgramaUniversidadPostulacion")
 	@Consumes({ "application/json" })
@@ -155,38 +172,42 @@ public class UchileArteController {
 	public Response listarProgramaUniversidadPostulacion(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<ProgramaUniversidadPostulacionDTO> retListaProgramaUniversidadPostulacionDTO=factoryServicio.getProgramaUniversidadPostulacionServicio().listarProgramaUniversidadPostulacionDTO();
 
-		List<ProgramaUniversidadPostulacionDTO> retListaProgramaUniversidadPostulacionDTO = new ArrayList<ProgramaUniversidadPostulacionDTO>();
+				if(retListaProgramaUniversidadPostulacionDTO!=null && retListaProgramaUniversidadPostulacionDTO.size()>0){
+					uchileArte.setListaProgramaUniversidadPostulacionDTO(retListaProgramaUniversidadPostulacionDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaProgramaUniversidadPostulacionDTO=factoryServicio.getProgramaUniversidadPostulacionServicio().listarProgramaUniversidadPostulacionDTO();
+			error.setMensaje(e.getMessage());
 
-		if(retListaProgramaUniversidadPostulacionDTO!=null && retListaProgramaUniversidadPostulacionDTO.size()>0){
-			cantidadResultados = retListaProgramaUniversidadPostulacionDTO.size();
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaProgramaUniversidadPostulacionDTO(retListaProgramaUniversidadPostulacionDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
 
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/listarProgramaUniversidadPostulacionConEstado")
 	@Consumes({ "application/json" })
@@ -194,187 +215,211 @@ public class UchileArteController {
 	public Response listarProgramaUniversidadPostulacionConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<ProgramaUniversidadPostulacionDTO> retListaProgramaUniversidadPostulacionDTO=factoryServicio.getProgramaUniversidadPostulacionServicio().listarProgramaUniversidadPostulacionxEstadoDTO();
 
-		List<ProgramaUniversidadPostulacionDTO> retListaProgramaUniversidadPostulacionDTO = new ArrayList<ProgramaUniversidadPostulacionDTO>();
+				if(retListaProgramaUniversidadPostulacionDTO!=null && retListaProgramaUniversidadPostulacionDTO.size()>0){
+					uchileArte.setListaProgramaUniversidadPostulacionDTO(retListaProgramaUniversidadPostulacionDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaProgramaUniversidadPostulacionDTO=factoryServicio.getProgramaUniversidadPostulacionServicio().listarProgramaUniversidadPostulacionxEstadoDTO();
+			error.setMensaje(e.getMessage());
 
-		if(retListaProgramaUniversidadPostulacionDTO!=null && retListaProgramaUniversidadPostulacionDTO.size()>0){
-			cantidadResultados = retListaProgramaUniversidadPostulacionDTO.size();
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaProgramaUniversidadPostulacionDTO(retListaProgramaUniversidadPostulacionDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
-	
+
+
 
 
 	/******** Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado****/
 	@POST
-	@Path("/listarTipoCertificados")
+	@Path("/listarTipoCertificado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarTipoCertificados(RequestProductoDTO requestProductoDTO) {
+	public Response listarTipoCertificado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
 
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<TipoCertificadoDTO> retListaTipoCertificadoDTO=factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoDTO();//Traer Todos
 
-		List<TipoCertificadoDTO> retListaTipoCertificadoDTO = new ArrayList<TipoCertificadoDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoCertificadoDTO=factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoDTO();//Traer Todos
+				if(retListaTipoCertificadoDTO!=null && retListaTipoCertificadoDTO.size()>0){
+					uchileArte.setListaTipoCertificadoDTO(retListaTipoCertificadoDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaTipoCertificadoDTO!=null && retListaTipoCertificadoDTO.size()>0){
-			cantidadResultados = retListaTipoCertificadoDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaTipoCertificadoDTO(retListaTipoCertificadoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-
-		return Response.status(201).entity(wrapperUchileArte).build();
-
-	}
-	
-	@POST
-	@Path("/listarTipoCertificadosConEstado")
-	@Consumes({ "application/json" })
-	@Produces({ "application/json" })
-	public Response listarTipoCertificadosConEstado(RequestProductoDTO requestProductoDTO) {
-		WrapperUchileArte wrapperUchileArte = null;
-
-		UchileArte uchileArte = new UchileArte();
-
-		Instant start = Instant.now();
-
-		int cantidadResultados = 0;
-
-		List<TipoCertificadoDTO> retListaTipoCertificadoDTO = new ArrayList<TipoCertificadoDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoCertificadoDTO = factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoxEstadoDTO();
-
-		if(retListaTipoCertificadoDTO!=null && retListaTipoCertificadoDTO.size()>0){
-			cantidadResultados = retListaTipoCertificadoDTO.size();
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
 		}
-
-		uchileArte.setListaTipoCertificadoDTO(retListaTipoCertificadoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
 
-
 	@POST
-	@Path("/listarFinalidadCertificados")
+	@Path("/listarTipoCertificadoConEstado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarFinalidadCertificados(RequestProductoDTO requestProductoDTO) {
+	public Response listarTipoCertificadoConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
 
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<TipoCertificadoDTO> retListaTipoCertificadoDTO = factoryServicio.getTipoCertificadoServicio().listarTipoCertificadoxEstadoDTO();
 
-		List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO = new ArrayList<FinalidadCertificadoDTO>();
+				if(retListaTipoCertificadoDTO!=null && retListaTipoCertificadoDTO.size()>0){
+					uchileArte.setListaTipoCertificadoDTO(retListaTipoCertificadoDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		}
+
+
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+
+	}
+
+
+	@POST
+	@Path("/listarFinalidadCertificado")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response listarFinalidadCertificado(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
+
+		UchileArte uchileArte = new UchileArte();
+
+		Instant start = Instant.now();
+
 		// Mostrar Todo
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadoDTO();
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadoDTO();
 
-		if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
-			cantidadResultados = retListaFinalidadCertificadoDTO.size();
+				if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
+					uchileArte.setListaFinalidadCertificadoDTO(retListaFinalidadCertificadoDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaFinalidadCertificadoDTO(retListaFinalidadCertificadoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
-	
+
 	@POST
-	@Path("/listarFinalidadCertificadosConEstado")
+	@Path("/listarFinalidadCertificadoConEstado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarFinalidadCertificadosConEstado(RequestProductoDTO requestProductoDTO) {
+	public Response listarFinalidadCertificadoConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
 
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-
-		List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO = new ArrayList<FinalidadCertificadoDTO>();
 		// Mostrar Todo
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadoOrdenDTO();
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<FinalidadCertificadoDTO> retListaFinalidadCertificadoDTO=factoryServicio.getFinalidadCertificadoServicio().listarFinalidadCertificadoOrdenDTO();
 
-		if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
-			cantidadResultados = retListaFinalidadCertificadoDTO.size();
+				if(retListaFinalidadCertificadoDTO!=null && retListaFinalidadCertificadoDTO.size()>0){
+					uchileArte.setListaFinalidadCertificadoDTO(retListaFinalidadCertificadoDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaFinalidadCertificadoDTO(retListaFinalidadCertificadoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
@@ -387,66 +432,81 @@ public class UchileArteController {
 	public Response crearSolicitudCertificado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				SolicitudCertificadoDTO solicitudCertificadoDTO = factoryServicio.getSolicitudCertificadoServicio().crearSolicitudCertificadoDTO(requestProductoDTO.getSolicitudCertificadoDTO());
 
-		// Mostrar Todo
-		/*-------------------------------------------------------------------------------------------------------------*/
-		SolicitudCertificadoDTO solicitudCertificadoDTO = factoryServicio.getSolicitudCertificadoServicio().crearSolicitudCertificadoDTO(requestProductoDTO.getSolicitudCertificadoDTO());
+				if(solicitudCertificadoDTO!=null && solicitudCertificadoDTO.getIdSolicitudCertificado()>0){
+					uchileArte.setSolicitudCertificadoDTO(solicitudCertificadoDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		cantidadResultados = 1;
+			error.setMensaje(e.getMessage());
 
-		uchileArte.setSolicitudCertificadoDTO(solicitudCertificadoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
+			error.setCodigo(1);
+		}
 
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
-	
+
 	}
 
 
 	@POST
-	@Path("/listarSolicitudCertificados")
+	@Path("/listarSolicitudCertificado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response listarSolicitudCertificados(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<SolicitudCertificadoDTO> retSolicitudCertificadoDTO  = factoryServicio.getSolicitudCertificadoServicio().listarSolicitudCertificadosDTO();
 
-		List<SolicitudCertificadoDTO> retSolicitudCertificadoDTO = new ArrayList<SolicitudCertificadoDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retSolicitudCertificadoDTO = factoryServicio.getSolicitudCertificadoServicio().listarSolicitudCertificadosDTO();
+				if(retSolicitudCertificadoDTO!=null && retSolicitudCertificadoDTO.size()>0){
+					uchileArte.setListaSolicitudCertificadoDTO(retSolicitudCertificadoDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retSolicitudCertificadoDTO!=null && retSolicitudCertificadoDTO.size()>0){
-			cantidadResultados = retSolicitudCertificadoDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaSolicitudCertificadoDTO(retSolicitudCertificadoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
@@ -458,38 +518,40 @@ public class UchileArteController {
 	public Response listarSolicitudCertificadoxEntreFechas(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<SolicitudCertificadoDTO> retListaSolicitudCertificadoDTO = factoryServicio.getSolicitudCertificadoServicio().listarSolicitudCertificadoxEntreFechasDTO(requestProductoDTO.getListaSolicitudCertificadoDTO().get(0), requestProductoDTO.getListaSolicitudCertificadoDTO().get(1));
 
-		List<SolicitudCertificadoDTO> retListaSolicitudCertificadoDTO = new ArrayList<SolicitudCertificadoDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaSolicitudCertificadoDTO = factoryServicio.getSolicitudCertificadoServicio().listarSolicitudCertificadoxEntreFechasDTO(requestProductoDTO.getListaSolicitudCertificadoDTO().get(0), requestProductoDTO.getListaSolicitudCertificadoDTO().get(1));
+				if(retListaSolicitudCertificadoDTO!=null && retListaSolicitudCertificadoDTO.size()>0){
+					uchileArte.setListaSolicitudCertificadoDTO(retListaSolicitudCertificadoDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaSolicitudCertificadoDTO!=null && retListaSolicitudCertificadoDTO.size()>0){
-			cantidadResultados = retListaSolicitudCertificadoDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaSolicitudCertificadoDTO(retListaSolicitudCertificadoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-		
 		return Response.status(201).entity(wrapperUchileArte).build();
-//		return Response.status(Status.OK).entity(wrapperUchileArte).build();
-		
-//		String jsonRetorno = MapperWrapper.mapperWrapper(wrapperUchileArte);
-//		
-//		
-//		return Response.status(201).entity(jsonRetorno).build();
 	}
 
 	/******** Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado  Solicitudes Certificado****/
@@ -497,72 +559,86 @@ public class UchileArteController {
 
 
 	@POST
-	@Path("/listarTipoSolicitudes")
+	@Path("/listarTipoSolicitud")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarTipoSolicitudes(RequestProductoDTO requestProductoDTO) {
+	public Response listarTipoSolicitud(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
 
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<TipoSolicitudDTO> retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudDTO();
 
-		List<TipoSolicitudDTO> retListaTipoSolicitudDTO = new ArrayList<TipoSolicitudDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudDTO();
+				if(retListaTipoSolicitudDTO!=null && retListaTipoSolicitudDTO.size()>0){
+					uchileArte.setListaTipoSolicitudDTO(retListaTipoSolicitudDTO);
+				}
+			}
 
-		if(retListaTipoSolicitudDTO!=null && retListaTipoSolicitudDTO.size()>0){
-			cantidadResultados = retListaTipoSolicitudDTO.size();
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaTipoSolicitudDTO(retListaTipoSolicitudDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
-	@Path("/listarTipoSolicitudesConEstado")
+	@Path("/listarTipoSolicitudConEstado")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarTipoSolicitudesConEstado(RequestProductoDTO requestProductoDTO) {
+	public Response listarTipoSolicitudConEstado(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
 
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<TipoSolicitudDTO> retListaTipoSolicitudDTO =factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudOrdenxEstadoDTO();
 
-		List<TipoSolicitudDTO> retListaTipoSolicitudDTO = new ArrayList<TipoSolicitudDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaTipoSolicitudDTO=factoryServicio.getTipoSolicitudServicio().listarTipoSolicitudOrdenxEstadoDTO();
+				if(retListaTipoSolicitudDTO!=null && retListaTipoSolicitudDTO.size()>0){
+					uchileArte.setListaTipoSolicitudDTO(retListaTipoSolicitudDTO);
+				}
+			}
 
-		if(retListaTipoSolicitudDTO!=null && retListaTipoSolicitudDTO.size()>0){
-			cantidadResultados = retListaTipoSolicitudDTO.size();
+
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-
-		uchileArte.setListaTipoSolicitudDTO(retListaTipoSolicitudDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
@@ -575,28 +651,36 @@ public class UchileArteController {
 	public Response crearArchivoSolicitud(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				ArchivoSolicitudDTO metArchivoSolicitudAcademicaDTO = factoryServicio.getArchivoSolicitudServicio().crearArchivoSolicitudDTO(requestProductoDTO.getArchivoSolicitudDTO());
 
-		/*-------------------------------------------------------------------------------------------------------------*/
-		ArchivoSolicitudDTO metArchivoSolicitudAcademicaDTO = factoryServicio.getArchivoSolicitudServicio().crearArchivoSolicitudDTO(requestProductoDTO.getArchivoSolicitudDTO());
+				if(metArchivoSolicitudAcademicaDTO!=null && metArchivoSolicitudAcademicaDTO.getIdArchivoSolicitud()>0){
+					uchileArte.setArchivoAcademicaDTO(metArchivoSolicitudAcademicaDTO);
+				}
+			}
 
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		cantidadResultados = 1;
+			error.setMensaje(e.getMessage());
 
-		uchileArte.setArchivoAcademicaDTO(metArchivoSolicitudAcademicaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+			error.setCodigo(1);
+		}
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
@@ -609,29 +693,38 @@ public class UchileArteController {
 	public Response actualizarArchivoSolicitud(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				ArchivoSolicitudDTO metArchivoSolicitudAcademicaDTO = factoryServicio.getArchivoSolicitudServicio().actualizarArchivoSolicitudDTO(requestProductoDTO.getArchivoSolicitudDTO());
 
-		/*-------------------------------------------------------------------------------------------------------------*/
+				if(metArchivoSolicitudAcademicaDTO!=null && metArchivoSolicitudAcademicaDTO.getIdArchivoSolicitud()>0){
+					uchileArte.setArchivoAcademicaDTO(metArchivoSolicitudAcademicaDTO);
+				}
+			}
 
-		ArchivoSolicitudDTO metArchivoSolicitudAcademicaDTO = factoryServicio.getArchivoSolicitudServicio().actualizarArchivoSolicitudDTO(requestProductoDTO.getArchivoSolicitudDTO());
 
-		cantidadResultados = 1;
-		
-		uchileArte.setArchivoAcademicaDTO(metArchivoSolicitudAcademicaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		Instant end = Instant.now();
+			error.setMensaje(e.getMessage());
 
-		Duration duration = Duration.between(start, end);
+			error.setCodigo(1);
+		}
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
@@ -643,64 +736,80 @@ public class UchileArteController {
 	public Response crearSolicitudAcademica(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				SolicitudAcademicaDTO solicitudAcademicaDTO = factoryServicio.getSolicitudAcademicaServicio().crearSolicitudAcademicaDTO(requestProductoDTO.getSolicitudAcademicaDTO());
 
-		/*-------------------------------------------------------------------------------------------------------------*/
-		SolicitudAcademicaDTO solicitudAcademicaDTO = factoryServicio.getSolicitudAcademicaServicio().crearSolicitudAcademicaDTO(requestProductoDTO.getSolicitudAcademicaDTO());
+				if(solicitudAcademicaDTO!=null && solicitudAcademicaDTO.getIdArchivoSolicitud()>0){
+					uchileArte.setSolicitudAcademicaDTO(solicitudAcademicaDTO);
+				}
+			}
 
-		cantidadResultados = 1;
-		
-		uchileArte.setSolicitudAcademicaDTO(solicitudAcademicaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		Instant end = Instant.now();
+			error.setMensaje(e.getMessage());
 
-		Duration duration = Duration.between(start, end);
+			error.setCodigo(1);
+		}
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
 
 	@POST
-	@Path("/listarSolicitudAcademicas")
+	@Path("/listarSolicitudAcademica")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarSolicitudAcademicas(RequestProductoDTO requestProductoDTO) {
+	public Response listarSolicitudAcademica(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
 
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<SolicitudAcademicaDTO> retListaSolicitudAcademicaDTO = factoryServicio.getSolicitudAcademicaServicio().listarSolicitudAcademicasDTO();
 
-		List<SolicitudAcademicaDTO> retListaSolicitudAcademicaDTO = new ArrayList<SolicitudAcademicaDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaSolicitudAcademicaDTO = factoryServicio.getSolicitudAcademicaServicio().listarSolicitudAcademicasDTO();
+				if(retListaSolicitudAcademicaDTO!=null && retListaSolicitudAcademicaDTO.size()>0){
+					uchileArte.setListaSolicitudAcademicaDTO(retListaSolicitudAcademicaDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaSolicitudAcademicaDTO!=null && retListaSolicitudAcademicaDTO.size()>0){
-			cantidadResultados = retListaSolicitudAcademicaDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaSolicitudAcademicaDTO(retListaSolicitudAcademicaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
 
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
@@ -712,38 +821,38 @@ public class UchileArteController {
 	public Response listarSolicitudAcademicaxEntreFechas(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<SolicitudAcademicaDTO> retListaSolicitudAcademicaDTO  = factoryServicio.getSolicitudAcademicaServicio().listarSolicitudAcademicaxEntreFechasDTO(requestProductoDTO.getListaSolicitudAcademicaDTO().get(0), requestProductoDTO.getListaSolicitudAcademicaDTO().get(1));
 
-		List<SolicitudAcademicaDTO> retListaSolicitudAcademicaDTO = new ArrayList<SolicitudAcademicaDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaSolicitudAcademicaDTO = factoryServicio.getSolicitudAcademicaServicio().listarSolicitudAcademicaxEntreFechasDTO(requestProductoDTO.getListaSolicitudAcademicaDTO().get(0), requestProductoDTO.getListaSolicitudAcademicaDTO().get(1));
+				if(retListaSolicitudAcademicaDTO!=null && retListaSolicitudAcademicaDTO.size()>0){
+					uchileArte.setListaSolicitudAcademicaDTO(retListaSolicitudAcademicaDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaSolicitudAcademicaDTO!=null && retListaSolicitudAcademicaDTO.size()>0){
-			cantidadResultados = retListaSolicitudAcademicaDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaSolicitudAcademicaDTO(retListaSolicitudAcademicaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-		
 		return Response.status(201).entity(wrapperUchileArte).build();
-//		return Response.status(Status.OK).entity(wrapperUchileArte).build();
-		
-//		String jsonRetorno = MapperWrapper.mapperWrapper(wrapperUchileArte);
-//		
-//		return Response.status(201).entity(jsonRetorno).build();
 	}
 
 	@POST
@@ -753,68 +862,77 @@ public class UchileArteController {
 	public Response buscarArchivoSolicitud(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-
-		/*-------------------------------------------------------------------------------------------------------------*/
 		try{
-			ArchivoSolicitudDTO archivoSolicitudDTO = factoryServicio.getArchivoSolicitudServicio().buscarArchivoSolicitudIdDTO(requestProductoDTO.getArchivoSolicitudDTO());
+			if(securitate.security(httpServletRequest)){
+				ArchivoSolicitudDTO archivoSolicitudDTO = factoryServicio.getArchivoSolicitudServicio().buscarArchivoSolicitudIdDTO(requestProductoDTO.getArchivoSolicitudDTO());
 
-			cantidadResultados = 1;
+				if(archivoSolicitudDTO!=null && archivoSolicitudDTO.getIdArchivoSolicitud()>0){
+					uchileArte.setArchivoAcademicaDTO(archivoSolicitudDTO);
+				}
+			}
 
-			uchileArte.setArchivoAcademicaDTO(archivoSolicitudDTO);
-		}catch(Exception e){
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
 
 	@POST
-	@Path("/listarRegiones")
+	@Path("/listarRegion")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listarRegiones(RequestProductoDTO requestProductoDTO) {
+	public Response listarRegion(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
 
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<RegionDTO> retListaRegionDTO = factoryServicio.getRegionServicio().listarRegionesDTO();
 
-		List<RegionDTO> retListaRegionDTO = new ArrayList<RegionDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaRegionDTO = factoryServicio.getRegionServicio().listarRegionesDTO();
+				if(retListaRegionDTO!=null && retListaRegionDTO.size()>0){
+					uchileArte.setListaRegionDTO(retListaRegionDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaRegionDTO!=null && retListaRegionDTO.size()>0){
-			cantidadResultados = retListaRegionDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaRegionDTO(retListaRegionDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
@@ -826,31 +944,37 @@ public class UchileArteController {
 	public Response listarComunasxRegion(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<ComunaDTO> retListaComunaDTO  = factoryServicio.getComunaServicio().listarComunasDTOxRegion(requestProductoDTO.getComunaDTO());
 
-		List<ComunaDTO> retListaComunaDTO = new ArrayList<ComunaDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaComunaDTO = factoryServicio.getComunaServicio().listarComunasDTOxRegion(requestProductoDTO.getComunaDTO());
+				if(retListaComunaDTO!=null && retListaComunaDTO.size()>0){
+					uchileArte.setListaComunaDTO(retListaComunaDTO);
+				}
+			}
 
-		if(retListaComunaDTO!=null && retListaComunaDTO.size()>0){
-			cantidadResultados = retListaComunaDTO.size();
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaComunaDTO(retListaComunaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
@@ -862,35 +986,43 @@ public class UchileArteController {
 	public Response crearSolicitudPostulacion(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				SolicitudPostulacionDTO solicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().crearSolicitudPostulacionDTO(requestProductoDTO.getSolicitudPostulacionDTO());
 
-		/*-------------------------------------------------------------------------------------------------------------*/
-		SolicitudPostulacionDTO solicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().crearSolicitudPostulacionDTO(requestProductoDTO.getSolicitudPostulacionDTO());
+				if(solicitudPostulacionDTO!=null && solicitudPostulacionDTO.getIdSolicitudPostulacion()>0){
+					uchileArte.setSolicitudPostulacionDTO(solicitudPostulacionDTO);
+				}
+			}
 
-		cantidadResultados = 1;
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		uchileArte.setSolicitudPostulacionDTO(solicitudPostulacionDTO);
+			error.setMensaje(e.getMessage());
 
-		/*-------------------------------------------------------------------------------------------------------------*/
+			error.setCodigo(1);
+		}
 
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
-	
-	
-	
+
+
+
 	@POST
 	@Path("/listarSolicitudPostulacion")
 	@Consumes({ "application/json" })
@@ -898,71 +1030,76 @@ public class UchileArteController {
 	public Response listarSolicitudPostulacion(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<SolicitudPostulacionDTO> retListaSolicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().listarSolicitudPostulacionesDTO();
 
-		List<SolicitudPostulacionDTO> retListaSolicitudPostulacionDTO = new ArrayList<SolicitudPostulacionDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaSolicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().listarSolicitudPostulacionesDTO();
+				if(retListaSolicitudPostulacionDTO!=null && retListaSolicitudPostulacionDTO.size()>0){
+					uchileArte.setListaSolicitudPostulacionDTO(retListaSolicitudPostulacionDTO);
+				}
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		if(retListaSolicitudPostulacionDTO!=null && retListaSolicitudPostulacionDTO.size()>0){
-			cantidadResultados = retListaSolicitudPostulacionDTO.size();
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaSolicitudPostulacionDTO(retListaSolicitudPostulacionDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}
 
-//	@POST
-//	@Path("/listarSolicitudPostulacionxEntreFechas")
-//	@Consumes({ "application/json" })
-//	@Produces({ "application/json" })
-//	public Response listarSolicitudPostulacionxEntreFechas(RequestProductoDTO requestProductoDTO) {
-//		WrapperUchileArte wrapperUchileArte = null;
-//
-//		UchileArte uchileArte = new UchileArte();
-//
-//		Instant start = Instant.now();
-//
-//		int cantidadResultados = 0;
-//
-//		List<SolicitudPostulacionDTO> retListaSolicitudPostulacionDTO = new ArrayList<SolicitudPostulacionDTO>();
-//		/*-------------------------------------------------------------------------------------------------------------*/
-//		retListaSolicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().listarSolicitudPostulacionxEntreFechasDTO(requestProductoDTO.getListaSolicitudPostulacionDTO().get(0), requestProductoDTO.getListaSolicitudPostulacionDTO().get(1));
-//
-//		if(retListaSolicitudPostulacionDTO!=null && retListaSolicitudPostulacionDTO.size()>0){
-//			cantidadResultados = retListaSolicitudPostulacionDTO.size();
-//		}
-//
-//		uchileArte.setListaSolicitudPostulacionDTO(retListaSolicitudPostulacionDTO);
-//		/*-------------------------------------------------------------------------------------------------------------*/
-//
-//		Instant end = Instant.now();
-//
-//		Duration duration = Duration.between(start, end);
-//
-//		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-//
-//		//wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-//				//this.request.getContentType(), uchileArte);
-//
-//		return Response.status(201).entity(wrapperUchileArte).build();
-//	}
-	
+	//	@POST
+	//	@Path("/listarSolicitudPostulacionxEntreFechas")
+	//	@Consumes({ "application/json" })
+	//	@Produces({ "application/json" })
+	//	public Response listarSolicitudPostulacionxEntreFechas(RequestProductoDTO requestProductoDTO) {
+	//		WrapperUchileArte wrapperUchileArte = null;
+	//
+	//		UchileArte uchileArte = new UchileArte();
+	//
+	//		Instant start = Instant.now();
+	//
+	//		int cantidadResultados = 0;
+	//
+	//		List<SolicitudPostulacionDTO> retListaSolicitudPostulacionDTO = new ArrayList<SolicitudPostulacionDTO>();
+	//		/*-------------------------------------------------------------------------------------------------------------*/
+	//		retListaSolicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().listarSolicitudPostulacionxEntreFechasDTO(requestProductoDTO.getListaSolicitudPostulacionDTO().get(0), requestProductoDTO.getListaSolicitudPostulacionDTO().get(1));
+	//
+	//		if(retListaSolicitudPostulacionDTO!=null && retListaSolicitudPostulacionDTO.size()>0){
+	//			cantidadResultados = retListaSolicitudPostulacionDTO.size();
+	//		}
+	//
+	//		uchileArte.setListaSolicitudPostulacionDTO(retListaSolicitudPostulacionDTO);
+	//		/*-------------------------------------------------------------------------------------------------------------*/
+	//
+	//		Instant end = Instant.now();
+	//
+	//		Duration duration = Duration.between(start, end);
+	//
+	//		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+	//
+	//		//wrapperUchileArte = new WrapperUchileArte( tiempoRespuesta, cantidadResultados, this.httpServletRequest.getRequestURL().toString(), null,
+	//				//this.httpServletRequest.getContentType(), uchileArte);
+	//
+	//		return Response.status(201).entity(wrapperUchileArte).build();
+	//	}
+
 	@POST
 	@Path("/listarSolicitudPostulacionxEntreFechas")
 	@Consumes({ "application/json" })
@@ -970,40 +1107,41 @@ public class UchileArteController {
 	public Response listarSolicitudPostulacionxEntreFechas(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				List<SolicitudPostulacionDTO> retListaSolicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().listarSolicitudPostulacionxEntreFechasDTO(requestProductoDTO.getListaSolicitudPostulacionDTO().get(0), requestProductoDTO.getListaSolicitudPostulacionDTO().get(1));
 
-		List<SolicitudPostulacionDTO> retListaSolicitudPostulacionDTO = new ArrayList<SolicitudPostulacionDTO>();
-		/*-------------------------------------------------------------------------------------------------------------*/
-		retListaSolicitudPostulacionDTO = factoryServicio.getSolicitudPostulacionServicio().listarSolicitudPostulacionxEntreFechasDTO(requestProductoDTO.getListaSolicitudPostulacionDTO().get(0), requestProductoDTO.getListaSolicitudPostulacionDTO().get(1));
+				if(retListaSolicitudPostulacionDTO!=null && retListaSolicitudPostulacionDTO.size()>0){
+					uchileArte.setListaSolicitudPostulacionDTO(retListaSolicitudPostulacionDTO);
+				}
+			}
 
-		if(retListaSolicitudPostulacionDTO!=null && retListaSolicitudPostulacionDTO.size()>0){
-			cantidadResultados = retListaSolicitudPostulacionDTO.size();
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaSolicitudPostulacionDTO(retListaSolicitudPostulacionDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
-		
 		return Response.status(201).entity(wrapperUchileArte).build();
-//		return Response.status(Status.OK).entity(wrapperUchileArte).build();
-		
-//		String jsonRetorno = MapperWrapper.mapperWrapper(wrapperUchileArte);
-//		
-//		return Response.status(201).entity(jsonRetorno).build();
 	}
-	
+
 	@POST
 	@Path("/crearNegocioSolicitud")
 	@Consumes({ "application/json" })
@@ -1011,28 +1149,37 @@ public class UchileArteController {
 	public Response crearNegocioSolicitud(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
 
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
+		try{
+			if(securitate.security(httpServletRequest)){
+				NegocioSolicitudDTO negocioSolicitudDTO = factoryServicio.getNegocioSolicitudServicio().crearNegocioSolicitudDTO(requestProductoDTO.getNegocioSolicitudDTO());
 
-		/*-------------------------------------------------------------------------------------------------------------*/
-		NegocioSolicitudDTO negocioSolicitudDTO = factoryServicio.getNegocioSolicitudServicio().crearNegocioSolicitudDTO(requestProductoDTO.getNegocioSolicitudDTO());
+				if(negocioSolicitudDTO!=null && negocioSolicitudDTO.getIdNegocioSolicitudDTO()>0){
+					uchileArte.setNegocioSolicitudDTO(negocioSolicitudDTO);
+				}
+			}
 
-		cantidadResultados = 1;
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		uchileArte.setNegocioSolicitudDTO(negocioSolicitudDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
+			error.setMensaje(e.getMessage());
 
-		Instant end = Instant.now();
+			error.setCodigo(1);
+		}
 
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), null,
-				this.request.getContentType(), uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 	}

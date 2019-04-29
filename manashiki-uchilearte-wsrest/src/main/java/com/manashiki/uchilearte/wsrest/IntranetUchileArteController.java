@@ -30,6 +30,7 @@ import com.manashiki.uchilearte.servicio.FactoryServicio;
 import com.manashiki.uchilearte.servicio.exception.ServicioImplException;
 import com.manashiki.uchilearte.wrapper.WrapperUchileArte;
 
+import vijnana.respuesta.wrapper.response.AbstractWrapperError;
 import vijnana.utilidades.component.utilidades.AppDate;
 
 @Component
@@ -37,7 +38,7 @@ import vijnana.utilidades.component.utilidades.AppDate;
 public class IntranetUchileArteController {
 
 	@Context
-	private HttpServletRequest request;
+	private HttpServletRequest httpServletRequest;
 
 	@Autowired
 	FactoryServicio factoryServicio;
@@ -51,357 +52,374 @@ public class IntranetUchileArteController {
 
 		return Response.status(201).entity(responseGG).build();
 	}
-	
-//	ADMIN
-//	1) listarAlumnoNoAsociados
-//	1) listarAlumnoAsociados
-//	1) crearAlumno->Asociar a Usuario
-//	1) actualizarAlumno->Asociar a Usuario
-//	1) listarProgramaUniversidad
-//	2)crearProgramasActivosSemestre
-//	2)actualizarProgramasActivosSemestre
-//	3)crearAlumnoProgramaActivoSemestre
-//	3)actualizarAlumnoProgramaActivoSemestre
-//	4)crearAsignaturasProgramasActivosSemestre
-//	4)actualizarAsignaturasProgramasActivosSemestre
-//	6) listarAsignaturasProgramasActivosSemestreTomadasxAlumno
-	
-//	USUARIO
-//	1) obtenerAlumnoxUsuario
-//	2)obtenerProgramasActivosSemestre
-//	3)obtenerAsignaturasProgramasActivosSemestre
-//	4)seleccionarAsignaturasProgramasActivosSemestre
-//	5)crearConfirmacionAsignaturasTomadas
-//	6) enviarCorreoConfirmacionAsignaturasTomada
-	
+
+	//	ADMIN
+	//	1) listarAlumnoNoAsociados
+	//	1) listarAlumnoAsociados
+	//	1) crearAlumno->Asociar a Usuario
+	//	1) actualizarAlumno->Asociar a Usuario
+	//	1) listarProgramaUniversidad
+	//	2)crearProgramasActivosSemestre
+	//	2)actualizarProgramasActivosSemestre
+	//	3)crearAlumnoProgramaActivoSemestre
+	//	3)actualizarAlumnoProgramaActivoSemestre
+	//	4)crearAsignaturasProgramasActivosSemestre
+	//	4)actualizarAsignaturasProgramasActivosSemestre
+	//	6) listarAsignaturasProgramasActivosSemestreTomadasxAlumno
+
+	//	USUARIO
+	//	1) obtenerAlumnoxUsuario
+	//	2)obtenerProgramasActivosSemestre
+	//	3)obtenerAsignaturasProgramasActivosSemestre
+	//	4)seleccionarAsignaturasProgramasActivosSemestre
+	//	5)crearConfirmacionAsignaturasTomadas
+	//	6) enviarCorreoConfirmacionAsignaturasTomada
+
 	@POST
 	@Path("/listarSemestreTemporada")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response listarSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		vijnana.respuesta.wrapper.response.AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		List<SemestreTemporadaDTO> listaSemestreTemporadaDTO = new ArrayList<SemestreTemporadaDTO>();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		listaSemestreTemporadaDTO = factoryServicio.getSemestreTemporadaServicio().listarSemestreTemporadaDTO();
+		try {
+			listaSemestreTemporadaDTO = factoryServicio.getSemestreTemporadaServicio().listarSemestreTemporadaDTO();
 
 			if(listaSemestreTemporadaDTO!=null && listaSemestreTemporadaDTO.size()>0){
-				cantidadResultados = listaSemestreTemporadaDTO.size();
+				uchileArte.setListaSemestreTemporadaDTO(listaSemestreTemporadaDTO);
 			}
 
-		uchileArte.setListaSemestreTemporadaDTO(listaSemestreTemporadaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		Duration duration = Duration.between(start, end);
+			error.setMensaje(e.getMessage());
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+			error.setCodigo(1);
 
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		} 
+
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/crearSemestreTemporada")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response crearSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		SemestreTemporadaDTO semestreTemporadaDTO = new SemestreTemporadaDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		semestreTemporadaDTO=factoryServicio.getSemestreTemporadaServicio().crearSemestreTemporadaDTO(requestProductoDTO.getSemestreTemporadaDTO());
 
-		if(semestreTemporadaDTO!=null && semestreTemporadaDTO.getIdSemestreTemporada()>0){
-			cantidadResultados ++;
+		try{
+			semestreTemporadaDTO=factoryServicio.getSemestreTemporadaServicio().crearSemestreTemporadaDTO(requestProductoDTO.getSemestreTemporadaDTO());
+
+			if(semestreTemporadaDTO!=null && semestreTemporadaDTO.getIdSemestreTemporada()>0){
+				uchileArte.setSemestreTemporadaDTO(semestreTemporadaDTO);
+			}
+
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+
+		} 
+
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
 		}
-		
-		uchileArte.setSemestreTemporadaDTO(semestreTemporadaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/actualizarSemestreTemporada")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response actualizarSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		SemestreTemporadaDTO semestreTemporadaDTO = new SemestreTemporadaDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		semestreTemporadaDTO = factoryServicio.getSemestreTemporadaServicio().actualizarSemestreTemporadaDTO(requestProductoDTO.getSemestreTemporadaDTO());
 
-		if(semestreTemporadaDTO!=null && semestreTemporadaDTO.getIdSemestreTemporada()>0){
-			cantidadResultados ++;
+		try{
+			semestreTemporadaDTO = factoryServicio.getSemestreTemporadaServicio().actualizarSemestreTemporadaDTO(requestProductoDTO.getSemestreTemporadaDTO());
+
+			if(semestreTemporadaDTO!=null && semestreTemporadaDTO.getIdSemestreTemporada()>0){
+				uchileArte.setSemestreTemporadaDTO(semestreTemporadaDTO);
+			}
+
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+
+		} 
+
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
 		}
-		
-		uchileArte.setSemestreTemporadaDTO(semestreTemporadaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/buscarSemestreTemporada")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response buscarSemestreTemporada(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		SemestreTemporadaDTO semestreTemporadaDTO = new SemestreTemporadaDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
+
 		try {
 			semestreTemporadaDTO = factoryServicio.getSemestreTemporadaServicio().buscarSemestreTemporadaxIdDTO(requestProductoDTO.getSemestreTemporadaDTO());
-			
+
 			if(semestreTemporadaDTO!=null && semestreTemporadaDTO.getIdSemestreTemporada()>0){
-				cantidadResultados ++;
+				uchileArte.setSemestreTemporadaDTO(semestreTemporadaDTO);
 			}
+
 		} catch (ServicioImplException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		} 
+
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
 		}
-		
-		uchileArte.setSemestreTemporadaDTO(semestreTemporadaDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	//Crear el Crear Usuario Universidad de Chile como servicio para los alumnos
-		@POST
-		@Path("/crearAlumno")
-		@Consumes({ "application/json" })
-		@Produces({ "application/json" })
-		public Response crearAlumno(RequestProductoDTO requestProductoDTO) {
-			WrapperUchileArte wrapperUchileArte = null;
-			
-			vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-			
-			UchileArte uchileArte = new UchileArte();
+	@POST
+	@Path("/crearAlumno")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response crearAlumno(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
 
-			Instant start = Instant.now();
+		AbstractWrapperError error = null;
 
-			int cantidadResultados = 0;
-			
-			AlumnoDTO retAlumnoDTO = new AlumnoDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-				retAlumnoDTO=factoryServicio.getAlumnoServicio().crearAlumnoDTO(requestProductoDTO.getAlumnoDTO());//Traer Todos
+		UchileArte uchileArte = new UchileArte();
 
-				if(retAlumnoDTO!=null && retAlumnoDTO.getIdAlumnoUchile() >0){
-					cantidadResultados = 1;
-				}
+		Instant start = Instant.now();
 
-			uchileArte.setAlumnoDTO(retAlumnoDTO);
-			/*-------------------------------------------------------------------------------------------------------------*/
-			Instant end = Instant.now();
+		AlumnoDTO retAlumnoDTO = new AlumnoDTO();
+		try{
 
-			Duration duration = Duration.between(start, end);
+			retAlumnoDTO=factoryServicio.getAlumnoServicio().crearAlumnoDTO(requestProductoDTO.getAlumnoDTO());//Traer Todos
 
-			String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-			wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-					this.request.getMethod(), uchileArte);
-			wrapperUchileArte.setData(uchileArte);
-
-			return Response.status(201).entity(wrapperUchileArte).build();
-		}
-		
-		@POST
-		@Path("/actualizarAlumno")
-		@Consumes({ "application/json" })
-		@Produces({ "application/json" })
-		public Response actualizarAlumno(RequestProductoDTO requestProductoDTO) {
-			WrapperUchileArte wrapperUchileArte = null;
-			
-			vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-			
-			UchileArte uchileArte = new UchileArte();
-
-			Instant start = Instant.now();
-
-			int cantidadResultados = 0;
-			
-			AlumnoDTO retAlumnoDTO = new AlumnoDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-				retAlumnoDTO=factoryServicio.getAlumnoServicio().actualizarAlumnoDTO(requestProductoDTO.getAlumnoDTO());//Traer Todos
-
-				if(retAlumnoDTO!=null && retAlumnoDTO.getIdAlumnoUchile() >0){
-					cantidadResultados = 1;
-				}
-
-			uchileArte.setAlumnoDTO(retAlumnoDTO);
-			/*-------------------------------------------------------------------------------------------------------------*/
-			Instant end = Instant.now();
-
-			Duration duration = Duration.between(start, end);
-
-			String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-			wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-					this.request.getMethod(), uchileArte);
-			wrapperUchileArte.setData(uchileArte);
-
-			return Response.status(201).entity(wrapperUchileArte).build();
-		}
-		
-		@POST
-		@Path("/obtenerAlumnoxUsuario")
-		@Consumes({ "application/json" })
-		@Produces({ "application/json" })
-		public Response obtenerAlumnoxUsuario(RequestProductoDTO requestProductoDTO) {
-			WrapperUchileArte wrapperUchileArte = null;
-			
-			vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-			
-			UchileArte uchileArte = new UchileArte();
-
-			Instant start = Instant.now();
-
-			int cantidadResultados = 0;
-			
-			AlumnoDTO retAlumnoDTO = new AlumnoDTO();
-			try{
-				/*-------------------------------------------------------------------------------------------------------------*/
-				retAlumnoDTO=factoryServicio.getAlumnoServicio().buscarAlumnoxIdUsuarioxIdEstadoDTO(requestProductoDTO.getAlumnoDTO());//Traer Todos
-
-				if(retAlumnoDTO!=null && retAlumnoDTO.getIdAlumnoUchile() >0){
-					cantidadResultados = 1;
-				}
-			}catch(ServicioImplException se){
-			
-				error.setMensaje(se.getMessage());
+			if(retAlumnoDTO!=null && retAlumnoDTO.getIdAlumnoUchile() >0){
+				uchileArte.setAlumnoDTO(retAlumnoDTO);
 			}
 
-			uchileArte.setAlumnoDTO(retAlumnoDTO);
-			/*-------------------------------------------------------------------------------------------------------------*/
-			Instant end = Instant.now();
+		} catch (Exception e) {
+			
+			error = new AbstractWrapperError();
 
-			Duration duration = Duration.between(start, end);
+			error.setMensaje(e.getMessage());
 
-			String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-			wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-					this.request.getMethod(), uchileArte);
-			wrapperUchileArte.setData(uchileArte);
-
-			return Response.status(201).entity(wrapperUchileArte).build();
-
+			error.setCodigo(1);
+		} 
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
 		}
-	
-	
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+
+	}
+
+	@POST
+	@Path("/actualizarAlumno")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response actualizarAlumno(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
+
+		UchileArte uchileArte = new UchileArte();
+
+		Instant start = Instant.now();
+
+		AlumnoDTO retAlumnoDTO = new AlumnoDTO();
+		try{
+			retAlumnoDTO=factoryServicio.getAlumnoServicio().actualizarAlumnoDTO(requestProductoDTO.getAlumnoDTO());//Traer Todos
+
+			if(retAlumnoDTO!=null && retAlumnoDTO.getIdAlumnoUchile() >0){
+				uchileArte.setAlumnoDTO(retAlumnoDTO);
+			}
+		} catch (Exception e) {
+			
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		} 
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+
+	}
+
+	@POST
+	@Path("/obtenerAlumnoxUsuario")
+	@Consumes({ "application/json" })
+	@Produces({ "application/json" })
+	public Response obtenerAlumnoxUsuario(RequestProductoDTO requestProductoDTO) {
+		WrapperUchileArte wrapperUchileArte = null;
+
+		AbstractWrapperError error = null;
+
+		UchileArte uchileArte = new UchileArte();
+
+		Instant start = Instant.now();
+
+		AlumnoDTO retAlumnoDTO = new AlumnoDTO();
+		try{
+			retAlumnoDTO=factoryServicio.getAlumnoServicio().buscarAlumnoxIdUsuarioxIdEstadoDTO(requestProductoDTO.getAlumnoDTO());//Traer Todos
+
+			if(retAlumnoDTO!=null && retAlumnoDTO.getIdAlumnoUchile() >0){
+				uchileArte.setAlumnoDTO(retAlumnoDTO);
+			}
+		}catch(ServicioImplException e){
+
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		}
+
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
+
+		return Response.status(201).entity(wrapperUchileArte).build();
+
+	}
+
+
 	@POST
 	@Path("/listarAlumnoNoAsociadoToUsuario")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response listarAlumnoNoAsociadoToUsuario(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		List<AlumnoDTO> listaAlumnoDTO = new ArrayList<AlumnoDTO>();
 		try{
-			/*-------------------------------------------------------------------------------------------------------------*/
-			 listaAlumnoDTO =factoryServicio.getAlumnoServicio().listarAlumnoNoAsociadoToUsuario();//Traer Todos
-			 /*-------------------------------------------------------------------------------------------------------------*/
+			listaAlumnoDTO =factoryServicio.getAlumnoServicio().listarAlumnoNoAsociadoToUsuario();//Traer Todos
 
 			if(listaAlumnoDTO!=null && listaAlumnoDTO.size() >0){
-				cantidadResultados = 1;
+				uchileArte.setListaAlumnoDTO(listaAlumnoDTO);
 			}
-		}catch(ServicioImplException se){
-		
-			error.setMensaje(se.getMessage());
+		}catch(ServicioImplException e){
+
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaAlumnoDTO(listaAlumnoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 
 	@POST
 	@Path("/listarAlumnoNoAsociadoToSeguridad")
@@ -409,693 +427,743 @@ public class IntranetUchileArteController {
 	@Produces({ "application/json" })
 	public Response listarAlumnoNoAsociadoToSeguridad(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		List<AlumnoDTO> listaAlumnoDTO = new ArrayList<AlumnoDTO>();
 		try{
-			/*-------------------------------------------------------------------------------------------------------------*/
 			listaAlumnoDTO = factoryServicio.getAlumnoServicio().listarAlumnoNoAsociadoToSeguridad();//Traer Todos
 
 			if(listaAlumnoDTO!=null && listaAlumnoDTO.size() >0){
-				cantidadResultados = 1;
+				uchileArte.setListaAlumnoDTO(listaAlumnoDTO);
 			}
-		}catch(ServicioImplException se){
-		
-			error.setMensaje(se.getMessage());
+		}catch(ServicioImplException e){
+
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
 
-		uchileArte.setListaAlumnoDTO(listaAlumnoDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/crearProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response crearProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		ProgramaActivoSemestreDTO programaActivoSemestreDTO = new ProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		programaActivoSemestreDTO=factoryServicio.getProgramaActivoSemestreServicio().crearProgramaActivoSemestreDTO(requestProductoDTO.getProgramaActivoSemestreDTO());
+		try{
+			programaActivoSemestreDTO=factoryServicio.getProgramaActivoSemestreServicio().crearProgramaActivoSemestreDTO(requestProductoDTO.getProgramaActivoSemestreDTO());
 
-		if(programaActivoSemestreDTO!=null && programaActivoSemestreDTO.getIdProgramaActivoSemestre()>0){
-			cantidadResultados ++;
+			if(programaActivoSemestreDTO!=null && programaActivoSemestreDTO.getIdProgramaActivoSemestre()>0){
+				uchileArte.setProgramaActivoSemestreDTO(programaActivoSemestreDTO);
+			}
+
+		}catch(Exception e){
+
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setProgramaActivoSemestreDTO(programaActivoSemestreDTO);
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/actualizarProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response actualizarProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		ProgramaActivoSemestreDTO programaActivoSemestreDTO = new ProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		programaActivoSemestreDTO=factoryServicio.getProgramaActivoSemestreServicio().actualizarProgramaActivoSemestreDTO(requestProductoDTO.getProgramaActivoSemestreDTO());
 
-		if(programaActivoSemestreDTO!=null && programaActivoSemestreDTO.getIdProgramaActivoSemestre()>0){
-			cantidadResultados ++;
+		try{
+
+
+			programaActivoSemestreDTO=factoryServicio.getProgramaActivoSemestreServicio().actualizarProgramaActivoSemestreDTO(requestProductoDTO.getProgramaActivoSemestreDTO());
+
+			if(programaActivoSemestreDTO!=null && programaActivoSemestreDTO.getIdProgramaActivoSemestre()>0){
+				uchileArte.setProgramaActivoSemestreDTO(programaActivoSemestreDTO);
+			}
+
+		}catch(Exception e){
+
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setProgramaActivoSemestreDTO(programaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/buscarProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response buscarProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		ProgramaActivoSemestreDTO programaActivoSemestreDTO = new ProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
+		/*-------------------------------------------------------------------------------------------------------------*/
 		try {
 			programaActivoSemestreDTO = factoryServicio.getProgramaActivoSemestreServicio().buscarProgramaActivoSemestrexIdDTO(requestProductoDTO.getProgramaActivoSemestreDTO());
-			
+
 			if(programaActivoSemestreDTO!=null && programaActivoSemestreDTO.getIdProgramaActivoSemestre()>0){
-				cantidadResultados ++;
+				uchileArte.setProgramaActivoSemestreDTO(programaActivoSemestreDTO);
 			}
-			
+
 		} catch (ServicioImplException e) {
-			e.printStackTrace();
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setProgramaActivoSemestreDTO(programaActivoSemestreDTO);
+
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
-	
+
+
 	@POST
 	@Path("/listarProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response listarProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		List<ProgramaActivoSemestreDTO> listaProgramaActivoSemestreDTO = new ArrayList<ProgramaActivoSemestreDTO>();
+
+		try{
 			/*-------------------------------------------------------------------------------------------------------------*/
-		listaProgramaActivoSemestreDTO = factoryServicio.getProgramaActivoSemestreServicio().listarProgramaActivoSemestreDTO();
+			listaProgramaActivoSemestreDTO = factoryServicio.getProgramaActivoSemestreServicio().listarProgramaActivoSemestreDTO();
 
 			if(listaProgramaActivoSemestreDTO!=null && listaProgramaActivoSemestreDTO.size()>0){
-				cantidadResultados = listaProgramaActivoSemestreDTO.size();
+				uchileArte.setListaProgramaActivoSemestreDTO(listaProgramaActivoSemestreDTO);
 			}
 
-		uchileArte.setListaProgramaActivoSemestreDTO(listaProgramaActivoSemestreDTO);
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		}
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/crearAlumnoProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response crearAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AlumnoProgramaActivoSemestreDTO alumnoProgramaActivoSemestreDTO = new AlumnoProgramaActivoSemestreDTO();
+		try{
 			/*-------------------------------------------------------------------------------------------------------------*/
-		alumnoProgramaActivoSemestreDTO=factoryServicio.getAlumnoProgramaActivoSemestreServicio().crearAlumnoProgramaActivoSemestreDTO(requestProductoDTO.getAlumnoProgramaActivoSemestreDTO());
+			alumnoProgramaActivoSemestreDTO=factoryServicio.getAlumnoProgramaActivoSemestreServicio().crearAlumnoProgramaActivoSemestreDTO(requestProductoDTO.getAlumnoProgramaActivoSemestreDTO());
 
-		if(alumnoProgramaActivoSemestreDTO!=null && alumnoProgramaActivoSemestreDTO.getIdAlumnoProgramaActivoSemestre()>0){
-			cantidadResultados ++;
+			if(alumnoProgramaActivoSemestreDTO!=null && alumnoProgramaActivoSemestreDTO.getIdAlumnoProgramaActivoSemestre()>0){
+				uchileArte.setAlumnoProgramaActivoSemestreDTO(alumnoProgramaActivoSemestreDTO);
+			}
+
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setAlumnoProgramaActivoSemestreDTO(alumnoProgramaActivoSemestreDTO);
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/actualizarAlumnoProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response actualizarAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AlumnoProgramaActivoSemestreDTO alumnoProgramaActivoSemestreDTO = new AlumnoProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		alumnoProgramaActivoSemestreDTO=factoryServicio.getAlumnoProgramaActivoSemestreServicio().actualizarAlumnoProgramaActivoSemestreDTO(requestProductoDTO.getAlumnoProgramaActivoSemestreDTO());
 
-		if(alumnoProgramaActivoSemestreDTO!=null && alumnoProgramaActivoSemestreDTO.getIdAlumnoProgramaActivoSemestre()>0){
-			cantidadResultados ++;
+		try{
+			alumnoProgramaActivoSemestreDTO=factoryServicio.getAlumnoProgramaActivoSemestreServicio().actualizarAlumnoProgramaActivoSemestreDTO(requestProductoDTO.getAlumnoProgramaActivoSemestreDTO());
+
+			if(alumnoProgramaActivoSemestreDTO!=null && alumnoProgramaActivoSemestreDTO.getIdAlumnoProgramaActivoSemestre()>0){
+				uchileArte.setAlumnoProgramaActivoSemestreDTO(alumnoProgramaActivoSemestreDTO);
+			}
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setAlumnoProgramaActivoSemestreDTO(alumnoProgramaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/buscarAlumnoProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response buscarAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AlumnoProgramaActivoSemestreDTO alumnoProgramaActivoSemestreDTO = new AlumnoProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
+		/*-------------------------------------------------------------------------------------------------------------*/
 		try {
 			alumnoProgramaActivoSemestreDTO=factoryServicio.getAlumnoProgramaActivoSemestreServicio().buscarAlumnoProgramaActivoSemestrexIdDTO(requestProductoDTO.getAlumnoProgramaActivoSemestreDTO());
-			
+
 			if(alumnoProgramaActivoSemestreDTO!=null && alumnoProgramaActivoSemestreDTO.getIdAlumnoProgramaActivoSemestre()>0){
-				cantidadResultados ++;
+				uchileArte.setAlumnoProgramaActivoSemestreDTO(alumnoProgramaActivoSemestreDTO);
 			}
-		
+
 		} catch (ServicioImplException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setAlumnoProgramaActivoSemestreDTO(alumnoProgramaActivoSemestreDTO);
+
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/listarAlumnoProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response listarAlumnoProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
+
 		List<AlumnoProgramaActivoSemestreDTO> listaAlumnoProgramaActivoSemestreDTO = new ArrayList<AlumnoProgramaActivoSemestreDTO>();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		listaAlumnoProgramaActivoSemestreDTO = factoryServicio.getAlumnoProgramaActivoSemestreServicio().listarAlumnoProgramaActivoSemestreDTO();
+
+		try{
+			listaAlumnoProgramaActivoSemestreDTO = factoryServicio.getAlumnoProgramaActivoSemestreServicio().listarAlumnoProgramaActivoSemestreDTO();
 
 			if(listaAlumnoProgramaActivoSemestreDTO!=null && listaAlumnoProgramaActivoSemestreDTO.size()>0){
-				cantidadResultados = listaAlumnoProgramaActivoSemestreDTO.size();
+				uchileArte.setListaAlumnoProgramaActivoSemestreDTO(listaAlumnoProgramaActivoSemestreDTO);
 			}
 
-		uchileArte.setListaAlumnoProgramaActivoSemestreDTO(listaAlumnoProgramaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
+		} catch (Exception e) {
+			
+			error = new AbstractWrapperError();
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+			error.setMensaje(e.getMessage());
 
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+			error.setCodigo(1);
+		}
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/crearAsignaturaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response crearAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
+
 		AsignaturaProgramaActivoSemestreDTO asignaturaProgramaActivoSemestreDTO = new AsignaturaProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		asignaturaProgramaActivoSemestreDTO=factoryServicio.getAsignaturaProgramaActivoSemestreServicio().crearAsignaturaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaProgramaActivoSemestreDTO());
-
-		if(asignaturaProgramaActivoSemestreDTO!=null && asignaturaProgramaActivoSemestreDTO.getIdAsignaturaProgramaActivoSemestre()>0){
-			cantidadResultados ++;
-		}
-		
-		uchileArte.setAsignaturaProgramaActivoSemestreDTO(asignaturaProgramaActivoSemestreDTO);
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
+		try{
+			asignaturaProgramaActivoSemestreDTO=factoryServicio.getAsignaturaProgramaActivoSemestreServicio().crearAsignaturaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaProgramaActivoSemestreDTO());
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+			if(asignaturaProgramaActivoSemestreDTO!=null && asignaturaProgramaActivoSemestreDTO.getIdAsignaturaProgramaActivoSemestre()>0){
+				uchileArte.setAsignaturaProgramaActivoSemestreDTO(asignaturaProgramaActivoSemestreDTO);
+			}
+		} catch (Exception e) {
+			
+			error = new AbstractWrapperError();
 
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		}
+
+		/*-------------------------------------------------------------------------------------------------------------*/
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/actualizarAsignaturaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response actualizarAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AsignaturaProgramaActivoSemestreDTO asignaturaProgramaActivoSemestreDTO = new AsignaturaProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		asignaturaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaProgramaActivoSemestreServicio().actualizarAsignaturaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaProgramaActivoSemestreDTO());
-
-		if(asignaturaProgramaActivoSemestreDTO!=null && asignaturaProgramaActivoSemestreDTO.getIdAsignaturaProgramaActivoSemestre()>0){
-			cantidadResultados ++;
-		}
-		
-		uchileArte.setAsignaturaProgramaActivoSemestreDTO(asignaturaProgramaActivoSemestreDTO);
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
+		try{
 
-		Duration duration = Duration.between(start, end);
+			asignaturaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaProgramaActivoSemestreServicio().actualizarAsignaturaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaProgramaActivoSemestreDTO());
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
+			if(asignaturaProgramaActivoSemestreDTO!=null && asignaturaProgramaActivoSemestreDTO.getIdAsignaturaProgramaActivoSemestre()>0){
+				uchileArte.setAsignaturaProgramaActivoSemestreDTO(asignaturaProgramaActivoSemestreDTO);
+			}
 
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		} catch (Exception e) {
+			
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		}
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/buscarAsignaturaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response buscarAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AsignaturaProgramaActivoSemestreDTO asignaturaProgramaActivoSemestreDTO = new AsignaturaProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
 		try {
 			asignaturaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaProgramaActivoSemestreServicio().buscarAsignaturaProgramaActivoSemestrexIdDTO(requestProductoDTO.getAsignaturaProgramaActivoSemestreDTO());
-			
+
 			if(asignaturaProgramaActivoSemestreDTO!=null && asignaturaProgramaActivoSemestreDTO.getIdAsignaturaProgramaActivoSemestre()>0){
-				cantidadResultados ++;
+				uchileArte.setAsignaturaProgramaActivoSemestreDTO(asignaturaProgramaActivoSemestreDTO);
 			}
-		
+
 		} catch (ServicioImplException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setAsignaturaProgramaActivoSemestreDTO(asignaturaProgramaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/listarAsignaturaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response listarAsignaturaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		List<AsignaturaProgramaActivoSemestreDTO> listaAsignaturaProgramaActivoSemestreDTO = new ArrayList<AsignaturaProgramaActivoSemestreDTO>();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		listaAsignaturaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaProgramaActivoSemestreServicio().listarAsignaturaProgramaActivoSemestreDTO();
+
+		try {
+			listaAsignaturaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaProgramaActivoSemestreServicio().listarAsignaturaProgramaActivoSemestreDTO();
 
 			if(listaAsignaturaProgramaActivoSemestreDTO!=null && listaAsignaturaProgramaActivoSemestreDTO.size()>0){
-				cantidadResultados = listaAsignaturaProgramaActivoSemestreDTO.size();
+				uchileArte.setListaAsignaturaProgramaActivoSemestreDTO(listaAsignaturaProgramaActivoSemestreDTO);
 			}
 
-		uchileArte.setListaAsignaturaProgramaActivoSemestreDTO(listaAsignaturaProgramaActivoSemestreDTO);
+
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
+		}
+
 		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
-	
-	
+
+
+
 	@POST
 	@Path("/crearAsignaturaTomadaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response crearAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AsignaturaTomadaProgramaActivoSemestreDTO asignaturaTomadaProgramaActivoSemestreDTO = new AsignaturaTomadaProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		asignaturaTomadaProgramaActivoSemestreDTO=factoryServicio.getAsignaturaTomadaProgramaActivoSemestreServicio().crearAsignaturaTomadaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaTomadaProgramaActivoSemestreDTO());
+		try{
+			asignaturaTomadaProgramaActivoSemestreDTO=factoryServicio.getAsignaturaTomadaProgramaActivoSemestreServicio().crearAsignaturaTomadaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaTomadaProgramaActivoSemestreDTO());
 
-		if(asignaturaTomadaProgramaActivoSemestreDTO!=null && asignaturaTomadaProgramaActivoSemestreDTO.getIdAsignaturaTomadaProgramaActivoSemestre()>0){
-			cantidadResultados ++;
+			if(asignaturaTomadaProgramaActivoSemestreDTO!=null && asignaturaTomadaProgramaActivoSemestreDTO.getIdAsignaturaTomadaProgramaActivoSemestre()>0){
+				uchileArte.setAsignaturaTomadaProgramaActivoSemestreDTO(asignaturaTomadaProgramaActivoSemestreDTO);
+			}
+
+
+
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setAsignaturaTomadaProgramaActivoSemestreDTO(asignaturaTomadaProgramaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/actualizarAsignaturaTomadaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response actualizarAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AsignaturaTomadaProgramaActivoSemestreDTO asignaturaTomadaProgramaActivoSemestreDTO = new AsignaturaTomadaProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		asignaturaTomadaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaTomadaProgramaActivoSemestreServicio().actualizarAsignaturaTomadaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaTomadaProgramaActivoSemestreDTO());
 
-		if(asignaturaTomadaProgramaActivoSemestreDTO!=null && asignaturaTomadaProgramaActivoSemestreDTO.getIdAsignaturaTomadaProgramaActivoSemestre()>0){
-			cantidadResultados ++;
+		try{
+			asignaturaTomadaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaTomadaProgramaActivoSemestreServicio().actualizarAsignaturaTomadaProgramaActivoSemestreDTO(requestProductoDTO.getAsignaturaTomadaProgramaActivoSemestreDTO());
+
+			if(asignaturaTomadaProgramaActivoSemestreDTO!=null && asignaturaTomadaProgramaActivoSemestreDTO.getIdAsignaturaTomadaProgramaActivoSemestre()>0){
+				uchileArte.setAsignaturaTomadaProgramaActivoSemestreDTO(asignaturaTomadaProgramaActivoSemestreDTO);
+			}
+
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-		
-		uchileArte.setAsignaturaTomadaProgramaActivoSemestreDTO(asignaturaTomadaProgramaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
 
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/buscarAsignaturaTomadaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response buscarAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		AsignaturaTomadaProgramaActivoSemestreDTO asignaturaTomadaProgramaActivoSemestreDTO = new AsignaturaTomadaProgramaActivoSemestreDTO();
-			/*-------------------------------------------------------------------------------------------------------------*/
+
 		try {
 			asignaturaTomadaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaTomadaProgramaActivoSemestreServicio().buscarAsignaturaTomadaProgramaActivoSemestrexIdDTO(requestProductoDTO.getAsignaturaTomadaProgramaActivoSemestreDTO());
-			
+
 			if(asignaturaTomadaProgramaActivoSemestreDTO!=null && asignaturaTomadaProgramaActivoSemestreDTO.getIdAsignaturaTomadaProgramaActivoSemestre()>0){
-				cantidadResultados ++;
+				uchileArte.setAsignaturaTomadaProgramaActivoSemestreDTO(asignaturaTomadaProgramaActivoSemestreDTO);
 			}
-			
+
 		} catch (ServicioImplException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			error = new AbstractWrapperError();
+
+			error.setMensaje(e.getMessage());
+
+			error.setCodigo(1);
 		}
-
-		
-		uchileArte.setAsignaturaTomadaProgramaActivoSemestreDTO(asignaturaTomadaProgramaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
-
-		Duration duration = Duration.between(start, end);
-
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 	@POST
 	@Path("/listarAsignaturaTomadaProgramaActivoSemestre")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public Response listarAsignaturaTomadaProgramaActivoSemestre(RequestProductoDTO requestProductoDTO) {
 		WrapperUchileArte wrapperUchileArte = null;
-		
-		vijnana.respuesta.wrapper.response.AbstractWrapperError error = new vijnana.respuesta.wrapper.response.AbstractWrapperError();
-		
+
+		AbstractWrapperError error = null;
+
 		UchileArte uchileArte = new UchileArte();
 
 		Instant start = Instant.now();
 
-		int cantidadResultados = 0;
-		
 		List<AsignaturaTomadaProgramaActivoSemestreDTO> listaAsignaturaTomadaProgramaActivoSemestreDTO = new ArrayList<AsignaturaTomadaProgramaActivoSemestreDTO>();
-			/*-------------------------------------------------------------------------------------------------------------*/
-		listaAsignaturaTomadaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaTomadaProgramaActivoSemestreServicio().listarAsignaturaTomadaProgramaActivoSemestreDTO();
+
+		try{
+
+			listaAsignaturaTomadaProgramaActivoSemestreDTO = factoryServicio.getAsignaturaTomadaProgramaActivoSemestreServicio().listarAsignaturaTomadaProgramaActivoSemestreDTO();
 
 			if(listaAsignaturaTomadaProgramaActivoSemestreDTO!=null && listaAsignaturaTomadaProgramaActivoSemestreDTO.size()>0){
-				cantidadResultados = listaAsignaturaTomadaProgramaActivoSemestreDTO.size();
+				uchileArte.setListaAsignaturaTomadaProgramaActivoSemestreDTO(listaAsignaturaTomadaProgramaActivoSemestreDTO);
 			}
 
-		uchileArte.setListaAsignaturaTomadaProgramaActivoSemestreDTO(listaAsignaturaTomadaProgramaActivoSemestreDTO);
-		/*-------------------------------------------------------------------------------------------------------------*/
-		Instant end = Instant.now();
+		} catch (Exception e) {
+			error = new AbstractWrapperError();
 
-		Duration duration = Duration.between(start, end);
+			error.setMensaje(e.getMessage());
 
-		String tiempoRespuesta = AppDate.generarTiempoDuracion(duration.getSeconds(), duration.getNano());
-
-		wrapperUchileArte = new WrapperUchileArte(true, tiempoRespuesta, cantidadResultados, this.request.getRequestURL().toString(), error,
-				this.request.getMethod(), uchileArte);
-		wrapperUchileArte.setData(uchileArte);
+			error.setCodigo(1);
+		}
+		if(error==null){
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), uchileArte);
+		}
+		else{
+			wrapperUchileArte = new WrapperUchileArte( error,  AppDate.generarTiempoDuracion(Duration.between(start, Instant.now())), this.httpServletRequest.getRequestURL().toString(),
+					this.httpServletRequest.getMethod(), null);
+		}
 
 		return Response.status(201).entity(wrapperUchileArte).build();
 
 	}
-	
+
 }
